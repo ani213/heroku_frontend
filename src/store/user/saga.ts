@@ -11,6 +11,7 @@ import {
   ForgetPasswordAction,
   ForgetPasswordComplete,
   CHANAGE_PASSWORD_RUN,
+  loginComplete,
 } from "./action";
 import qs from "qs";
 import { Method, request, ApiResponse, callApi } from "../../services/api/Api";
@@ -24,14 +25,19 @@ export function* callLogin(action: {
 }) {
   try {
     const reqdata = qs.stringify(action.payload);
-    const { data } = yield call(request, {
+    const response: ApiResponse<LoginResponse> = yield call(request, {
       data: reqdata,
       url: "/login",
       method: "POST",
     });
-    console.log(data);
+    const {data}=response;
+    // console.log(data);
+    yield put(loginComplete(data))
+    history.push(RouteService.dashboard.getPath())
   } catch (err) {
     console.log(err);
+    yield put(showError({ title: "Login Error", error: err }));
+
   }
 }
 export function* watchCallLogin() {
@@ -42,7 +48,7 @@ export function* callLogout() {
     yield put(logout());
     history.push(RouteService.login.getPath());
   } catch (err) {
-    yield put(showError({ title: "Logot Error", error: err }));
+    yield put(showError({ title: "Logout Error", error: err }));
   }
 }
 export function* watchLogout() {

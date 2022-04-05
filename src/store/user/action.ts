@@ -6,6 +6,15 @@ export const login = (data: LoginFormValues) => ({
   payload: data,
 });
 
+export const LOGIN_COMPLETE='user/LOGIN_COMPLETE';
+export const loginComplete=(data:LoginResponse)=>({
+  type:LOGIN_COMPLETE,
+  payload:data,
+})
+export interface LoginCompleteAction extends Action<typeof LOGIN_COMPLETE> {
+  readonly payload:LoginResponse
+}
+
 
 export const REGISTER = "user/REGISTER";
 export const register = (data: RegisterFormValues) => {
@@ -105,6 +114,7 @@ export const changePasswordRun = (
 export type UserAction = 
 |RegisterCompleteAction
 |ForgetPasswordCompleteAction
+|LoginCompleteAction
 
 
 

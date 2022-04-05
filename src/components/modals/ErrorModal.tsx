@@ -72,8 +72,10 @@ const ErrorModal:React.FC<ErrorModalProps>=(props)=> {
  
   return (
     <div>
-      <Dialog  aria-labelledby="customized-dialog-title" open={error.isOpen}
-      maxWidth='md'
+      <Dialog  
+      aria-labelledby="customized-dialog-title"
+      open={error.isOpen}
+      maxWidth='sm'
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           {(error && error.error && error.error.title)||""}

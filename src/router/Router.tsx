@@ -11,6 +11,7 @@ const ConnectedLoginPage=React.lazy(()=>import("../containers/pages/ConnectedLog
 const ConnectedRegisterPage=React.lazy(()=>import('../containers/pages/ConnectedRegisterPage'))
 const ConnectedVarificationPage=React.lazy(()=>import('../containers/pages/ConnectedVarificationPage'))
 const ConnectedChangePasswordPage=React.lazy(()=>import('../containers/pages/ConnectedChangePasswordPage'))
+const ConnectedDashboard=React.lazy(()=>import('../containers/pages/ConnectedDashboard'))
 
 
 interface RouterProps  {
@@ -30,7 +31,7 @@ interface RouterProps  {
               <Route path={RouteService.changePassword.getPath()} element={isVarification? <ConnectedChangePasswordPage />:<Navigate to={RouteService.login.getPath()}/>}/>
 
               <Route element={<ProtectedRoute unauthorizedRedirect='/login'/>}>
-                
+                 <Route path={RouteService.dashboard.getPath()} element={<ConnectedDashboard />}/>
               </Route>
               
             </Routes>

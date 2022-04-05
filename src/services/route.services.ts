@@ -21,13 +21,15 @@ export class RouteBuilder<T extends object>{
 
 
 export enum Routes{
-    LOGIN='/login'
+    LOGIN='/login',
+    DASHBOARD='/dashboard'
 }
 const RouteService={
     login: new RouteBuilder('/login'),
     register:new RouteBuilder('/register'),
     varification:new RouteBuilder('/varification'),
     changePassword: new RouteBuilder('/change-password'),
+    dashboard:new RouteBuilder(Routes.DASHBOARD),
     test:new RouteBuilder<{id:number; ani:number}>('/test/:id/:ani')
 }
 export default RouteService;

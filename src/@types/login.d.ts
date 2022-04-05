@@ -37,3 +37,9 @@ declare interface ChangePasswordFormValues{
     readonly password?:string;
     readonly changePassword?:string;
 }
+declare interface LoginResponse{
+    readonly access_token:string;
+    readonly expire_access:number;
+    readonly expire_refresh:number;
+    readonly refresh_token:string;
+}

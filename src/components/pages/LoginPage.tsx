@@ -10,6 +10,7 @@ import { useLoading } from "../../store/layout/hooks";
 import ForgetPasswordModal from "../modals/ForgetPasswordModal";
 import ErrorModal from "../modals/ErrorModal";
 
+
 export interface LoginPageProps {
   readonly onSubmit:(data:LoginFormValues)=>void
 }
@@ -31,6 +32,7 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
       }}
      onSubmit={handleSubmit}
      validateOnBlur={false}
+     validateOnChange={false}
      validationSchema={LoginValidationSchema}
     >
       {(form)=>(
@@ -91,7 +93,7 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
                 </Box>
                 <Grid container>
                   <Grid item xs>
-                    <Link onClick={()=>setIsOpen(true)} variant="body2">
+                    <Link onClick={()=>setIsOpen(true)} variant="body2" style={{cursor:"pointer"}}>
                       Forgot password?
                     </Link>
                   </Grid>

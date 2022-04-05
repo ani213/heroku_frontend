@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { FORGET_PASSWORD_COMPLETE, LOGOUT, LogoutAction, REGISTERATION_COMPLETE, UserAction } from './action';
+import { FORGET_PASSWORD_COMPLETE, LOGIN_COMPLETE, LOGOUT, LogoutAction, REGISTERATION_COMPLETE, UserAction } from './action';
 export interface UserState {
     readonly isAuthenticate:boolean;
     readonly access_token?: string;
@@ -19,6 +19,12 @@ export interface UserState {
 
   const reducer: Reducer<UserState,UserAction| LogoutAction> = (state = defaultState, action) => {
     switch (action.type) {
+      case LOGIN_COMPLETE:
+        return{
+          ...state,
+          ...action.payload,
+          isAuthenticate:true
+        }
       case REGISTERATION_COMPLETE:
         return{
           ...state,

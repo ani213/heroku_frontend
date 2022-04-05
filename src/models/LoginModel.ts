@@ -6,14 +6,11 @@ export const LoginValidationSchema = yup.object().shape({
 });
 export const RegisterValidationSchema = yup.object().shape({
   username: yup.string().trim().strict(true).required("username is required.").matches(/^(\S+$)/, '* This field cannot contain only blankspaces'),
-  password: yup.string().required("Password is required."),
-  confirmPassword: yup
-    .string()
-    .oneOf(
-      [yup.ref("password"), null],
-      "password and confirm password must match."
-    )
-    .required("Confirm password is required"),
+  password:yup.string().required().matches(
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/,
+    "Password must Contain 6 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+  ),
+  confirmPassword:yup.string().oneOf([yup.ref('password'),null],'password and confirmPassword must match.').required(),
   dateOfBirth: yup.string().required("Birth is required"),
   email: yup.string().email().required("Email is required."),
   firstName: yup.string().required("Email is requird."),
