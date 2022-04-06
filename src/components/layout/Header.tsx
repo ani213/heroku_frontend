@@ -1,0 +1,18 @@
+import { Typography } from "@material-ui/core";
+import * as React from "react";
+
+export interface HeaderProps {
+  
+}
+
+const Header: React.FC<HeaderProps> = (props) => {
+   
+    return(
+        <>
+            <Typography variant="h6" noWrap>
+                Aniket
+            </Typography>
+        </>
+    )
+}
+export default Header;
