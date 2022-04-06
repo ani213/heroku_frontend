@@ -14,6 +14,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Header from "../layout/Header";
 import Navbar from "../layout/Navbar";
 import { Typography } from "@material-ui/core";
+import { useUserContext } from "../../store/user/hooks";
 
 const drawerWidth = 240;
 
@@ -92,6 +93,7 @@ export interface MainTemplateProps {
 }
 
 const MainTemplate: React.FC<MainTemplateProps> = (props) => {
+  const [user]=useUserContext()
   const {children}=props
   const classes = useStyles();
   const theme = useTheme();
@@ -144,7 +146,7 @@ const MainTemplate: React.FC<MainTemplateProps> = (props) => {
       >
         <div className={classes.arrowContainer}>
           <div style={{width:"80%"}}>
-          <Typography variant="h6" align="center">Aniket</Typography>
+          <Typography variant="h6" align="center">{user?.firstName}</Typography>
           </div>
           <div style={{width:"20%"}}>
           <IconButton onClick={handleDrawerClose}>

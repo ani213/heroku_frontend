@@ -8,7 +8,7 @@ import {
   varificationRun,
 } from "./action";
 import { useDispatch, useSelector } from "react-redux";
-import { emailSelector, getIsAuth } from "./selector";
+import { emailSelector, getIsAuth, userContextSelector } from "./selector";
 
 export function useLogin(): [(data: LoginFormValues) => void, () => void] {
   const dispatch = useDispatch();
@@ -70,5 +70,13 @@ export function useChangePassword():[
   return [changePassword];
 }
 
+export function useLogout():[()=>void]{
+  const dispatch = useDispatch();
+  const logOut=React.useCallback(()=>dispatch(logoutRun()),[dispatch]);
+  return [logOut]
+}
 
-
+export function useUserContext():[UserContext|undefined]{
+const user=useSelector(userContextSelector);
+return [user]
+}

@@ -109,12 +109,22 @@ export const changePasswordRun = (
   type: CHANAGE_PASSWORD_RUN,
 });
 
+export const SET_USER_CONTEXT='user/SET_USER_CONTEXT';
+export const setUserContext=(data:UserContext)=>({
+  type:SET_USER_CONTEXT,
+  payload:data
+})
+export interface SetUserContextAction extends Action<typeof SET_USER_CONTEXT> {
+  readonly payload:UserContext
+}
+
 
 
 export type UserAction = 
 |RegisterCompleteAction
 |ForgetPasswordCompleteAction
 |LoginCompleteAction
+|SetUserContextAction
 
 
 

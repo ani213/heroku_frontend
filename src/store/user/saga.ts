@@ -12,6 +12,7 @@ import {
   ForgetPasswordComplete,
   CHANAGE_PASSWORD_RUN,
   loginComplete,
+  setUserContext,
 } from "./action";
 import qs from "qs";
 import { Method, request, ApiResponse, callApi } from "../../services/api/Api";
@@ -33,6 +34,12 @@ export function* callLogin(action: {
     const {data}=response;
     // console.log(data);
     yield put(loginComplete(data))
+    const userData:ApiResponse<UserContext> =yield call(callApi, {
+      method: Method.GET,
+      url: "/usercontext",
+    });
+    // console.log(userData);
+    yield put(setUserContext(userData.data))
     history.push(RouteService.dashboard.getPath())
   } catch (err) {
     console.log(err);

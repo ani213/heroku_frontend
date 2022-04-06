@@ -2,6 +2,14 @@ declare interface LoginFormValues{
     readonly username:string;
     readonly password:string;
 }
+declare interface UserContext{
+    readonly username:string;
+    readonly firstName:string;
+    readonly lastName?:string;
+    readonly email:string;
+    readonly dateOfBirth:Date;
+    readonly role:string;
+}
 declare interface RegisterFormValues{
     readonly username:string;
     readonly firstName:string;
