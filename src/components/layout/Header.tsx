@@ -9,7 +9,7 @@ const Header: React.FC<HeaderProps> = (props) => {
    
     return(
         <>
-            <Typography variant="h6" noWrap>
+            <Typography variant="h5" noWrap>
                 Aniket
             </Typography>
         </>
