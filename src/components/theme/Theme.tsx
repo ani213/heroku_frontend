@@ -13,7 +13,7 @@ const Theme: React.FC<any> =(props)=>{
           secondary: {
             main: red[700],
           },
-          type:'light',
+          type:'dark',
         },
       }));
     return(

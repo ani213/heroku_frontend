@@ -25,6 +25,7 @@ export function* callLogin(action: {
   readonly payload: LoginFormValues;
 }) {
   try {
+    yield put(showLoading());
     const reqdata = qs.stringify(action.payload);
     const response: ApiResponse<LoginResponse> = yield call(request, {
       data: reqdata,
@@ -32,17 +33,16 @@ export function* callLogin(action: {
       method: "POST",
     });
     const {data}=response;
-    // console.log(data);
     yield put(loginComplete(data))
     const userData:ApiResponse<UserContext> =yield call(callApi, {
       method: Method.GET,
       url: "/usercontext",
     });
-    // console.log(userData);
-    yield put(setUserContext(userData.data))
+    yield put(setUserContext(userData.data));
+    yield put(hideLoading());
     history.push(RouteService.dashboard.getPath())
   } catch (err) {
-    console.log(err);
+    yield put(hideLoading());
     yield put(showError({ title: "Login Error", error: err }));
 
   }
