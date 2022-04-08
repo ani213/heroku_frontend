@@ -22,7 +22,6 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
   const handleSubmit = (data:LoginFormValues) => {
     onSubmit(data)
   };
-
   return (
     <>
     <Formik<LoginFormValues>

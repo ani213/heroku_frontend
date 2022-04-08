@@ -1,19 +1,28 @@
 import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import * as React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export interface NavItemProps {
   readonly title:string;
-  readonly icon:React.ReactNode
+  readonly icon:React.ReactNode;
+  readonly to?:string;
 }
 
 const NavItem: React.FC<NavItemProps> = (props) => {
-   const {title,icon}=props;
+   const {title,icon,to}=props;
+   const {pathname}=useLocation();
+   const navigate=useNavigate();
+   const handleClick=()=>{
+      if(to){
+        navigate(to)
+      }
+   }
     return(
         <>
-          <ListItem button >
+          <ListItem button selected={pathname===to} disabled={!to} onClick={handleClick}>
               <ListItemIcon>{icon}</ListItemIcon>
               <ListItemText primary={title} />
-            </ListItem>
+          </ListItem>
         </>
     )
 }

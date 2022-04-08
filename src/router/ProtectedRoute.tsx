@@ -9,7 +9,6 @@ export interface ProtectedRouteProps extends RouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
     const {unauthorizedRedirect}=props;
     const [authorized]=useAuth();
-    console.log(authorized);
     return authorized? <Outlet />:<Navigate to={unauthorizedRedirect} />
 };
 

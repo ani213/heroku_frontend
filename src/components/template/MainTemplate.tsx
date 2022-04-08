@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) =>
       overflowX: 'hidden',
       width: theme.spacing(7) + 1,
       [theme.breakpoints.up('sm')]: {
-        width: theme.spacing(9) + 1,
+        width: theme.spacing(7) + 1,
       },
     },
     toolbar: {
@@ -98,7 +98,6 @@ const MainTemplate: React.FC<MainTemplateProps> = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };

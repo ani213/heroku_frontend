@@ -30,6 +30,8 @@ const RouteService={
     varification:new RouteBuilder('/varification'),
     changePassword: new RouteBuilder('/change-password'),
     dashboard:new RouteBuilder(Routes.DASHBOARD),
+    addProblem: new RouteBuilder('/add-problem'),
+
     test:new RouteBuilder<{id:number; ani:number}>('/test/:id/:ani')
 }
 export default RouteService;
