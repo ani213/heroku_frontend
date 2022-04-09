@@ -20,10 +20,29 @@ const useStyles = makeStyles((theme) =>
     avtar: {
       width: 100,
       height: 100,
+      color:'white'
     },
     spaceTop: {
       marginTop: 10,
     },
+    0:{
+      background:theme.palette.secondary.main
+    },
+    1:{
+      background:theme.palette.primary.main
+    },
+    2:{
+      background:'#d2f00e'
+    },
+    3:{
+      background:'#bd08ae'
+    },
+    4:{
+      background:'#d11352'
+    },
+    5:{
+      background:'#f5071f'
+    }
   })
 );
 
@@ -47,6 +66,11 @@ const Profile: React.FC<ProfileProps> = (props) => {
       setTheme("light");
     }
   };
+  function getRandomInt() {
+     let r= Math.floor(Math.random() * 6);
+     return classes[r]
+  }
+
   return (
     <>
       <Dialog
@@ -65,7 +89,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
           >
             <Grid container item xs={12} justifyContent="center">
               <Grid item>
-                <Avatar className={classes.avtar}>
+                <Avatar className={`${classes.avtar} ${getRandomInt()}`}>
                   <Typography variant="h2">{name[0].toUpperCase()}</Typography>
                 </Avatar>
               </Grid>
