@@ -7,3 +7,4 @@ const getLayoutState = (state:ApplicationState) => _.get(state, stateKey);
 export const getErrorSelector=createSelector(getLayoutState,(state):ERROR|undefined=>_.get(state,"error"));
 export const errorModalYNSelector=createSelector(getLayoutState,(state):boolean=>_.get(state,"errorModalYN"));
 export const isLoadingSelector=createSelector(getLayoutState,(state):boolean=>_.get(state,"isLoading"));
+export const themeSelector=createSelector(getLayoutState,(state):'light'|'dark'=>_.get(state,"theme"));

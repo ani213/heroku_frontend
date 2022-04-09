@@ -9,7 +9,7 @@ export interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = (props) => {
-   
+
     return(
         <>
           <NavList>

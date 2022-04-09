@@ -15,7 +15,7 @@ const App: React.FC<any> = (props) => {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <React.Suspense fallback={<LoadingScreen />}>
-            <Theme>
+            <Theme >
               <CssBaseline />
               <Router history={history} />
           </Theme>

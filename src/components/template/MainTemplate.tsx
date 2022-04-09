@@ -1,31 +1,44 @@
 import * as React from "react";
-import clsx from 'clsx';
-import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import clsx from "clsx";
+import {
+  createStyles,
+  makeStyles,
+  useTheme,
+  Theme,
+} from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
 import Header from "../layout/Header";
 import Navbar from "../layout/Navbar";
-import { Typography } from "@material-ui/core";
+import {
+  Avatar,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from "@material-ui/core";
 import { useUserContext } from "../../store/user/hooks";
+import Profile from "../layout/Profile";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: 'flex',
+      display: "flex",
     },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
-      transition: theme.transitions.create(['width', 'margin'], {
+      transition: theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
@@ -33,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
     appBarShift: {
       marginLeft: drawerWidth,
       width: `calc(100% - ${drawerWidth}px)`,
-      transition: theme.transitions.create(['width', 'margin'], {
+      transition: theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
@@ -42,35 +55,35 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: 36,
     },
     hide: {
-      display: 'none',
+      display: "none",
     },
     drawer: {
       width: drawerWidth,
       flexShrink: 0,
-      whiteSpace: 'nowrap',
+      whiteSpace: "nowrap",
     },
     drawerOpen: {
       width: drawerWidth,
-      transition: theme.transitions.create('width', {
+      transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
     },
     drawerClose: {
-      transition: theme.transitions.create('width', {
+      transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
-      overflowX: 'hidden',
+      overflowX: "hidden",
       width: theme.spacing(7) + 1,
-      [theme.breakpoints.up('sm')]: {
-        width: theme.spacing(7) + 1,
+      [theme.breakpoints.up("sm")]: {
+        width: theme.spacing(9) + 1,
       },
     },
     toolbar: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-end',
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-end",
       padding: theme.spacing(0, 1),
       // necessary for content to be below app bar
       ...theme.mixins.toolbar,
@@ -79,25 +92,24 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       padding: theme.spacing(3),
     },
-    arrowContainer:{
-      display: 'flex',
-      alignItems: 'center',
+    arrowContainer: {
+      display: "flex",
+      alignItems: "center",
       // justifyContent: 'space-between',
       padding: theme.spacing(0, 1),
-    }
-  }),
+    },
+  })
 );
 
-export interface MainTemplateProps {
-    
-}
+export interface MainTemplateProps {}
 
 const MainTemplate: React.FC<MainTemplateProps> = (props) => {
-  const [user]=useUserContext()
-  const {children}=props
+  const [user] = useUserContext();
+  const { children } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [profileYN, setProfile] = React.useState<boolean>(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -127,7 +139,7 @@ const MainTemplate: React.FC<MainTemplateProps> = (props) => {
           >
             <MenuIcon />
           </IconButton>
-           <Header />
+          <Header />
         </Toolbar>
       </AppBar>
       <Drawer
@@ -144,27 +156,45 @@ const MainTemplate: React.FC<MainTemplateProps> = (props) => {
         }}
       >
         <div className={classes.arrowContainer}>
-          <div style={{width:"80%"}}>
-          <Typography variant="h6" align="center">{user?.firstName}</Typography>
+          <div style={{ width: "80%" }}>
+            <Typography variant="h6" align="center">
+              {user?.firstName}
+            </Typography>
           </div>
-          <div style={{width:"20%"}}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
+          <div style={{ width: "20%" }}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === "rtl" ? (
+                <ChevronRightIcon />
+              ) : (
+                <ChevronLeftIcon />
+              )}
+            </IconButton>
           </div>
         </div>
         <Divider />
         <Navbar />
-        
+        <Divider />
+        <List>
+          <ListItem button onClick={() => setProfile(true)}>
+            <ListItemIcon>
+              <Avatar>{user?.firstName[0]}</Avatar>
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
+          </ListItem>
+        </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {children}
       </main>
+      <Profile
+        open={profileYN}
+        name={user?.firstName || ""}
+        lastName={user?.lastName}
+        onClose={()=>setProfile(false)}
+      />
     </div>
-  )
-}
+  );
+};
 
 export default MainTemplate;
-
-

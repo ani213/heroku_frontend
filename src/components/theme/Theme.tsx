@@ -3,8 +3,11 @@ import red from '@material-ui/core/colors/deepPurple';
 import green from '@material-ui/core/colors/green';
 
 import { createTheme, responsiveFontSizes,ThemeProvider} from '@material-ui/core/styles';
+import { useTheme } from '../../store/layout/hooks';
+
 const Theme: React.FC<any> =(props)=>{
     const{children}=props;
+    const [selectedTheme]=useTheme();
     const theme = responsiveFontSizes(createTheme({
         palette: {
           primary: {
@@ -13,7 +16,7 @@ const Theme: React.FC<any> =(props)=>{
           secondary: {
             main: red[700],
           },
-          type:'light',
+          type:selectedTheme,
         },
       }));
     return(

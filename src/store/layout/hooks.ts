@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { hideError, showError } from './action';
-import {  errorModalYNSelector, getErrorSelector, isLoadingSelector } from './selector';
+import { hideError, setTheme, showError } from './action';
+import {  errorModalYNSelector, getErrorSelector, isLoadingSelector, themeSelector } from './selector';
 
 export function useError():[{readonly error:ERROR|undefined;readonly isOpen:boolean},(data:ERROR)=>void,()=>void]{
     const error=useSelector(getErrorSelector);
@@ -14,4 +14,11 @@ export function useError():[{readonly error:ERROR|undefined;readonly isOpen:bool
 export function useLoading():[boolean]{
     const isLoading=useSelector(isLoadingSelector);
     return[isLoading]
+}
+
+export function useTheme():[MyTheme,(data:MyTheme)=>void]{
+    const theme=useSelector(themeSelector);
+    const dispatch=useDispatch();
+    const getTheme=React.useCallback((data:MyTheme)=>dispatch(setTheme(data)),[dispatch])
+    return [theme,getTheme]
 }

@@ -5,17 +5,20 @@ import {
   HIDE_LOADER,
   LayoutActions,
   SET_ERROR,
+  SET_THEME,
   SHOW_LOADER,
 } from "./action";
 export interface LayoutState {
   readonly error: ERROR | undefined;
   readonly errorModalYN: boolean;
   readonly isLoading: boolean;
+  readonly theme:MyTheme
 }
 export const defaultState: LayoutState = {
   error: undefined,
   errorModalYN: false,
   isLoading: false,
+  theme:'light'
 };
 
 const reducer: Reducer<LayoutState, LayoutActions | LogoutAction> = (
@@ -24,7 +27,6 @@ const reducer: Reducer<LayoutState, LayoutActions | LogoutAction> = (
 ) => {
   switch (action.type) {
     case SET_ERROR:
-      console.log(action.payload,"paylod");
       return {
         ...state,
         error: action.payload,
@@ -46,7 +48,11 @@ const reducer: Reducer<LayoutState, LayoutActions | LogoutAction> = (
         ...state,
         isLoading: false,
       };
-
+    case SET_THEME:
+      return{
+        ...state,
+        theme:action.payload
+      }
     case LOGOUT:
       return defaultState;
     default:

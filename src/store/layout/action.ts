@@ -22,8 +22,16 @@ export const HIDE_LOADER='layout/HIDE_LOADER';
 export const hideLoading=()=>({
     type:HIDE_LOADER
 })
+export const SET_THEME='layout/SET_THEME';
+export const setTheme=(data:MyTheme)=>({
+type:SET_THEME,
+payload:data
+})
 export interface ShowLoaderAction extends Action<typeof SHOW_LOADER>{}
 export interface HideLoaderAction extends Action<typeof HIDE_LOADER>{}
+export interface ThemeAction extends Action<typeof SET_THEME>{
+    readonly payload:MyTheme
+}
 
 
 export type LayoutActions=
@@ -31,3 +39,4 @@ export type LayoutActions=
 | HideErrorAction
 | ShowLoaderAction
 | HideLoaderAction
+| ThemeAction

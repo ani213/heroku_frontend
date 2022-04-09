@@ -19,7 +19,7 @@ const NavItem: React.FC<NavItemProps> = (props) => {
    }
     return(
         <>
-          <ListItem button selected={pathname===to} disabled={!to} onClick={handleClick}>
+          <ListItem button selected={pathname===to} onClick={handleClick}>
               <ListItemIcon>{icon}</ListItemIcon>
               <ListItemText primary={title} />
           </ListItem>
