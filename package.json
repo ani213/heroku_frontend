@@ -67,5 +67,10 @@
   "devDependencies": {
     "@types/ckeditor__ckeditor5-build-classic": "^29.0.1",
     "@types/react-router": "^5.1.18"
+  },
+  "engines" : { 
+    "npm" : ">=7.0.0",
+    "node" : ">=16.0.0"
   }
+
 }
