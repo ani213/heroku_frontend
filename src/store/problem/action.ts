@@ -27,6 +27,28 @@ export const getProblemByIdComplete=(data:Problem)=>({
     payload:data
 })
 
+
+export const UPDATE_PROBLEM_RUN='problem/UPDATE_PROBLEM_RUN';
+export interface UpdateProblemAction extends Action<typeof UPDATE_PROBLEM_RUN>,
+OnCompleteAction{
+  readonly payload:{
+    readonly data:Problem;
+  }
+}
+export const updateProblemRun=(
+  data:Problem,
+  onComplete?:()=>void
+):UpdateProblemAction=>({
+  meta:{
+    onComplete
+  },
+  payload:{
+    data
+  },
+  type:UPDATE_PROBLEM_RUN
+})
+
+
 export interface SetProbleBYIdmAction extends Action<typeof GET_PROBLEM_ID_COMPLETE>{
     readonly payload:Problem
 }

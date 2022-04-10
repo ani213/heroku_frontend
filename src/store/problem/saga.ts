@@ -4,7 +4,7 @@ import { Method,  ApiResponse, callApi } from "../../services/api/Api";
 import { history } from "../../services/history";
 import RouteService from "../../services/route.services";
 import { hideLoading, showError, showLoading } from "../layout/action";
-import { ADD_PROBLEM, getProblem, getProblemByIdComplete, GET_PROBLEM, GET_PROBLEM_ID, setProblems } from "./action";
+import { ADD_PROBLEM, getProblem, getProblemById, getProblemByIdComplete, GET_PROBLEM, GET_PROBLEM_ID, setProblems, UpdateProblemAction, UPDATE_PROBLEM_RUN } from "./action";
 
 export function* callGetProblem(action: {
     readonly type: string;
@@ -75,5 +75,30 @@ export function* callGetProblem(action: {
     yield takeLatest(ADD_PROBLEM, callCreateProblem);
   }
 
+  export function* callUpdateProblem(action:UpdateProblemAction) {
+    try {
+      yield put(showLoading());
+      const response:ApiResponse<{readonly message:string}> =yield call(callApi, {
+        data:action.payload.data,
+        method: Method.PUT,
+        url: "/problem",
+      });
+      const {data}=response;
+      yield put(getProblemById(action.payload.data._id||""))
+       if(action.meta.onComplete){
+        action.meta.onComplete()
+       }
+      yield put(hideLoading());
+    } catch (err) {
+      yield put(hideLoading());
+      yield put(showError({ title: "Error", error: err }));
+    }
+  }
+  export function* watchUpdateProblem() {
+    yield takeLatest(UPDATE_PROBLEM_RUN, callUpdateProblem);
+  }
 
-  export default [watchGetProblem,watchCreateProblem,watchGetProblemById]
+
+
+
+  export default [watchGetProblem,watchCreateProblem,watchGetProblemById,watchUpdateProblem]

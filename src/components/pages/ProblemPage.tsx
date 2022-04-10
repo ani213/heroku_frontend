@@ -68,11 +68,11 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
         <div className={classes.row}>
           <div className={classes.center}>
             <Typography
-              color="secondary"
-              variant="h6"
+              // color="secondary"
+              variant="h5"
               align="center"
               className={classes.text}
-              onClick={()=>setOpen('title')}
+              onClick={() => setOpen("title")}
             >
               {problem?.title}
             </Typography>
@@ -86,13 +86,17 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
       <Grid container xs={12} spacing={1} className={classes.main}>
         <Grid item xs={12} md={6} lg={6}>
           <Card className={classes.card}>
-            <Grid container xs={12} justifyContent="flex-end">
+            <Grid container xs={12} justifyContent="space-between">
+              <Grid item>
+                <Typography variant="h5">Question</Typography>
+              </Grid>
               <Grid item>
                 <IconButton onClick={() => setOpen("question")}>
                   <EditIcon />
                 </IconButton>
               </Grid>
             </Grid>
+            <div className={classes.boderLine}></div>
             <Typography>
               <div
                 dangerouslySetInnerHTML={createMarkup(problem?.question || "")}
@@ -103,13 +107,18 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
         </Grid>
         <Grid item xs={12} md={6} lg={6}>
           <Card className={classes.card}>
-            <Grid container xs={12} justifyContent="flex-end">
+            <Grid container xs={12} justifyContent="space-between">
+            <Grid item>
+                <Typography variant="h5">Answer</Typography>
+              </Grid>
               <Grid item>
                 <IconButton onClick={() => setOpen("answer")}>
                   <EditIcon />
                 </IconButton>
               </Grid>
             </Grid>
+            <div className={classes.boderLine}></div>
+
             <Typography>
               <div
                 dangerouslySetInnerHTML={createMarkup(problem?.answer || "")}
@@ -121,17 +130,17 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
       </Grid>
       <ErrorModal />
       <QuestionModal
-        isOpen={open==='question'}
+        isOpen={open === "question"}
         onClose={() => setOpen(undefined)}
         problem={problem}
       />
       <AnswerModal
-        isOpen={open==='answer'}
+        isOpen={open === "answer"}
         onClose={() => setOpen(undefined)}
         problem={problem}
       />
       <TitleModal
-        isOpen={open==='title'}
+        isOpen={open === "title"}
         onClose={() => setOpen(undefined)}
         problem={problem}
       />

@@ -1,9 +1,19 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addProblem, getProblem, getProblemById } from "./action";
+import {
+  addProblem,
+  getProblem,
+  getProblemById,
+  updateProblemRun,
+} from "./action";
 import { getProblemByIdSelector, getProblemSelector } from "./selector";
 
-export function useProblem(): [ReadonlyArray<Problem>, () => void,(data:Problem)=>void] {
+export function useProblem(): [
+  ReadonlyArray<Problem>,
+  () => void,
+  (data: Problem) => void,
+  (data: Problem, onComplete?: () => void) => void
+] {
   const dispatch = useDispatch();
   const problems = useSelector(getProblemSelector);
   const getProblems = React.useCallback(
@@ -11,19 +21,27 @@ export function useProblem(): [ReadonlyArray<Problem>, () => void,(data:Problem)
     [dispatch]
   );
   const createProblems = React.useCallback(
-    (data:Problem) => dispatch(addProblem(data)),
+    (data: Problem) => dispatch(addProblem(data)),
     [dispatch]
   );
-  return [problems, getProblems,createProblems];
+  const updateProblem = React.useCallback(
+    (data: Problem, onComplete?: () => void) =>
+      dispatch(updateProblemRun(data, onComplete)),
+    [dispatch]
+  );
+  return [problems, getProblems, createProblems, updateProblem];
 }
 
-export function useProblemById(): [Problem|undefined, (data:string) => void] {
+export function useProblemById(): [
+  Problem | undefined,
+  (data: string) => void
+] {
   const dispatch = useDispatch();
   const problem = useSelector(getProblemByIdSelector);
   const getProblems = React.useCallback(
-    (data:string) => dispatch(getProblemById(data)),
+    (data: string) => dispatch(getProblemById(data)),
     [dispatch]
   );
-  
+
   return [problem, getProblems];
 }
