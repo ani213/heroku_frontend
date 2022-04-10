@@ -28,6 +28,7 @@ import {
 } from "@material-ui/core";
 import { useUserContext } from "../../store/user/hooks";
 import Profile from "../layout/Profile";
+import ErrorModal from "../modals/ErrorModal";
 
 const drawerWidth = 240;
 
@@ -77,7 +78,7 @@ const useStyles = makeStyles((theme: Theme) =>
       overflowX: "hidden",
       width: theme.spacing(7) + 1,
       [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(9) + 1,
+        width: theme.spacing(7) + 1,
       },
     },
     toolbar: {
@@ -98,6 +99,10 @@ const useStyles = makeStyles((theme: Theme) =>
       // justifyContent: 'space-between',
       padding: theme.spacing(0, 1),
     },
+    avatar:{
+      height:30,
+      width:30
+    }
   })
 );
 
@@ -177,7 +182,7 @@ const MainTemplate: React.FC<MainTemplateProps> = (props) => {
         <List>
           <ListItem button onClick={() => setProfile(true)}>
             <ListItemIcon>
-              <Avatar>{user?.firstName[0]}</Avatar>
+              <Avatar className={classes.avatar}>{user?.firstName[0]}</Avatar>
             </ListItemIcon>
             <ListItemText primary="Profile" />
           </ListItem>
@@ -193,6 +198,7 @@ const MainTemplate: React.FC<MainTemplateProps> = (props) => {
         lastName={user?.lastName}
         onClose={()=>setProfile(false)}
       />
+      <ErrorModal />
     </div>
   );
 };

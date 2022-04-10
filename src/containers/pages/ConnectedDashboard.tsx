@@ -9,7 +9,7 @@ const ConnectedDashboard = () => {
   },[]);
   return (
     <>
-      <Dashboard prolems={problems}/>
+      <Dashboard problems={problems}/>
     </>
   );
 };
