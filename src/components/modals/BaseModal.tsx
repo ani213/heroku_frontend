@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) =>
     row:{
       display:'grid',
       gridTemplateColumns:'95% 4%',
-      alignItems:"center"
+      alignItems:"center",
+      width:"100%"
     }
   })
 );
@@ -76,9 +77,11 @@ const BaseModal: React.FC<BaseModalProps> = (props) => {
               >
                 {title}
               </Typography>
+              <div>
               <IconButton onClick={onClose} color='inherit'>
                 <CloseIcon />
               </IconButton>
+              </div>
             </div>
           ) : (
             <Typography

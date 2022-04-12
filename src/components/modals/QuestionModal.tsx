@@ -28,7 +28,7 @@ const QuestionModal: React.FC<QuestionModalProps> = (props) => {
     <>
       <BaseModal
         isOpen={isOpen}
-        title={"Prolem"}
+        title={"Problem"}
         color="secondary"
         align="center"
         fullScreen={true}

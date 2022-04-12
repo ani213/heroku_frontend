@@ -16,10 +16,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 const useStyles = makeStyles((theme) =>
   createStyles({
     row: {
-      // display: "grid",
-      // gridTemplateColumns: "95% 5%",
-      // alignItems: "center",
-      // width:"100%"
       display: "flex",
       justifyContent: "space-between",
       alignItems:"center",
