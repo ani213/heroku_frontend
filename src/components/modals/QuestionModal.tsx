@@ -1,7 +1,9 @@
 import { Button, Grid } from "@material-ui/core";
 import * as React from "react";
+import { useLoading } from "../../store/layout/hooks";
 import { useProblem } from "../../store/problem/hooks";
-import Editor from "../editor/Editor";
+import QuillEditor from "../editor/QuillEditor";
+import PreLoader from "../Loaders/Preloader";
 import BaseModal, { BaseModalAction, BaseModalContent } from "./BaseModal";
 import ErrorModal from "./ErrorModal";
 
@@ -13,6 +15,7 @@ export interface QuestionModalProps {
 
 const QuestionModal: React.FC<QuestionModalProps> = (props) => {
   const [, , , updateProblem] = useProblem();
+  const [isLoading] = useLoading();
   const [state, setState] = React.useState<string>("");
   const { isOpen, onClose, problem } = props;
   const handleSubmit = () => {
@@ -25,7 +28,7 @@ const QuestionModal: React.FC<QuestionModalProps> = (props) => {
     <>
       <BaseModal
         isOpen={isOpen}
-        title={"Question"}
+        title={"Prolem"}
         color="secondary"
         align="center"
         fullScreen={true}
@@ -34,7 +37,7 @@ const QuestionModal: React.FC<QuestionModalProps> = (props) => {
         <BaseModalContent dividers>
           <Grid container xs={12}>
             <Grid item xs={12}>
-              <Editor
+              <QuillEditor
                 onEditorChange={(data: string) => {
                   setState(data);
                 }}
@@ -53,7 +56,8 @@ const QuestionModal: React.FC<QuestionModalProps> = (props) => {
             color="primary"
             disabled={!state}
           >
-            Submit
+            {isLoading ? <PreLoader /> : "Submit"}
+           
           </Button>
         </BaseModalAction>
       </BaseModal>

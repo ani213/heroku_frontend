@@ -10,6 +10,9 @@ import QuestionModal from "../modals/QuestionModal";
 import AnswerModal from "../modals/AnswerModal";
 import TitleModal from "../modals/TitleModal";
 
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     row: {
@@ -43,6 +46,27 @@ const useStyles = makeStyles((theme) =>
       justifyContent: "center",
       alignItems: "center",
     },
+    root: {
+      flexGrow: 1,
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      flexGrow: 1,
+    },
+    toolbar: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-end",
+      padding: theme.spacing(1),
+      // necessary for content to be below app bar
+      ...theme.mixins.toolbar,
+    },
+    content: {
+      flexGrow: 1,
+      paddingTop: theme.spacing(7),
+    },
   })
 );
 
@@ -64,10 +88,11 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
   };
   return (
     <>
-      <Card className={classes.card}>
-        <div className={classes.row}>
-          <div className={classes.center}>
-            <Typography
+  <div className={classes.root}>
+      <AppBar position="fixed">
+        <Toolbar>
+          <div className={classes.row}>
+          <Typography
               // color="secondary"
               variant="h5"
               align="center"
@@ -76,19 +101,21 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
             >
               {problem?.title}
             </Typography>
-          </div>
-          <IconButton onClick={handleCancel}>
+            <IconButton color="inherit" onClick={handleCancel}>
             <CloseIcon />
           </IconButton>
-        </div>
-      </Card>
-      <div className={classes.boderLine}></div>
+          </div>
+        </Toolbar>
+      </AppBar>
+    </div>
+      <div className={classes.content}>
+      <div className={classes.toolbar}>
       <Grid container xs={12} spacing={1} className={classes.main}>
         <Grid item xs={12} md={6} lg={6}>
           <Card className={classes.card}>
             <Grid container xs={12} justifyContent="space-between">
               <Grid item>
-                <Typography variant="h5">Question</Typography>
+                <Typography variant="h5">Problem</Typography>
               </Grid>
               <Grid item>
                 <IconButton onClick={() => setOpen("question")}>
@@ -109,7 +136,7 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
           <Card className={classes.card}>
             <Grid container xs={12} justifyContent="space-between">
             <Grid item>
-                <Typography variant="h5">Answer</Typography>
+                <Typography variant="h5">Solution</Typography>
               </Grid>
               <Grid item>
                 <IconButton onClick={() => setOpen("answer")}>
@@ -128,6 +155,8 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
           </Card>
         </Grid>
       </Grid>
+      </div>
+      </div>
       <ErrorModal />
       <QuestionModal
         isOpen={open === "question"}

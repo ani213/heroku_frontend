@@ -76,7 +76,7 @@ const BaseModal: React.FC<BaseModalProps> = (props) => {
               >
                 {title}
               </Typography>
-              <IconButton onClick={onClose} color='secondary'>
+              <IconButton onClick={onClose} color='inherit'>
                 <CloseIcon />
               </IconButton>
             </div>

@@ -3,11 +3,11 @@ import MainTemplate from "../template/MainTemplate";
 import TextField from "@material-ui/core/TextField";
 import SimpleTabs, { TabPanel } from "../tabs/Tab";
 import { useTab } from "../../hooks";
-import Editor from "../editor/Editor";
 import { Box, Button, Typography } from "@material-ui/core";
 import { useProblem } from "../../store/problem/hooks";
 import PreLoader from "../Loaders/Preloader";
 import { useLoading } from "../../store/layout/hooks";
+import QuillEditor from "../editor/QuillEditor";
 
 export interface AddProblemProps {}
 
@@ -46,7 +46,7 @@ const AddProblem: React.FC<AddProblemProps> = (props) => {
             <Typography variant="h6" gutterBottom>
               Problem:
             </Typography>
-            <Editor
+            <QuillEditor
               onEditorChange={(data) => setState({ ...state, question: data })}
               data={state.question}
             />
@@ -55,7 +55,7 @@ const AddProblem: React.FC<AddProblemProps> = (props) => {
             <Typography variant="h6" gutterBottom>
               Solution:
             </Typography>
-            <Editor
+            <QuillEditor
               data={state.answer}
               onEditorChange={(data) => setState({ ...state, answer: data })}
             />
