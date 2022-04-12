@@ -10,15 +10,20 @@ import QuestionModal from "../modals/QuestionModal";
 import AnswerModal from "../modals/AnswerModal";
 import TitleModal from "../modals/TitleModal";
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     row: {
-      display: "grid",
-      gridTemplateColumns: "95% 4%",
-      alignItems: "center",
+      // display: "grid",
+      // gridTemplateColumns: "95% 5%",
+      // alignItems: "center",
+      // width:"100%"
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems:"center",
+      width:"100%"
     },
     card: {
       paddingLeft: 15,
@@ -34,11 +39,11 @@ const useStyles = makeStyles((theme) =>
       paddingTop: 15,
     },
     text: {
-      width: "70%",
+      width: "80%",
       textOverflow: "ellipsis",
       overflow: "hidden",
       whiteSpace: "nowrap",
-      textAlign: "center",
+      // textAlign: "center",
       cursor: "pointer",
     },
     center: {
@@ -88,74 +93,82 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
   };
   return (
     <>
-  <div className={classes.root}>
-      <AppBar position="fixed">
-        <Toolbar>
-          <div className={classes.row}>
-          <Typography
-              // color="secondary"
-              variant="h5"
-              align="center"
-              className={classes.text}
-              onClick={() => setOpen("title")}
-            >
-              {problem?.title}
-            </Typography>
-            <IconButton color="inherit" onClick={handleCancel}>
-            <CloseIcon />
-          </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
-    </div>
-      <div className={classes.content}>
-      <div className={classes.toolbar}>
-      <Grid container xs={12} spacing={1} className={classes.main}>
-        <Grid item xs={12} md={6} lg={6}>
-          <Card className={classes.card}>
-            <Grid container xs={12} justifyContent="space-between">
-              <Grid item>
-                <Typography variant="h5">Problem</Typography>
-              </Grid>
-              <Grid item>
-                <IconButton onClick={() => setOpen("question")}>
-                  <EditIcon />
+      <div className={classes.root}>
+        <AppBar position="fixed">
+          <Toolbar>
+            <div className={classes.row}>
+              {/* <div> */}
+                <Typography
+                  // color="secondary"
+                  variant="h5"
+                  // align="center"
+                  className={classes.text}
+                  onClick={() => setOpen("title")}
+                >
+                  {problem?.title}
+                </Typography>
+              {/* </div> */}
+              <div>
+                <IconButton color="inherit" onClick={handleCancel}>
+                  <CloseIcon />
                 </IconButton>
-              </Grid>
-            </Grid>
-            <div className={classes.boderLine}></div>
-            <Typography>
-              <div
-                dangerouslySetInnerHTML={createMarkup(problem?.question || "")}
-                className="editor"
-              ></div>
-            </Typography>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6} lg={6}>
-          <Card className={classes.card}>
-            <Grid container xs={12} justifyContent="space-between">
-            <Grid item>
-                <Typography variant="h5">Solution</Typography>
-              </Grid>
-              <Grid item>
-                <IconButton onClick={() => setOpen("answer")}>
-                  <EditIcon />
-                </IconButton>
-              </Grid>
-            </Grid>
-            <div className={classes.boderLine}></div>
-
-            <Typography>
-              <div
-                dangerouslySetInnerHTML={createMarkup(problem?.answer || "")}
-                className="editor"
-              ></div>
-            </Typography>
-          </Card>
-        </Grid>
-      </Grid>
+              </div>
+            </div>
+          </Toolbar>
+        </AppBar>
       </div>
+      <div className={classes.content}>
+        <div className={classes.toolbar}>
+          <Grid container xs={12} spacing={1} className={classes.main}>
+            <Grid item xs={12} md={6} lg={6}>
+              <Card className={classes.card}>
+                <Grid container xs={12} justifyContent="space-between">
+                  <Grid item>
+                    <Typography variant="h5">Problem</Typography>
+                  </Grid>
+                  <Grid item>
+                    <IconButton onClick={() => setOpen("question")}>
+                      <EditIcon />
+                    </IconButton>
+                  </Grid>
+                </Grid>
+                <div className={classes.boderLine}></div>
+                <Typography>
+                  <div
+                    dangerouslySetInnerHTML={createMarkup(
+                      problem?.question || ""
+                    )}
+                    className="editor"
+                  ></div>
+                </Typography>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <Card className={classes.card}>
+                <Grid container xs={12} justifyContent="space-between">
+                  <Grid item>
+                    <Typography variant="h5">Solution</Typography>
+                  </Grid>
+                  <Grid item>
+                    <IconButton onClick={() => setOpen("answer")}>
+                      <EditIcon />
+                    </IconButton>
+                  </Grid>
+                </Grid>
+                <div className={classes.boderLine}></div>
+
+                <Typography>
+                  <div
+                    dangerouslySetInnerHTML={createMarkup(
+                      problem?.answer || ""
+                    )}
+                    className="editor"
+                  ></div>
+                </Typography>
+              </Card>
+            </Grid>
+          </Grid>
+        </div>
       </div>
       <ErrorModal />
       <QuestionModal
