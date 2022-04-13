@@ -5,6 +5,8 @@ import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import { useNavigate } from "react-router-dom";
 import RouteService from "../../services/route.services";
+import Pagination from '@material-ui/lab/Pagination';
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     row: {
@@ -17,28 +19,40 @@ const useStyles = makeStyles((theme) =>
       paddingBottom: 10,
       cursor: "pointer",
     },
+    spaceTop:{
+      marginTop:20
+    }
   })
 );
 
 export interface DashboardProps {
   readonly problems: ReadonlyArray<Problem>;
+  readonly title:string;
 }
 
 const Dashboard: React.FC<DashboardProps> = (props) => {
-  const { problems } = props;
+  const { problems,title } = props;
+  const [page,setPage]=React.useState<number>(1);
   const classes = useStyles();
   const navigate=useNavigate();
   const handleClick = (data: Problem) => {
     navigate(RouteService.problem.build({id:data._id||""}))
   };
+ const handlePage=(e:any,page:number)=>{
+  setPage(page)
+ }
+ const selectedProblems=React.useMemo(()=>{
+  return problems.slice((page-1)*10,page*10);
+ },[page])
+  
   return (
     <>
       <MainTemplate>
         <Typography variant="h5" align="center">
-          Problems
+          {title}
         </Typography>
         <Grid container xs={12} spacing={1}>
-          {problems.map((ele, index) => {
+          {selectedProblems.map((ele, index) => {
             return (
               <Grid item xs={12} key={ele._id} onClick={() => handleClick(ele)}>
                 <Card className={classes.card}>
@@ -53,7 +67,11 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
             );
           })}
         </Grid>
-        
+        <Grid container xs={12} justifyContent="center" className={classes.spaceTop}>
+          <Grid item >
+            <Pagination count={Math.ceil(problems.length/10)} color='primary' onChange={handlePage}/>
+          </Grid>
+        </Grid>
       </MainTemplate>
     </>
   );

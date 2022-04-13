@@ -2,11 +2,12 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addProblem,
+  getMyProblem,
   getProblem,
   getProblemById,
   updateProblemRun,
 } from "./action";
-import { getProblemByIdSelector, getProblemSelector } from "./selector";
+import { getMyProblemSelector, getProblemByIdSelector, getProblemSelector } from "./selector";
 
 export function useProblem(): [
   ReadonlyArray<Problem>,
@@ -44,4 +45,17 @@ export function useProblemById(): [
   );
 
   return [problem, getProblems];
+}
+
+export function useMyProblem(): [
+  ReadonlyArray<Problem>,
+  () => void,
+] {
+  const dispatch = useDispatch();
+  const problems = useSelector(getMyProblemSelector);
+  const getProblems = React.useCallback(
+    () => dispatch(getMyProblem()),
+    [dispatch]
+  );
+  return [problems, getProblems];
 }

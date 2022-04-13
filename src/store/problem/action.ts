@@ -16,6 +16,19 @@ export const getProblem=()=>({
     type:GET_PROBLEM
 })
 
+export const SET_MY_PROBLEMS='problem/SET_MY_PROBLEMS';
+export const setMyProblems=(data:ReadonlyArray<Problem>)=>({
+    type:SET_MY_PROBLEMS,
+    payload:data
+})
+export const GET_MY_PROBLEM='problem/GET_MY_PROBLEM';
+export const getMyProblem=()=>({
+    type:GET_MY_PROBLEM
+})
+
+
+
+
 export const GET_PROBLEM_ID='problem/GET_PROBLEM_ID';
 export const getProblemById=(data:string)=>({
     type:GET_PROBLEM_ID,
@@ -57,7 +70,12 @@ export interface SetProbblemAction extends Action<typeof SET_PROBLEMS>{
     readonly payload:ReadonlyArray<Problem>
 }
 
+export interface SetMyProblemAction extends Action<typeof SET_MY_PROBLEMS>{
+  readonly payload:ReadonlyArray<Problem>
+}
+
 
 export type ProblemActions=
 | SetProbblemAction
 | SetProbleBYIdmAction
+| SetMyProblemAction

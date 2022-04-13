@@ -14,6 +14,7 @@ const ConnectedChangePasswordPage=React.lazy(()=>import('../containers/pages/Con
 const ConnectedDashboard=React.lazy(()=>import('../containers/pages/ConnectedDashboard'))
 const ConnectedAddProblem=React.lazy(()=>import('../containers/pages/ConnectedAddProblem'))
 const ConnectedProblem=React.lazy(()=>import('../containers/pages/ConnectedProlemPage'))
+const ConnectedMyProblem=React.lazy(()=>import('../containers/pages/ConnectedMyProblems'))
 
 
 interface RouterProps  {
@@ -36,6 +37,7 @@ interface RouterProps  {
                  <Route path={RouteService.dashboard.getPath()} element={<ConnectedDashboard />}/>
                  <Route path={RouteService.addProblem.getPath()} element={<ConnectedAddProblem />}/>
                  <Route path={RouteService.problem.getPath()} element={<ConnectedProblem />}/>
+                 <Route path={RouteService.myProblem.getPath()} element={<ConnectedMyProblem />}/>
 
               </Route>
               

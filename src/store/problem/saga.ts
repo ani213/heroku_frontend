@@ -4,7 +4,7 @@ import { Method,  ApiResponse, callApi } from "../../services/api/Api";
 import { history } from "../../services/history";
 import RouteService from "../../services/route.services";
 import { hideLoading, showError, showLoading } from "../layout/action";
-import { ADD_PROBLEM, getProblem, getProblemById, getProblemByIdComplete, GET_PROBLEM, GET_PROBLEM_ID, setProblems, UpdateProblemAction, UPDATE_PROBLEM_RUN } from "./action";
+import { ADD_PROBLEM, getProblem, getProblemById, getProblemByIdComplete, GET_MY_PROBLEM, GET_PROBLEM, GET_PROBLEM_ID, setMyProblems, setProblems, UpdateProblemAction, UPDATE_PROBLEM_RUN } from "./action";
 
 export function* callGetProblem(action: {
     readonly type: string;
@@ -14,7 +14,7 @@ export function* callGetProblem(action: {
       yield put(showLoading());
       const response:ApiResponse<ReadonlyArray<Problem>> =yield call(callApi, {
         method: Method.GET,
-        url: "/problem",
+        url: "/problems/all",
       });
       const {data}=response;
       yield put(setProblems(data));
@@ -65,7 +65,7 @@ export function* callGetProblem(action: {
       yield put(getProblem())
       console.log(data);
       yield put(hideLoading());
-      history.push(RouteService.dashboard.getPath())
+      history.push(RouteService.myProblem.getPath())
     } catch (err) {
       yield put(hideLoading());
       yield put(showError({ title: "Error", error: err }));
@@ -99,6 +99,28 @@ export function* callGetProblem(action: {
   }
 
 
+  export function* callGetMyProblem(action: {
+    readonly type: string;
+    readonly payload: LoginFormValues;
+  }) {
+    try {
+      yield put(showLoading());
+      const response:ApiResponse<ReadonlyArray<Problem>> =yield call(callApi, {
+        method: Method.GET,
+        url: "/problem",
+      });
+      const {data}=response;
+      yield put(setMyProblems(data));
+      yield put(hideLoading());
+    } catch (err) {
+      yield put(hideLoading());
+      yield put(showError({ title: "Error", error: err }));
+    }
+  }
+  export function* watchGetMyProblem() {
+    yield takeLatest(GET_MY_PROBLEM, callGetMyProblem);
+  }
 
 
-  export default [watchGetProblem,watchCreateProblem,watchGetProblemById,watchUpdateProblem]
+
+  export default [watchGetProblem,watchCreateProblem,watchGetProblemById,watchUpdateProblem,watchGetMyProblem]

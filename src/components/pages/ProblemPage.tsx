@@ -12,6 +12,7 @@ import TitleModal from "../modals/TitleModal";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import { useUserContext } from "../../store/user/hooks";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -78,6 +79,7 @@ export interface ProlemPageProps {
 const ProlemPage: React.FC<ProlemPageProps> = (props) => {
   const { problem } = props;
   const classes = useStyles();
+  const [user]=useUserContext();
   const [open, setOpen] = React.useState<
     "title" | "question" | "answer" | undefined
   >(undefined);
@@ -87,6 +89,7 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
   const createMarkup = (data: string) => {
     return { __html: data };
   };
+  // console.log(problem);
   return (
     <>
       <div className={classes.root}>
@@ -123,7 +126,7 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
                     <Typography variant="h5">Problem</Typography>
                   </Grid>
                   <Grid item>
-                    <IconButton onClick={() => setOpen("question")}>
+                    <IconButton onClick={() => setOpen("question")} disabled={problem?.user_id!==user?._id}>
                       <EditIcon />
                     </IconButton>
                   </Grid>
@@ -146,7 +149,7 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
                     <Typography variant="h5">Solution</Typography>
                   </Grid>
                   <Grid item>
-                    <IconButton onClick={() => setOpen("answer")}>
+                    <IconButton onClick={() => setOpen("answer")} disabled={problem?.user_id!==user?._id}>
                       <EditIcon />
                     </IconButton>
                   </Grid>

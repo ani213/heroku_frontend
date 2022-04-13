@@ -31,6 +31,7 @@ const RouteService={
     changePassword: new RouteBuilder('/change-password'),
     dashboard:new RouteBuilder(Routes.DASHBOARD),
     addProblem: new RouteBuilder('/add-problem'),
+    myProblem:new RouteBuilder('/problems'),
     problem:new RouteBuilder<{id:string}>('/problem/:id'),
     test:new RouteBuilder<{id:number; ani:number}>('/test/:id/:ani')
 }
