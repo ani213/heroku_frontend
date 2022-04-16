@@ -34,10 +34,10 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
     onSubmit(data);
   };
   const responseSuccessGoogle = (response: any) => {
-    console.log(response);
+    console.log(response.tokenId);
   };
   const responseFailureGoogle = (response: any) => {
-    console.log(response);
+    // console.log(response);
   };
 
   return (
