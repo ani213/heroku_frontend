@@ -9,7 +9,6 @@ const ConnectedProblemPage = () => {
  React.useEffect(()=>{
    getProblem(id||"")
  },[])
- console.log(problem);
   return (
     <>
       <ProlemPage problem={problem}/>

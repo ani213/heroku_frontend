@@ -63,7 +63,6 @@ export function* callGetProblem(action: {
       });
       const {data}=response;
       yield put(getProblem())
-      console.log(data);
       yield put(hideLoading());
       history.push(RouteService.myProblem.getPath())
     } catch (err) {

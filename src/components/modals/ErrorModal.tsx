@@ -59,11 +59,9 @@ const ErrorModal:React.FC<ErrorModalProps>=(props)=> {
   const [error,,hideModal]=useError();
   const [,logout]=useLogin()
   const err=error && error.error && error.error.error;
-  // console.log(err);
   const errorMessage=(err && err.data)||(typeof err==='object' && err);
   // const code=err && err.status;
   const handleClose = () => {
-    console.log(err);
     hideModal()
     if(err && err.message==="Unauthorized access"){
      logout()

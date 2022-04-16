@@ -89,7 +89,6 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
   const createMarkup = (data: string) => {
     return { __html: data };
   };
-  // console.log(problem);
   return (
     <>
       <div className={classes.root}>

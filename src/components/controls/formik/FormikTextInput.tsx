@@ -33,7 +33,6 @@ const FormikTextInput: React.FC<FormikTextInputProps & TextFieldProps & FieldPro
     };
     const errorText = getError(form, name);
     const hasError = !!errorText;
-    // console.log(errorText,"input");
     return (
       <TextField
         onBlur={() => form.setFieldTouched(name, true)}

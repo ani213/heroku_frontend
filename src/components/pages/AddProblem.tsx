@@ -20,7 +20,6 @@ const AddProblem: React.FC<AddProblemProps> = (props) => {
     answer: "",
   });
   const handleSubmit = () => {
-    console.log(state);
     createProblem(state);
   };
   const [tab, setTab] = useTab();

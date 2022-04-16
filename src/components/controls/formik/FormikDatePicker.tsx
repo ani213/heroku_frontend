@@ -30,7 +30,6 @@ DatePickerProps  & FieldProps
   };
   const errorText =getError(form, name) 
   const hasError = !!errorText;
-  // console.log(form);
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
     <DatePicker
