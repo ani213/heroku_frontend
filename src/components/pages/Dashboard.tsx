@@ -43,7 +43,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
  }
  const selectedProblems=React.useMemo(()=>{
   return problems.slice((page-1)*10,page*10);
- },[page])
+ },[page,problems])
   
   return (
     <>
