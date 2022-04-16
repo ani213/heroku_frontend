@@ -117,6 +117,12 @@ export const setUserContext=(data:UserContext)=>({
 export interface SetUserContextAction extends Action<typeof SET_USER_CONTEXT> {
   readonly payload:UserContext
 }
+export const LOGIN_WITH_GOOGLE='user/LOGIN_WITH_GOOGLE';
+export const loginWithGoogle=(data:LoginWithGoogle)=>({
+  type:LOGIN_WITH_GOOGLE,
+  payload:data
+})
+
 
 
 

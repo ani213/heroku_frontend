@@ -21,6 +21,7 @@ import { useLoading } from "../../store/layout/hooks";
 import ForgetPasswordModal from "../modals/ForgetPasswordModal";
 import ErrorModal from "../modals/ErrorModal";
 import { GoogleLogin } from "react-google-login";
+import { useLogin } from "../../store/user/hooks";
 
 export interface LoginPageProps {
   readonly onSubmit: (data: LoginFormValues) => void;
@@ -28,13 +29,15 @@ export interface LoginPageProps {
 
 const LoginPage: React.FC<LoginPageProps> = (props) => {
   const [isLoading] = useLoading();
+  const [,,loginWithGoogle]=useLogin()
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const { onSubmit } = props;
   const handleSubmit = (data: LoginFormValues) => {
     onSubmit(data);
   };
   const responseSuccessGoogle = (response: any) => {
-    console.log(response.tokenId);
+    // console.log(response.tokenId,"token id");
+    loginWithGoogle({idToken:response.tokenId})
   };
   const responseFailureGoogle = (response: any) => {
     // console.log(response);

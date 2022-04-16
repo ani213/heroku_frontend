@@ -2,6 +2,9 @@ declare interface LoginFormValues{
     readonly username:string;
     readonly password:string;
 }
+declare interface LoginWithGoogle{
+    readonly idToken:string;
+}
 declare interface UserContext{
     readonly username:string;
     readonly firstName:string;

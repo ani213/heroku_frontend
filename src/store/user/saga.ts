@@ -13,6 +13,7 @@ import {
   CHANAGE_PASSWORD_RUN,
   loginComplete,
   setUserContext,
+  LOGIN_WITH_GOOGLE,
 } from "./action";
 import qs from "qs";
 import { Method, request, ApiResponse, callApi } from "../../services/api/Api";
@@ -50,6 +51,41 @@ export function* callLogin(action: {
 export function* watchCallLogin() {
   yield takeLatest(LOGIN, callLogin);
 }
+
+export function* callLoginWithGoogle(action: {
+  readonly type: string;
+  readonly payload: LoginWithGoogle;
+}) {
+  try {
+    // yield put(showLoading());
+    // const reqdata = qs.stringify(action.payload);
+    // console.log(reqdata);
+    const response: ApiResponse<LoginResponse> = yield call(request, {
+      data: action.payload,
+      url: "/google/auth",
+      method: "POST",
+    });
+    const {data}=response;
+    // console.log(data);
+    yield put(loginComplete(data))
+    const userData:ApiResponse<UserContext> =yield call(callApi, {
+      method: Method.GET,
+      url: "/usercontext",
+    });
+    yield put(setUserContext(userData.data));
+    yield put(hideLoading());
+    history.push(RouteService.dashboard.getPath())
+  } catch (err) {
+    yield put(hideLoading());
+    yield put(showError({ title: "Login Error", error: err }));
+
+  }
+}
+export function* watchCallLoginWithGoogle() {
+  yield takeLatest(LOGIN_WITH_GOOGLE, callLoginWithGoogle);
+}
+
+
 export function* callLogout() {
   try {
     yield put(logout());
@@ -172,4 +208,5 @@ export default [
   watchCallForgetPasswordRun,
   watchCallCangePasswordRun,
   watchLogout,
+  watchCallLoginWithGoogle,
 ];

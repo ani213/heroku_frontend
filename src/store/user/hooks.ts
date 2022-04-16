@@ -3,6 +3,7 @@ import {
   changePasswordRun,
   forgetPasswordRun,
   login,
+  loginWithGoogle,
   logoutRun,
   register,
   varificationRun,
@@ -10,14 +11,22 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { emailSelector, getIsAuth, userContextSelector } from "./selector";
 
-export function useLogin(): [(data: LoginFormValues) => void, () => void] {
+export function useLogin(): [
+  (data: LoginFormValues) => void,
+  () => void,
+  (data: LoginWithGoogle) => void
+] {
   const dispatch = useDispatch();
   const loginUser = React.useCallback(
     (data: LoginFormValues) => dispatch(login(data)),
     [dispatch]
   );
   const logOut = React.useCallback(() => dispatch(logoutRun()), [dispatch]);
-  return [loginUser, logOut];
+  const loginWithGoogleUser = React.useCallback(
+    (data: LoginWithGoogle) => dispatch(loginWithGoogle(data)),
+    [dispatch]
+  );
+  return [loginUser, logOut, loginWithGoogleUser];
 }
 export function useRegister(): [(data: RegisterFormValues) => void] {
   const dispatch = useDispatch();
@@ -58,9 +67,9 @@ export function useForgetPassword(): [
   return [runForgetPassword];
 }
 
-export function useChangePassword():[
+export function useChangePassword(): [
   (data: ChangePasswordFormValues, onComplete?: () => void) => void
-]{
+] {
   const dispatch = useDispatch();
   const changePassword = React.useCallback(
     (data: ChangePasswordFormValues, onComplete?: () => void) =>
@@ -70,13 +79,13 @@ export function useChangePassword():[
   return [changePassword];
 }
 
-export function useLogout():[()=>void]{
+export function useLogout(): [() => void] {
   const dispatch = useDispatch();
-  const logOut=React.useCallback(()=>dispatch(logoutRun()),[dispatch]);
-  return [logOut]
+  const logOut = React.useCallback(() => dispatch(logoutRun()), [dispatch]);
+  return [logOut];
 }
 
-export function useUserContext():[UserContext|undefined]{
-const user=useSelector(userContextSelector);
-return [user]
+export function useUserContext(): [UserContext | undefined] {
+  const user = useSelector(userContextSelector);
+  return [user];
 }
