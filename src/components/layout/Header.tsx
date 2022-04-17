@@ -10,7 +10,7 @@ const Header: React.FC<HeaderProps> = (props) => {
     return(
         <>
             <Typography variant="h5" noWrap>
-                Aniket
+                Problem Hub
             </Typography>
         </>
     )

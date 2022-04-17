@@ -5,7 +5,6 @@ import {
   HIDE_LOADER,
   LayoutActions,
   SET_ERROR,
-  SET_THEME,
   SHOW_LOADER,
 } from "./action";
 export interface LayoutState {
@@ -48,11 +47,7 @@ const reducer: Reducer<LayoutState, LayoutActions | LogoutAction> = (
         ...state,
         isLoading: false,
       };
-    case SET_THEME:
-      return{
-        ...state,
-        theme:action.payload
-      }
+    
     case LOGOUT:
       return defaultState;
     default:

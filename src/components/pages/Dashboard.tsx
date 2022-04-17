@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) =>
     },
     spaceTop:{
       marginTop:20
+    },
+    contentContatiner:{
+      minHeight:"70vh"
     }
   })
 );
@@ -51,26 +54,23 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
         <Typography variant="h5" align="center">
           {title}
         </Typography>
-        <Grid container xs={12} spacing={1}>
+        <div className={classes.contentContatiner}>
+        <Grid container xs={12} spacing={1} >
           {selectedProblems.map((ele, index) => {
             return (
               <Grid item xs={12} key={ele._id} onClick={() => handleClick(ele)}>
                 <Card className={classes.card}>
-                  <div className={classes.row}>
-                    <Typography>
-                      <b>{index + 1}.</b>
-                    </Typography>
-                    <Typography>{ele.title}</Typography>
-                  </div>
+                    <Typography><b>{index+1}.</b> {ele.title}</Typography>
                 </Card>
               </Grid>
             );
           })}
         </Grid>
+        </div>
         <Grid container xs={12} justifyContent="center" className={classes.spaceTop}>
-          <Grid item >
+          {problems.length>0 &&<Grid item >
             <Pagination count={Math.ceil(problems.length/10)} color='primary' onChange={handlePage}/>
-          </Grid>
+          </Grid>}
         </Grid>
       </MainTemplate>
     </>

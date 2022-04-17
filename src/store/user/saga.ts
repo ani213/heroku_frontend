@@ -57,16 +57,13 @@ export function* callLoginWithGoogle(action: {
   readonly payload: LoginWithGoogle;
 }) {
   try {
-    // yield put(showLoading());
-    // const reqdata = qs.stringify(action.payload);
-    // console.log(reqdata);
+    
     const response: ApiResponse<LoginResponse> = yield call(request, {
       data: action.payload,
       url: "/google/auth",
       method: "POST",
     });
     const {data}=response;
-    // console.log(data);
     yield put(loginComplete(data))
     const userData:ApiResponse<UserContext> =yield call(callApi, {
       method: Method.GET,
