@@ -13,6 +13,7 @@ import TitleModal from "../modals/TitleModal";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { useUserContext } from "../../store/user/hooks";
+import Notification from "../layout/Notification";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -184,6 +185,8 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
         onClose={() => setOpen(undefined)}
         problem={problem}
       />
+      <Notification />
+
     </>
   );
 };

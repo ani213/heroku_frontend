@@ -59,10 +59,10 @@ const handleClose=()=>{
               <Grid container item xs={12} justifyContent="center">
                 <Grid item>
                   <Typography component="h1" variant="h5" gutterBottom align="center">
-                    Varification
+                    Verification
                   </Typography>
                  <Typography align="center">
-                   Varification code has been sent on your email <b>{email}</b>
+                   Verification code has been sent on your email <b>{email}</b>
                  </Typography>
                 </Grid>
               </Grid>
@@ -75,7 +75,7 @@ const handleClose=()=>{
                     required
                     fullWidth
                     id="varificationCode"
-                    label="Varification Code"
+                    label="Verification Code"
                     name="varificationCode"
                     autoComplete="varificationCode"
                     disaled={isLoading}

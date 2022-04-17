@@ -23,6 +23,7 @@ const Theme: React.FC<any> =(props)=>{
           },
           secondary: {
             main: deepPurple[700],
+            contrastText:'#fff',
           },
           type:selectedTheme,
         },

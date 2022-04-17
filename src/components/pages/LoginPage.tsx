@@ -22,7 +22,21 @@ import ForgetPasswordModal from "../modals/ForgetPasswordModal";
 import ErrorModal from "../modals/ErrorModal";
 import { GoogleLogin } from "react-google-login";
 import { useLogin } from "../../store/user/hooks";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+     background:`${theme.palette.primary.main} !important`,
+     color:'#fff !important',
+     borderRadius:'4px !important',
+     '& div':{
+      background:`${theme.palette.primary.main} !important`
+     }
+    },
+   
+  })
+);
 export interface LoginPageProps {
   readonly onSubmit: (data: LoginFormValues) => void;
 }
@@ -42,7 +56,7 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
   const responseFailureGoogle = (response: any) => {
     // console.log(response);
   };
-
+const classes=useStyles()
   return (
     <>
       <Formik<LoginFormValues>
@@ -114,10 +128,10 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
                   <Box sx={{ paddingBottom: 10,display:"flex", justifyContent:"center" }}>
                     <GoogleLogin
                       clientId={process.env.REACT_APP_CLIENT_ID||""}
-                      buttonText="Login With Google"
+                      // buttonText="Login With Google"
                       onSuccess={responseSuccessGoogle}
                       onFailure={responseFailureGoogle}
-                      // cookiePolicy={"single_host_origin"}
+                      className={classes.root}
                     />
                   </Box>
                   <Grid container>

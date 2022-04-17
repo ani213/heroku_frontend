@@ -13,6 +13,7 @@ declare interface UserContext{
     readonly dateOfBirth:Date;
     readonly role:string;
     readonly _id:string;
+    readonly picture?:string;
 }
 declare interface RegisterFormValues{
     readonly username:string;

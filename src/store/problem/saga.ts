@@ -3,7 +3,7 @@ import { call, takeLatest, put } from "redux-saga/effects";
 import { Method,  ApiResponse, callApi } from "../../services/api/Api";
 import { history } from "../../services/history";
 import RouteService from "../../services/route.services";
-import { hideLoading, showError, showLoading } from "../layout/action";
+import { addNotification, hideLoading, showError, showLoading } from "../layout/action";
 import { ADD_PROBLEM, getProblem, getProblemById, getProblemByIdComplete, GET_MY_PROBLEM, GET_PROBLEM, GET_PROBLEM_ID, setMyProblems, setProblems, UpdateProblemAction, UPDATE_PROBLEM_RUN } from "./action";
 
 export function* callGetProblem(action: {
@@ -56,12 +56,13 @@ export function* callGetProblem(action: {
   }) {
     try {
       yield put(showLoading());
-      const response:ApiResponse<{readonly message:string}> =yield call(callApi, {
+      const response:ApiResponse<{readonly title:string}> =yield call(callApi, {
         data:action.payload,
         method: Method.POST,
         url: "/problem",
       });
       const {data}=response;
+      yield put(addNotification(`${data.title} successfully created.`))
       yield put(getProblem())
       yield put(hideLoading());
       history.push(RouteService.myProblem.getPath())
@@ -83,6 +84,7 @@ export function* callGetProblem(action: {
         url: "/problem",
       });
       const {data}=response;
+      yield put(addNotification(data.message))
       yield put(getProblemById(action.payload.data._id||""))
        if(action.meta.onComplete){
         action.meta.onComplete()

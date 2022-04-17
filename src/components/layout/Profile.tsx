@@ -55,6 +55,7 @@ export interface ProfileProps {
   readonly onClose?: () => void;
   readonly name: string;
   readonly lastName?: string;
+  readonly picture?:string;
 }
 
 const colors:ReadonlyArray<{label:string,value:ThemeColor}>=[{label:"Green",value:'green'},
@@ -63,7 +64,7 @@ const colors:ReadonlyArray<{label:string,value:ThemeColor}>=[{label:"Green",valu
 ]
 
 const Profile: React.FC<ProfileProps> = (props) => {
-  const { open, onClose, name, lastName } = props;
+  const { open, onClose, name, lastName,picture } = props;
   const classes = useStyles();
   const [theme, setTheme] = useTheme();
   const [themeColor,setThemeColor]=useThemeColor();
@@ -103,13 +104,13 @@ const Profile: React.FC<ProfileProps> = (props) => {
           >
             <Grid container item xs={12} justifyContent="center">
               <Grid item>
-                <Avatar className={`${classes.avtar} ${getRandomInt()}`}>
+                {picture?<Avatar className={`${classes.avtar}`} src={picture}/>:<Avatar className={`${classes.avtar} ${getRandomInt()}`}>
                   <Typography variant="h2">{name[0].toUpperCase()}</Typography>
-                </Avatar>
+                </Avatar>}
               </Grid>
             </Grid>
             <Typography align="center" variant="h6">
-              {name} {lastName}
+              {name[0].toUpperCase()+name.substring(1)} {lastName}
             </Typography>
             <Grid item xs={12} justifyContent="center" container>
               <Grid item>

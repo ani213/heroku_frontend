@@ -29,6 +29,7 @@ import {
 import { useUserContext } from "../../store/user/hooks";
 import Profile from "../layout/Profile";
 import ErrorModal from "../modals/ErrorModal";
+import Notification from "../layout/Notification";
 
 const drawerWidth = 240;
 
@@ -182,7 +183,7 @@ const MainTemplate: React.FC<MainTemplateProps> = (props) => {
         <List>
           <ListItem button onClick={() => setProfile(true)}>
             <ListItemIcon>
-              <Avatar className={classes.avatar}>{user?.firstName[0]}</Avatar>
+              {user?.picture?<Avatar className={classes.avatar} src={user.picture}/>:<Avatar className={classes.avatar}>{user?.firstName[0]}</Avatar>}
             </ListItemIcon>
             <ListItemText primary="Profile" />
           </ListItem>
@@ -197,8 +198,10 @@ const MainTemplate: React.FC<MainTemplateProps> = (props) => {
         name={user?.firstName || ""}
         lastName={user?.lastName}
         onClose={()=>setProfile(false)}
+        picture={user?.picture}
       />
       <ErrorModal />
+      <Notification />
     </div>
   );
 };
