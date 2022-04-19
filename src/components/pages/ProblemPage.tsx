@@ -14,6 +14,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { useUserContext } from "../../store/user/hooks";
 import Notification from "../layout/Notification";
+import "react-quill/dist/quill.snow.css";
+
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -134,12 +136,14 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
                 </Grid>
                 <div className={classes.boderLine}></div>
                 <Typography>
+                  {/* <div className="ql-editor"> */}
                   <div
                     dangerouslySetInnerHTML={createMarkup(
                       problem?.question || ""
                     )}
                     className="ql-editor"
                   ></div>
+                  {/* </div> */}
                 </Typography>
               </Card>
             </Grid>
