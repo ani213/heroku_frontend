@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
       background: theme.palette.grey[100],
     },
     "& > .ql-container, & .ql-editor": {
-      height: 250,
+      minHeight: 250,
       zIndex: 0,
     },
     "&.disabled .editor .ql-container": {
