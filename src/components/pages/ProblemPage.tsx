@@ -88,6 +88,7 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
     history.go(-1);
   };
   const createMarkup = (data: string) => {
+  // console.log(data);
     return { __html: data };
   };
   return (
@@ -137,7 +138,7 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
                     dangerouslySetInnerHTML={createMarkup(
                       problem?.question || ""
                     )}
-                    className="editor"
+                    className="ql-editor"
                   ></div>
                 </Typography>
               </Card>
@@ -161,7 +162,7 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
                     dangerouslySetInnerHTML={createMarkup(
                       problem?.answer || ""
                     )}
-                    className="editor"
+                    className="ql-editor"
                   ></div>
                 </Typography>
               </Card>

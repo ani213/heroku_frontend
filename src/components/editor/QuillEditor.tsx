@@ -11,10 +11,10 @@ const useStyles = makeStyles((theme) => ({
   editor: {
     "& .ql-toolbar": {
       borderColor: theme.palette.primary.main,
-      background:theme.palette.grey[100],
+      background: theme.palette.grey[100],
     },
     "& > .ql-container, & .ql-editor": {
-      height: "auto",
+      height: 250,
       zIndex: 0,
     },
     "&.disabled .editor .ql-container": {
@@ -38,6 +38,7 @@ const QuillEditor: React.FC<QuillEditorProps> = (props) => {
         className={clsx(classes.editor)}
         value={data}
         onChange={onEditorChange}
+        placeholder={"Write something awesome..."}
       />
     </>
   );
