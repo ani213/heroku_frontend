@@ -15,15 +15,16 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { useUserContext } from "../../store/user/hooks";
 import Notification from "../layout/Notification";
 import "react-quill/dist/quill.snow.css";
-
+import Skeleton from "@material-ui/lab/Skeleton";
+import { useLoading } from "../../store/layout/hooks";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     row: {
       display: "flex",
       justifyContent: "space-between",
-      alignItems:"center",
-      width:"100%"
+      alignItems: "center",
+      width: "100%",
     },
     card: {
       paddingLeft: 15,
@@ -72,17 +73,21 @@ const useStyles = makeStyles((theme) =>
       flexGrow: 1,
       paddingTop: theme.spacing(7),
     },
+    spaceTop: {
+      padding: theme.spacing(2),
+    },
   })
 );
 
 export interface ProlemPageProps {
   readonly problem: Problem | undefined;
 }
-
+const loader = ["", "", "", "", "", "", "", ""];
 const ProlemPage: React.FC<ProlemPageProps> = (props) => {
   const { problem } = props;
+  const [isLoading] = useLoading();
   const classes = useStyles();
-  const [user]=useUserContext();
+  const [user] = useUserContext();
   const [open, setOpen] = React.useState<
     "title" | "question" | "answer" | undefined
   >(undefined);
@@ -90,26 +95,27 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
     history.go(-1);
   };
   const createMarkup = (data: string) => {
-  // console.log(data);
+    // console.log(data);
     return { __html: data };
   };
+
   return (
     <>
       <div className={classes.root}>
         <AppBar position="fixed">
           <Toolbar>
             <div className={classes.row}>
-              {/* <div> */}
+              {isLoading ? (
+                <Skeleton width="100%" />
+              ) : (
                 <Typography
-                  // color="secondary"
                   variant="h5"
-                  // align="center"
                   className={classes.text}
                   onClick={() => setOpen("title")}
                 >
                   {problem?.title}
                 </Typography>
-              {/* </div> */}
+              )}
               <div>
                 <IconButton color="inherit" onClick={handleCancel}>
                   <CloseIcon />
@@ -129,21 +135,37 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
                     <Typography variant="h5">Problem</Typography>
                   </Grid>
                   <Grid item>
-                    <IconButton onClick={() => setOpen("question")} disabled={problem?.user_id!==user?._id}>
+                    <IconButton
+                      onClick={() => setOpen("question")}
+                      disabled={problem?.user_id !== user?._id}
+                    >
                       <EditIcon />
                     </IconButton>
                   </Grid>
                 </Grid>
                 <div className={classes.boderLine}></div>
                 <Typography>
-                  {/* <div className="ql-editor"> */}
-                  <div
-                    dangerouslySetInnerHTML={createMarkup(
-                      problem?.question || ""
-                    )}
-                    className="ql-editor"
-                  ></div>
-                  {/* </div> */}
+                  {isLoading ? (
+                    <Grid
+                      container
+                      xs={12}
+                      justifyContent="center"
+                      className={classes.spaceTop}
+                    >
+                      {loader.map((ele, index) => (
+                        <Grid item key={index + "probLoad"} xs={12}>
+                          <Skeleton variant="text" width="100%" height={50} />
+                        </Grid>
+                      ))}
+                    </Grid>
+                  ) : (
+                    <div
+                      dangerouslySetInnerHTML={createMarkup(
+                        problem?.question || ""
+                      )}
+                      className="ql-editor"
+                    ></div>
+                  )}
                 </Typography>
               </Card>
             </Grid>
@@ -154,20 +176,37 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
                     <Typography variant="h5">Solution</Typography>
                   </Grid>
                   <Grid item>
-                    <IconButton onClick={() => setOpen("answer")} disabled={problem?.user_id!==user?._id}>
+                    <IconButton
+                      onClick={() => setOpen("answer")}
+                      disabled={problem?.user_id !== user?._id}
+                    >
                       <EditIcon />
                     </IconButton>
                   </Grid>
                 </Grid>
                 <div className={classes.boderLine}></div>
-
                 <Typography>
-                  <div
-                    dangerouslySetInnerHTML={createMarkup(
-                      problem?.answer || ""
-                    )}
-                    className="ql-editor"
-                  ></div>
+                  {isLoading ? (
+                    <Grid
+                      container
+                      xs={12}
+                      justifyContent="center"
+                      className={classes.spaceTop}
+                    >
+                      {loader.map((ele, index) => (
+                        <Grid item key={index + "soluLoad"} xs={12}>
+                          <Skeleton variant="text" width="100%" height={50} />
+                        </Grid>
+                      ))}
+                    </Grid>
+                  ) : (
+                    <div
+                      dangerouslySetInnerHTML={createMarkup(
+                        problem?.answer || ""
+                      )}
+                      className="ql-editor"
+                    ></div>
+                  )}
                 </Typography>
               </Card>
             </Grid>
@@ -191,7 +230,6 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
         problem={problem}
       />
       <Notification />
-
     </>
   );
 };
