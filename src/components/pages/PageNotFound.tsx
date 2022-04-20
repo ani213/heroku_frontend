@@ -1,12 +1,11 @@
 import { Grid, Typography } from "@material-ui/core";
 import * as React from "react";
-import gif from "../../assets/404.gif";
 const PageNotFound: React.FC<any> = (props) => {
   return (
     <>
       <Grid container justifyContent="center" xs={12}>
-        <Grid item xs={12}>
-          <img src={gif} alt="gif" />
+        <Grid item>
+          <img style={{height:"60vh"}} src='https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif' alt="gif" />
         </Grid>
       </Grid>
       <Grid container  xs={12} justifyContent="center">
