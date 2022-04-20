@@ -54,7 +54,7 @@ const QuestionModal: React.FC<QuestionModalProps> = (props) => {
             onClick={handleSubmit}
             variant="contained"
             color="primary"
-            disabled={!state}
+            disabled={!state||isLoading}
           >
             {isLoading ? <PreLoader /> : "Submit"}
            

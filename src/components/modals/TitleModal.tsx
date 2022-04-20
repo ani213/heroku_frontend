@@ -1,6 +1,8 @@
 import { Button, Grid, TextField } from "@material-ui/core";
 import * as React from "react";
+import { useLoading } from "../../store/layout/hooks";
 import { useProblem } from "../../store/problem/hooks";
+import PreLoader from "../Loaders/Preloader";
 import BaseModal, { BaseModalAction, BaseModalContent } from "./BaseModal";
 import ErrorModal from "./ErrorModal";
 
@@ -14,6 +16,7 @@ const TitleModal: React.FC<TitleModalProps> = (props) => {
   const [, , , updateProblem] = useProblem();
   const [state, setState] = React.useState<string>("");
   const { isOpen, onClose, problem } = props;
+  const [isLoading]=useLoading();
   const handleSubmit = () => {
     let res: Problem = { ...problem, title: state };
     updateProblem(res, onClose);
@@ -56,10 +59,10 @@ const TitleModal: React.FC<TitleModalProps> = (props) => {
           <Button
             variant="contained"
             color="primary"
-            disabled={!state}
+            disabled={!state||isLoading}
             onClick={handleSubmit}
           >
-            Submit
+           {isLoading? <PreLoader /> : "Submit"}
           </Button>
         </BaseModalAction>
       </BaseModal>

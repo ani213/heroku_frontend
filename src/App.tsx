@@ -6,7 +6,8 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import LoadingScreen from './components/Loaders/LoadingScreen';
 import Theme from './components/theme/Theme';
-import {CssBaseline} from '@material-ui/core'
+import {CssBaseline} from '@material-ui/core';
+import './components/editor/editor.css'
 const {store,persistor}=configureStore()
 
 const App: React.FC<any> = (props) => {
