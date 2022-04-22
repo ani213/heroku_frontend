@@ -21,7 +21,7 @@ const ForgetPasswordModal: React.FC<ForgetPasswordModalProps> = (props) => {
       <BaseModal
         isOpen={isOpen}
         title="Forget Password"
-        color="secondary"
+        color='secondary'
         align="center"
         maxWidth="md"
         style={{ minWidth: 500 }}

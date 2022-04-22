@@ -12,6 +12,20 @@ import indigo from '@material-ui/core/colors/indigo';
 import { createTheme, responsiveFontSizes,ThemeProvider} from '@material-ui/core/styles';
 import { useTheme, useThemeColor } from '../../store/theme/hooks';
 
+export const ThemeFonts = [
+  // 'Comfortaa',
+  '-apple-system',
+  'BlinkMacSystemFont',
+  '"Segoe UI"',
+  'Roboto',
+  '"Helvetica Neue"',
+  'Arial',
+  'sans-serif',
+  '"Apple Color Emoji"',
+  '"Segoe UI Emoji"',
+  '"Segoe UI Symbol"',
+];
+
 const Theme: React.FC<any> =(props)=>{
     const{children}=props;
     const [selectedTheme]=useTheme();
@@ -22,10 +36,15 @@ const Theme: React.FC<any> =(props)=>{
             main: green[700],
           },
           secondary: {
-            main: deepPurple[700],
-            contrastText:'#fff',
+            main: indigo[700],
+            contrastText: '#ffcc00',
           },
+          contrastThreshold: 4,
+          tonalOffset: 0.2,
           type:selectedTheme,
+        },
+        typography: {
+          fontFamily: ThemeFonts.join(','),
         },
       }));
       const blueTheme = responsiveFontSizes(createTheme({

@@ -20,6 +20,11 @@ const useStyles = makeStyles((theme) =>
       gridTemplateColumns:'95% 4%',
       alignItems:"center",
       width:"100%"
+    },
+    text:(props:BaseModalProps)=>{
+      return{
+          color:`${theme.palette.type==='dark'?'inherit':theme.palette.secondary.main}`
+      }
     }
   })
 );
@@ -31,10 +36,12 @@ export interface BaseModalProps {
   readonly style?: React.CSSProperties;
   readonly align?: "center" | "left" | "right";
   readonly textStyle?: React.CSSProperties;
-  readonly color?: "error" | "primary" | "secondary";
+  readonly color?: "error" | "primary" | "secondary"|'textSecondary'|'textPrimary'| 'inherit'|'initial';
   readonly maxWidth?: "lg" | "md" | "sm" | "xl" | "xs";
   readonly fullScreen?: boolean;
   readonly fullWidth?:boolean;
+  // readonly variant?: 'default' | 'primaryLight' | 'secondary' | 'warning' | 'error' | 'primary' | 'white';
+
 }
 
 const BaseModal: React.FC<BaseModalProps> = (props) => {
@@ -46,12 +53,12 @@ const BaseModal: React.FC<BaseModalProps> = (props) => {
     style,
     align,
     textStyle,
-    color,
+    // color,
     maxWidth,
     fullScreen,
-    fullWidth
+    fullWidth,
   } = props;
-  const classes = useStyles();
+  const classes = useStyles(props);
   return (
     <>
       <Dialog
@@ -71,7 +78,8 @@ const BaseModal: React.FC<BaseModalProps> = (props) => {
             <div className={classes.row}>
               <Typography
                 variant="h6"
-                color={color}
+                // color={color}
+                className={classes.text}
                 align={align}
                 style={textStyle}
               >
@@ -86,7 +94,8 @@ const BaseModal: React.FC<BaseModalProps> = (props) => {
           ) : (
             <Typography
               variant="h6"
-              color={color}
+              // color={color}
+              className={classes.text}
               align={align}
               style={textStyle}
             >
