@@ -33,6 +33,8 @@ const RouteService={
     addProblem: new RouteBuilder('/add-problem'),
     myProblem:new RouteBuilder('/problems'),
     problem:new RouteBuilder<{id:string}>('/problem/:id'),
+    problemTypes:new RouteBuilder('/category'),
+    categoryItem:new RouteBuilder<{id:string}>('/category/:id'),
     test:new RouteBuilder<{id:number; ani:number}>('/test/:id/:ani')
 }
 export default RouteService;

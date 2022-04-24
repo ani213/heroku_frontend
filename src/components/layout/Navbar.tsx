@@ -18,7 +18,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             <NavItem title="All Problems" icon={<ListAltIcon />} to={RouteService.dashboard.getPath()}/>
             <NavItem title="My Problems" icon={<ListIcon />} to={RouteService.myProblem.getPath()}/>
             <NavItem title="Add Problem" icon={<AddIcon />} to={RouteService.addProblem.getPath()}/>
-            <NavItem title="Categories" icon={<CategoryIcon />} to={RouteService.addProblem.getPath()}/>
+            <NavItem title="Categories" icon={<CategoryIcon />} to={RouteService.problemTypes.getPath()}/>
           </NavList>
         </>
     )

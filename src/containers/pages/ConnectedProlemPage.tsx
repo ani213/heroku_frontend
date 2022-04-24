@@ -6,8 +6,9 @@ import { useProblemById } from '../../store/problem/hooks';
 const ConnectedProblemPage = () => {
  const {id}=useParams();
  const [problem,getProblem]=useProblemById();
+
  React.useEffect(()=>{
-   getProblem(id||"")
+   getProblem(id||"");
  },[])
   return (
     <>

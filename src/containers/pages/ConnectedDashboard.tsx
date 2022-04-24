@@ -1,11 +1,14 @@
 import * as React from 'react'
 import Dashboard from "../../components/pages/Dashboard";
-import { useProblem } from "../../store/problem/hooks";
+import { useProblem, useProblemTypes } from "../../store/problem/hooks";
 
 const ConnectedDashboard = () => {
   const [problems,getProblems]=useProblem();
+ const [,getProblemTypes]=useProblemTypes();
+
   React.useEffect(()=>{
-    getProblems()
+    getProblems();
+    getProblemTypes();
   },[]);
   return (
     <>
