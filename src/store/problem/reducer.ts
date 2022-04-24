@@ -1,17 +1,19 @@
 import { Reducer } from "redux";
 import { LOGOUT, LogoutAction } from "../user/action";
-import { GET_PROBLEM_ID_COMPLETE, ProblemActions, SET_MY_PROBLEMS, SET_PROBLEMS } from "./action";
+import { GET_PROBLEM_ID_COMPLETE, ProblemActions, SET_MY_PROBLEMS, SET_PROBLEMS,GET_PROBLEM_TYPE_COMPLETE } from "./action";
 
 export interface ProblemState {
   readonly problems: ReadonlyArray<Problem>;
   readonly problem?:Problem,
   readonly myProblems: ReadonlyArray<Problem>;
+  readonly problemTypes:ReadonlyArray<ProblemType>
 
 }
 export const defaultState: ProblemState = {
   problems:[],
   problem:undefined,
-  myProblems:[]
+  myProblems:[],
+  problemTypes:[]
 };
 
 const reducer: Reducer<ProblemState, ProblemActions | LogoutAction> = (
@@ -34,6 +36,11 @@ const reducer: Reducer<ProblemState, ProblemActions | LogoutAction> = (
         ...state,
         myProblems:action.payload
       }  
+    case GET_PROBLEM_TYPE_COMPLETE:  
+     return{
+       ...state,
+       problemTypes:action.payload
+     }
     case LOGOUT:
       return defaultState;
     default:

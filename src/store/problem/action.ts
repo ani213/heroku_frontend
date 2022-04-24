@@ -61,6 +61,19 @@ export const updateProblemRun=(
   type:UPDATE_PROBLEM_RUN
 })
 
+export const GET_PROBLEM_TYPE='problem/GET_PROBLEM_TYPE';
+export const getProbleTypeRun=()=>({
+  type:GET_PROBLEM_TYPE
+})
+export const GET_PROBLEM_TYPE_COMPLETE='problem/GET_PROBLEM_TYPE_COMPLETE';
+export const getProblemTypeComplete=(data:ReadonlyArray<ProblemType>)=>({
+  type:GET_PROBLEM_TYPE_COMPLETE,
+  payload:data
+})
+
+export interface GetProblemTypeCompleteAction extends Action<typeof GET_PROBLEM_TYPE_COMPLETE>{
+  readonly payload:ReadonlyArray<ProblemType>
+}
 
 export interface SetProbleBYIdmAction extends Action<typeof GET_PROBLEM_ID_COMPLETE>{
     readonly payload:Problem
@@ -79,3 +92,4 @@ export type ProblemActions=
 | SetProbblemAction
 | SetProbleBYIdmAction
 | SetMyProblemAction
+| GetProblemTypeCompleteAction

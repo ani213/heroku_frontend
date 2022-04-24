@@ -3,8 +3,8 @@ import MainTemplate from "../template/MainTemplate";
 import TextField from "@material-ui/core/TextField";
 import SimpleTabs, { TabPanel } from "../tabs/Tab";
 import { useTab } from "../../hooks";
-import { Box, Button, Typography } from "@material-ui/core";
-import { useProblem } from "../../store/problem/hooks";
+import { Box, Button, MenuItem, Select, Typography } from "@material-ui/core";
+import { useProblem, useProblemTypes } from "../../store/problem/hooks";
 import PreLoader from "../Loaders/Preloader";
 import { useLoading } from "../../store/layout/hooks";
 import QuillEditor from "../editor/QuillEditor";
@@ -13,15 +13,21 @@ export interface AddProblemProps {}
 
 const AddProblem: React.FC<AddProblemProps> = (props) => {
   const [, , createProblem] = useProblem();
-  const [isLoading]=useLoading()
+  const [problemTypes] = useProblemTypes();
+
+  const [isLoading] = useLoading();
   const [state, setState] = React.useState<Problem>({
     title: "",
     question: "",
     answer: "",
+    type_id:"",
   });
   const handleSubmit = () => {
     createProblem(state);
   };
+  const handleChange=(e:any)=>{
+      setState({...state,type_id:e.target.value})
+  }
   const [tab, setTab] = useTab();
   return (
     <>
@@ -59,16 +65,30 @@ const AddProblem: React.FC<AddProblemProps> = (props) => {
               onEditorChange={(data) => setState({ ...state, answer: data })}
             />
           </TabPanel>
+          <TabPanel value={tab} index={3}>
+            <Select fullWidth 
+            value={state.type_id}
+            name="type_id"
+            onChange={handleChange}
+            variant="outlined" displayEmpty>
+              <MenuItem value="">Select Problem Types...</MenuItem>
+              {problemTypes.map((ele) => (
+                <MenuItem value={ele._id} key={ele._id}>
+                  {ele.title}
+                </MenuItem>
+              ))}
+            </Select>
+          </TabPanel>
         </SimpleTabs>
         <Box sx={{ marginTop: 10 }}>
           <Button
             fullWidth
             variant="contained"
             color="primary"
-            disabled={!state.title||isLoading}
+            disabled={!state.title||!state.type_id || isLoading}
             onClick={handleSubmit}
           >
-          {isLoading? <PreLoader />:"Submit"}
+            {isLoading ? <PreLoader /> : "Submit"}
           </Button>
         </Box>
       </MainTemplate>

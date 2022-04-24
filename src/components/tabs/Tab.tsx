@@ -74,6 +74,7 @@ const SimpleTabs:React.FC<SimpleTabProps>=(props)=> {
           <Tab label="Title" {...a11yProps(0)} />
           <Tab label="Problem" {...a11yProps(1)} />
           <Tab label="Solution" {...a11yProps(2)} />
+          <Tab label="Prolem Types" {...a11yProps(3)} />
         </Tabs>
       </AppBar>
       {children}

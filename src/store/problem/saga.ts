@@ -4,7 +4,7 @@ import { Method,  ApiResponse, callApi } from "../../services/api/Api";
 import { history } from "../../services/history";
 import RouteService from "../../services/route.services";
 import { addNotification, hideLoading, showError, showLoading } from "../layout/action";
-import { ADD_PROBLEM, getProblem, getProblemById, getProblemByIdComplete, GET_MY_PROBLEM, GET_PROBLEM, GET_PROBLEM_ID, setMyProblems, setProblems, UpdateProblemAction, UPDATE_PROBLEM_RUN } from "./action";
+import { ADD_PROBLEM, getProblem, getProblemById, getProblemByIdComplete, getProblemTypeComplete, GET_MY_PROBLEM, GET_PROBLEM, GET_PROBLEM_ID, GET_PROBLEM_TYPE, setMyProblems, setProblems, UpdateProblemAction, UPDATE_PROBLEM_RUN } from "./action";
 
 export function* callGetProblem(action: {
     readonly type: string;
@@ -122,6 +122,25 @@ export function* callGetProblem(action: {
     yield takeLatest(GET_MY_PROBLEM, callGetMyProblem);
   }
 
+  export function* callGetProblemTypes() {
+    try {
+      yield put(showLoading());
+      const response:ApiResponse<ReadonlyArray<ProblemType>> =yield call(callApi, {
+        method: Method.GET,
+        url: "/problem-types",
+      });
+      const {data}=response;
+      yield put(getProblemTypeComplete(data));
+      yield put(hideLoading());
+    } catch (err) {
+      yield put(hideLoading());
+      yield put(showError({ title: "Error", error: err }));
+    }
+  }
+  export function* watchGetProblemTypes() {
+    yield takeLatest(GET_PROBLEM_TYPE, callGetProblemTypes);
+  }
 
 
-  export default [watchGetProblem,watchCreateProblem,watchGetProblemById,watchUpdateProblem,watchGetMyProblem]
+
+  export default [watchGetProblem,watchCreateProblem,watchGetProblemById,watchUpdateProblem,watchGetMyProblem,watchGetProblemTypes]

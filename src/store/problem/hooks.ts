@@ -5,9 +5,10 @@ import {
   getMyProblem,
   getProblem,
   getProblemById,
+  getProbleTypeRun,
   updateProblemRun,
 } from "./action";
-import { getMyProblemSelector, getProblemByIdSelector, getProblemSelector } from "./selector";
+import { getMyProblemSelector, getMyProblemTypesSelector, getProblemByIdSelector, getProblemSelector } from "./selector";
 
 export function useProblem(): [
   ReadonlyArray<Problem>,
@@ -58,4 +59,17 @@ export function useMyProblem(): [
     [dispatch]
   );
   return [problems, getProblems];
+}
+
+export function useProblemTypes(): [
+  ReadonlyArray<ProblemType>,
+  () => void,
+] {
+  const dispatch = useDispatch();
+  const problemTypes = useSelector(getMyProblemTypesSelector);
+  const getProblemTypes = React.useCallback(
+    () => dispatch(getProbleTypeRun()),
+    [dispatch]
+  );
+  return [problemTypes, getProblemTypes];
 }

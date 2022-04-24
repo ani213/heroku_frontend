@@ -4,5 +4,11 @@ declare interface Problem{
     readonly title:string;
     readonly question?:string;
     readonly answer?:string;
+    readonly type_id?:string;
+}
 
+declare interface ProblemType{
+    readonly _id:string;
+    readonly title:string;
+    readonly value:string;
 }
