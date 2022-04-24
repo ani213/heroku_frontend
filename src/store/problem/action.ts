@@ -71,6 +71,24 @@ export const getProblemTypeComplete=(data:ReadonlyArray<ProblemType>)=>({
   payload:data
 })
 
+export const SELECT_PROBLEM_TYPE='problem/SELECT_PROBLEM_TYPE';
+export const selectProblemType=(data:ProblemType)=>({
+  type:SELECT_PROBLEM_TYPE,
+  payload:data
+})
+export const GET_CATEGORY_ITEMS_RUN='problem/GET_CATEGORY_ITEMS_RUN';
+export const getCategoryItemRun=(data:string)=>({
+    type:GET_CATEGORY_ITEMS_RUN,
+    payload:data,
+})
+
+export const GET_CATEGORY_ITEMS_COMPLETE='problem/GET_CATEGORY_ITEMS';
+export const getCategoryItemComplete=(data:ReadonlyArray<Problem>)=>({
+    type:GET_CATEGORY_ITEMS_COMPLETE,
+    payload:data,
+})
+
+
 export interface GetProblemTypeCompleteAction extends Action<typeof GET_PROBLEM_TYPE_COMPLETE>{
   readonly payload:ReadonlyArray<ProblemType>
 }
@@ -86,10 +104,18 @@ export interface SetProbblemAction extends Action<typeof SET_PROBLEMS>{
 export interface SetMyProblemAction extends Action<typeof SET_MY_PROBLEMS>{
   readonly payload:ReadonlyArray<Problem>
 }
+export interface SelectProblemTypeAction extends Action<typeof SELECT_PROBLEM_TYPE>{
+  readonly payload:ProblemType
+}
 
+export interface GetCategoryItemCompleteAction extends Action<typeof GET_CATEGORY_ITEMS_COMPLETE>{
+  readonly payload:ReadonlyArray<Problem>
+}
 
 export type ProblemActions=
 | SetProbblemAction
 | SetProbleBYIdmAction
 | SetMyProblemAction
 | GetProblemTypeCompleteAction
+| SelectProblemTypeAction
+| GetCategoryItemCompleteAction

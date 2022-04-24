@@ -2,13 +2,16 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addProblem,
+  getCategoryItemComplete,
+  getCategoryItemRun,
   getMyProblem,
   getProblem,
   getProblemById,
   getProbleTypeRun,
+  selectProblemType,
   updateProblemRun,
 } from "./action";
-import { getMyProblemSelector, getMyProblemTypesSelector, getProblemByIdSelector, getProblemSelector } from "./selector";
+import { getCategoryItemSelector, getMyProblemSelector, getMyProblemTypesSelector, getProblemByIdSelector, getProblemSelector, getSelectedProblemTypeSelector } from "./selector";
 
 export function useProblem(): [
   ReadonlyArray<Problem>,
@@ -73,3 +76,30 @@ export function useProblemTypes(): [
   );
   return [problemTypes, getProblemTypes];
 }
+
+export function useSelectProblemType(): [
+  ProblemType|undefined,
+  (data:ProblemType) => void,
+] {
+  const dispatch = useDispatch();
+  const problemType = useSelector(getSelectedProblemTypeSelector);
+  const selectedProblemType = React.useCallback(
+    (data:ProblemType) => dispatch(selectProblemType(data)),
+    [dispatch]
+  );
+  return [problemType, selectedProblemType];
+}
+
+export function useCategoryItem(): [
+  ReadonlyArray<Problem>,
+  (data:string) => void,
+] {
+  const dispatch = useDispatch();
+  const problems = useSelector(getCategoryItemSelector);
+  const getProblemsItem = React.useCallback(
+    (data:string) => dispatch(getCategoryItemRun(data)),
+    [dispatch]
+  );
+  return [problems, getProblemsItem];
+}
+
