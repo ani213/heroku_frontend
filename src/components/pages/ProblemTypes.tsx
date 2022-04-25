@@ -45,7 +45,7 @@ const ProblemTypes: React.FC<ProblemTypesProps> = (props) => {
               <Card className={classes.card} onClick={()=>handleClick(ele)}>
                 <Grid item container xs={12} justifyContent="center">
                   <Grid item>
-                    <Avatar className={classes.avatar}>{ele.title}</Avatar>
+                    {!!ele.picture?<Avatar src={ele.picture} className={classes.avatar}/> : <Avatar className={classes.avatar}>{ele.title}</Avatar>}
                   </Grid>
                 </Grid>
                 <div className={classes.spaceTop}>

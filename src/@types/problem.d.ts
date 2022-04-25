@@ -11,4 +11,5 @@ declare interface ProblemType{
     readonly _id:string;
     readonly title:string;
     readonly value:string;
+    readonly picture?:string;
 }
