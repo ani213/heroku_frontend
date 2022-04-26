@@ -86,7 +86,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                 </Grid>
               );
             })}
-            {
+            {problems.length === 0 &&
               isLoading &&
               dummy.map((ele, index) => (
                 <Grid item xs={12} key={index + "loading"}>
