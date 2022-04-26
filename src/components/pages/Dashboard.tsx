@@ -20,6 +20,11 @@ const useStyles = makeStyles((theme) =>
       paddingTop: 10,
       paddingBottom: 10,
       cursor: "pointer",
+      transition: "transform .2s",
+      "&:hover": {
+        transform: "scale(1.007)",
+        background:theme.palette.action.hover,
+      }
     },
     spaceTop: {
       marginTop: 20,

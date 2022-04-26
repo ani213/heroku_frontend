@@ -12,7 +12,12 @@ const useStyles = makeStyles((theme) =>
     card: {
       cursor: "pointer",
       paddingTop: 15,
-      paddingBottom:15
+      paddingBottom:15,
+      transition: "transform .2s",
+      "&:hover": {
+        transform: "scale(1.04)",
+        background:theme.palette.action.hover,
+      }
     },
     avatar: {
       width: 150,
