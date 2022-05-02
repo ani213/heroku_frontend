@@ -15,9 +15,9 @@ const useStyles = makeStyles((theme) =>
       paddingBottom:15,
       transition: "transform .2s",
       "&:hover": {
-        transform: "scale(1.04)",
+        transform: "scale(1.02)",
         background:theme.palette.action.hover,
-      }
+      },
     },
     avatar: {
       width: 150,
@@ -25,6 +25,17 @@ const useStyles = makeStyles((theme) =>
     },
     spaceTop:{
         marginTop:15
+    },
+    zoom:{
+      transition: "transform .4s",
+      "&:hover": {
+        transform: "scale(1.04)",
+      }
+    },
+    title:{
+      "&:hover": {
+        color:`${theme.palette.type==='light'?theme.palette.primary.main:theme.palette.text.primary}`
+      }
     }
   })
 );
@@ -47,14 +58,14 @@ const ProblemTypes: React.FC<ProblemTypesProps> = (props) => {
         <Grid container xs={12} spacing={2}>
           {problemTypes?.map((ele) => (
             <Grid item xs={12} md={4} key={ele._id}>
-              <Card className={classes.card} onClick={()=>handleClick(ele)}>
+              <Card className={`${classes.card} ${classes.title} ${classes.zoom}`} onClick={()=>handleClick(ele)}>
                 <Grid item container xs={12} justifyContent="center">
-                  <Grid item>
-                    {!!ele.picture?<Avatar src={ele.picture} className={classes.avatar}/> : <Avatar className={classes.avatar}>{ele.title}</Avatar>}
+                  <Grid item className={classes.zoom}>
+                    {!!ele.picture?<Avatar src={ele.picture} className={classes.avatar}/> : <Avatar className={`${classes.avatar} ${classes.title}`}>{ele.title}</Avatar>}
                   </Grid>
                 </Grid>
                 <div className={classes.spaceTop}>
-                    <Typography variant="h5" align="center">{ele.title}</Typography>
+                    <Typography variant="h5" align="center" className={classes.title}>{ele.title}</Typography>
                 </div>
               </Card>
             </Grid>
