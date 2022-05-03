@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) =>
       marginTop: 20,
     },
     contentContatiner: {
-      minHeight: "70vh",
+      minHeight: "60vh",
     },
     text: {
       color: theme.palette.text.disabled,
@@ -85,7 +85,8 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                 >
                   <Card className={classes.card}>
                     <Typography>
-                      <b>{index + 1}.</b> {ele.title}
+                      {/* <b>{index + 1}.</b>  */}
+                      {ele.title}
                     </Typography>
                   </Card>
                 </Grid>
