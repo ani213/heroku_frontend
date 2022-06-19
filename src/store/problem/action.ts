@@ -61,6 +61,26 @@ export const updateProblemRun=(
   type:UPDATE_PROBLEM_RUN
 })
 
+export const CREATE_CATEGORY_TYPES='problem/CREATE_CATEGORY_TYPES';
+export interface CreateCategoryTypeAction extends Action<typeof CREATE_CATEGORY_TYPES>,
+OnCompleteAction{
+  readonly payload:{
+    readonly data:CreateCategoryPyload;
+  }
+}
+export const createCaegoryRun=(
+  data:CreateCategoryPyload,
+  onComplete?:()=>void
+):CreateCategoryTypeAction=>({
+  meta:{
+    onComplete
+  },
+  payload:{
+    data
+  },
+  type:CREATE_CATEGORY_TYPES
+})
+
 export const GET_PROBLEM_TYPE='problem/GET_PROBLEM_TYPE';
 export const getProbleTypeRun=()=>({
   type:GET_PROBLEM_TYPE

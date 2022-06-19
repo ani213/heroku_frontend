@@ -38,8 +38,9 @@ const RouteService={
     categoryItem:new RouteBuilder<{id:string}>('/category/:id'),
     test:new RouteBuilder<{id:number; ani:number}>('/test/:id/:ani'),
     superAdmin:{
-        dashboard:new RouteBuilder(`${Routes.SUPER_ADMIN}/dashboard/user`),
-        users:new RouteBuilder(`${Routes.SUPER_ADMIN}/dashboard/user`)
+        dashboard:new RouteBuilder(`${Routes.SUPER_ADMIN}/user`),
+        users:new RouteBuilder(`${Routes.SUPER_ADMIN}/user`),
+        category:new RouteBuilder(`${Routes.SUPER_ADMIN}/category`),
     }
 }
 export default RouteService;

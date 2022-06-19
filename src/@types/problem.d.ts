@@ -13,3 +13,8 @@ declare interface ProblemType{
     readonly value:string;
     readonly picture?:string;
 }
+declare interface CreateCategoryPyload{
+    readonly title?:string;
+    readonly value?:string;
+    readonly file?:File;
+}

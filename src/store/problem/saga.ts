@@ -3,8 +3,32 @@ import { call, takeLatest, put } from "redux-saga/effects";
 import { Method, ApiResponse, callApi } from "../../services/api/Api";
 import { history } from "../../services/history";
 import RouteService from "../../services/route.services";
-import { addNotification, hideLoading, showError, showLoading } from "../layout/action";
-import { ADD_PROBLEM, getCategoryItemComplete, getProblem, getProblemById, getProblemByIdComplete, getProblemTypeComplete, GET_CATEGORY_ITEMS_RUN, GET_MY_PROBLEM, GET_PROBLEM, GET_PROBLEM_ID, GET_PROBLEM_TYPE, setMyProblems, setProblems, UpdateProblemAction, UPDATE_PROBLEM_RUN } from "./action";
+import {
+  addNotification,
+  hideLoading,
+  showError,
+  showLoading,
+} from "../layout/action";
+import {
+  ADD_PROBLEM,
+  CreateCategoryTypeAction,
+  CREATE_CATEGORY_TYPES,
+  getCategoryItemComplete,
+  getProblem,
+  getProblemById,
+  getProblemByIdComplete,
+  getProblemTypeComplete,
+  getProbleTypeRun,
+  GET_CATEGORY_ITEMS_RUN,
+  GET_MY_PROBLEM,
+  GET_PROBLEM,
+  GET_PROBLEM_ID,
+  GET_PROBLEM_TYPE,
+  setMyProblems,
+  setProblems,
+  UpdateProblemAction,
+  UPDATE_PROBLEM_RUN,
+} from "./action";
 
 export function* callGetProblem(action: {
   readonly type: string;
@@ -56,16 +80,19 @@ export function* callCreateProblem(action: {
 }) {
   try {
     yield put(showLoading());
-    const response: ApiResponse<{ readonly title: string }> = yield call(callApi, {
-      data: action.payload,
-      method: Method.POST,
-      url: "/problem",
-    });
+    const response: ApiResponse<{ readonly title: string }> = yield call(
+      callApi,
+      {
+        data: action.payload,
+        method: Method.POST,
+        url: "/problem",
+      }
+    );
     const { data } = response;
-    yield put(addNotification(`${data.title} successfully created.`))
-    yield put(getProblem())
+    yield put(addNotification(`${data.title} successfully created.`));
+    yield put(getProblem());
     yield put(hideLoading());
-    history.push(RouteService.myProblem.getPath())
+    history.push(RouteService.myProblem.getPath());
   } catch (err) {
     yield put(hideLoading());
     yield put(showError({ title: "Error", error: err }));
@@ -78,16 +105,19 @@ export function* watchCreateProblem() {
 export function* callUpdateProblem(action: UpdateProblemAction) {
   try {
     yield put(showLoading());
-    const response: ApiResponse<{ readonly message: string }> = yield call(callApi, {
-      data: action.payload.data,
-      method: Method.PUT,
-      url: "/problem",
-    });
+    const response: ApiResponse<{ readonly message: string }> = yield call(
+      callApi,
+      {
+        data: action.payload.data,
+        method: Method.PUT,
+        url: "/problem",
+      }
+    );
     const { data } = response;
-    yield put(addNotification(data.message))
-    yield put(getProblemById(action.payload.data._id || ""))
+    yield put(addNotification(data.message));
+    yield put(getProblemById(action.payload.data._id || ""));
     if (action.meta.onComplete) {
-      action.meta.onComplete()
+      action.meta.onComplete();
     }
     yield put(hideLoading());
   } catch (err) {
@@ -98,7 +128,6 @@ export function* callUpdateProblem(action: UpdateProblemAction) {
 export function* watchUpdateProblem() {
   yield takeLatest(UPDATE_PROBLEM_RUN, callUpdateProblem);
 }
-
 
 export function* callGetMyProblem(action: {
   readonly type: string;
@@ -125,10 +154,13 @@ export function* watchGetMyProblem() {
 export function* callGetProblemTypes() {
   try {
     yield put(showLoading());
-    const response: ApiResponse<ReadonlyArray<ProblemType>> = yield call(callApi, {
-      method: Method.GET,
-      url: "/problem-types",
-    });
+    const response: ApiResponse<ReadonlyArray<ProblemType>> = yield call(
+      callApi,
+      {
+        method: Method.GET,
+        url: "/problem-types",
+      }
+    );
     const { data } = response;
     yield put(getProblemTypeComplete(data));
     yield put(hideLoading());
@@ -163,7 +195,40 @@ export function* watchGetCategoryItemId() {
   yield takeLatest(GET_CATEGORY_ITEMS_RUN, callGetCategoryItemId);
 }
 
+export function* callCreateCategory(action: CreateCategoryTypeAction) {
+  try {
+    yield put(showLoading());
+    const response: ApiResponse<{ readonly title: string }> = yield call(
+      callApi,
+      {
+        data: action.payload.data,
+        method: Method.POST,
+        url: "/problem-type",
+      }
+    );
+    const { data } = response;
+    yield put(addNotification(data.title));
+    yield put(getProbleTypeRun());
+    if (action.meta.onComplete) {
+      action.meta.onComplete();
+    }
+    yield put(hideLoading());
+  } catch (err) {
+    yield put(hideLoading());
+    yield put(showError({ title: "Error", error: err }));
+  }
+}
+export function* watchCreateCategory() {
+  yield takeLatest(CREATE_CATEGORY_TYPES, callCreateCategory);
+}
 
-
-
-export default [watchGetProblem, watchCreateProblem, watchGetProblemById, watchUpdateProblem, watchGetMyProblem, watchGetProblemTypes, watchGetCategoryItemId]
+export default [
+  watchGetProblem,
+  watchCreateProblem,
+  watchGetProblemById,
+  watchUpdateProblem,
+  watchGetMyProblem,
+  watchGetProblemTypes,
+  watchGetCategoryItemId,
+  watchCreateCategory
+];

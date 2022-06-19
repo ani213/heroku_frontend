@@ -20,6 +20,7 @@ const ConnectedMyProblem=React.lazy(()=>import('../containers/pages/ConnectedMyP
 const ConnectedProblemTypes=React.lazy(()=>import('../containers/pages/ConnectedProblemTypes'))
 const ConnectedCategoryItemPage=React.lazy(()=>import('../containers/pages/ConnectedCategoryItemPage'))
 const ConnectedSuperAdminDashboard=React.lazy(()=>import('../containers/pages/superadmin/ConnectedDashboard'));
+const ConnectedSuperAdminCategory=React.lazy(()=>import('../containers/pages/superadmin/ConnectedCategory'));
 
 
 interface RouterProps  {
@@ -48,6 +49,7 @@ interface RouterProps  {
               </Route>
               <Route element={<ProtectedWithRole roles={[roles.superAdmin]} unauthorizedRedirect='/login'/>}>
                 <Route path={RouteService.superAdmin.dashboard.getPath()} element={<ConnectedSuperAdminDashboard />}/>
+                <Route path={RouteService.superAdmin.category.getPath()} element={<ConnectedSuperAdminCategory />}/>
                  
               </Route>
             </Routes>

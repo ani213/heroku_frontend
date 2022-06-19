@@ -1,7 +1,7 @@
 import * as React from "react";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import SuperAdminTemplate from "../../template/SuperAdminTemplate";
-import UserCard from "../../cards/userCard";
+import UserCard from "../../cards/UserCard";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
