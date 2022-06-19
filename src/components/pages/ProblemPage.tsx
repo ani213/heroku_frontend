@@ -17,6 +17,7 @@ import Notification from "../layout/Notification";
 import "react-quill/dist/quill.snow.css";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { useLoading } from "../../store/layout/hooks";
+import FullScreenModal from "../modals/FullScreenModal";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -89,13 +90,18 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
   const classes = useStyles();
   const [user] = useUserContext();
   const [open, setOpen] = React.useState<
-    "title" | "question" | "answer" | undefined
+    "title" | "question" | "answer" | "fullscreen" | undefined
   >(undefined);
+
+  const [selected, setSelected] = React.useState<{
+    readonly title: string;
+    readonly data: string;
+  }>();
+
   const handleCancel = () => {
     history.go(-1);
   };
   const createMarkup = (data: string) => {
-    // console.log(data);
     return { __html: data };
   };
 
@@ -160,6 +166,13 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
                     </Grid>
                   ) : (
                     <div
+                      onClick={() => {
+                        setOpen("fullscreen");
+                        setSelected({
+                          title: problem?.title || "",
+                          data: problem?.question || "",
+                        });
+                      }}
                       dangerouslySetInnerHTML={createMarkup(
                         problem?.question || ""
                       )}
@@ -201,6 +214,13 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
                     </Grid>
                   ) : (
                     <div
+                      onClick={() => {
+                        setOpen("fullscreen");
+                        setSelected({
+                          title: problem?.title || "",
+                          data: problem?.answer || "",
+                        });
+                      }}
                       dangerouslySetInnerHTML={createMarkup(
                         problem?.answer || ""
                       )}
@@ -228,6 +248,12 @@ const ProlemPage: React.FC<ProlemPageProps> = (props) => {
         isOpen={open === "title"}
         onClose={() => setOpen(undefined)}
         problem={problem}
+      />
+      <FullScreenModal
+        isOpen={open === "fullscreen"}
+        onClose={() => setOpen(undefined)}
+        title={selected?.title || ""}
+        data={selected?.data || ""}
       />
       <Notification />
     </>
