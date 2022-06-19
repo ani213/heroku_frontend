@@ -3,9 +3,11 @@ import * as React from 'react';
 import { useSelector } from 'react-redux';
 import {Route,Routes, unstable_HistoryRouter as ReactRouter, Navigate } from 'react-router-dom';
 import PageNotFound from '../components/pages/PageNotFound';
+import { roles } from '../config/roleConfig';
 import RouteService from '../services/route.services';
 import { isVarificationYNSelector } from '../store/user/selector';
 import { ProtectedRoute } from './ProtectedRoute';
+import { ProtectedWithRole } from './ProtectedWithRole';
 
 const ConnectedLoginPage=React.lazy(()=>import("../containers/pages/ConnectedLoginPage"));
 const ConnectedRegisterPage=React.lazy(()=>import('../containers/pages/ConnectedRegisterPage'))
@@ -17,6 +19,7 @@ const ConnectedProblem=React.lazy(()=>import('../containers/pages/ConnectedProle
 const ConnectedMyProblem=React.lazy(()=>import('../containers/pages/ConnectedMyProblems'))
 const ConnectedProblemTypes=React.lazy(()=>import('../containers/pages/ConnectedProblemTypes'))
 const ConnectedCategoryItemPage=React.lazy(()=>import('../containers/pages/ConnectedCategoryItemPage'))
+const ConnectedSuperAdminDashboard=React.lazy(()=>import('../containers/pages/superadmin/ConnectedDashboard'));
 
 
 interface RouterProps  {
@@ -42,9 +45,11 @@ interface RouterProps  {
                  <Route path={RouteService.myProblem.getPath()} element={<ConnectedMyProblem />}/>
                  <Route path={RouteService.problemTypes.getPath()} element={<ConnectedProblemTypes />}/>
                  <Route path={RouteService.categoryItem.getPath()} element={<ConnectedCategoryItemPage />}/>
-
               </Route>
-              
+              <Route element={<ProtectedWithRole roles={[roles.superAdmin]} unauthorizedRedirect='/login'/>}>
+                <Route path={RouteService.superAdmin.dashboard.getPath()} element={<ConnectedSuperAdminDashboard />}/>
+                 
+              </Route>
             </Routes>
          </ReactRouter>
         </>

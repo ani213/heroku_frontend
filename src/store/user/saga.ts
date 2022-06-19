@@ -20,7 +20,7 @@ import { Method, request, ApiResponse, callApi } from "../../services/api/Api";
 import { hideLoading, showError, showLoading } from "../layout/action";
 import { history } from "../../services/history";
 import RouteService from "../../services/route.services";
-
+import { roles } from "../../config/roleConfig";
 export function* callLogin(action: {
   readonly type: string;
   readonly payload: LoginFormValues;
@@ -41,7 +41,12 @@ export function* callLogin(action: {
     });
     yield put(setUserContext(userData.data));
     yield put(hideLoading());
-    history.push(RouteService.dashboard.getPath())
+
+    if(roles.superAdmin===userData.data.role){
+      history.push(RouteService.superAdmin.dashboard.getPath())
+    }if(roles.user===userData.data.role){
+      history.push(RouteService.dashboard.getPath())
+    }
   } catch (err) {
     yield put(hideLoading());
     yield put(showError({ title: "Login Error", error: err }));

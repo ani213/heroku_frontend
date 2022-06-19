@@ -22,7 +22,8 @@ export class RouteBuilder<T extends object>{
 
 export enum Routes{
     LOGIN='/login',
-    DASHBOARD='/dashboard'
+    DASHBOARD='/dashboard',
+    SUPER_ADMIN='/super-admin'
 }
 const RouteService={
     login: new RouteBuilder('/login'),
@@ -35,6 +36,10 @@ const RouteService={
     problem:new RouteBuilder<{id:string}>('/problem/:id'),
     problemTypes:new RouteBuilder('/category'),
     categoryItem:new RouteBuilder<{id:string}>('/category/:id'),
-    test:new RouteBuilder<{id:number; ani:number}>('/test/:id/:ani')
+    test:new RouteBuilder<{id:number; ani:number}>('/test/:id/:ani'),
+    superAdmin:{
+        dashboard:new RouteBuilder(`${Routes.SUPER_ADMIN}/dashboard/user`),
+        users:new RouteBuilder(`${Routes.SUPER_ADMIN}/dashboard/user`)
+    }
 }
 export default RouteService;
