@@ -42,12 +42,12 @@ export function useSortBy(): [SortBY, (data:SortBY) => void] {
     return [sortBy, sortAction];
 }
 
-export function useSearchInput(): [string, (data:string) => void] {
+export function useSearchInput(): [Search, (data:Search) => void] {
     const search = useSelector(searchInputSelector);
     const dispatch = useDispatch();
     const searchAction = React.useCallback(
-        (data:string) => dispatch(searchInput(data)),
+        (data:Search) => dispatch(searchInput(data)),
         [dispatch]
     );
-    return [search||"", searchAction];
+    return [search, searchAction];
 }

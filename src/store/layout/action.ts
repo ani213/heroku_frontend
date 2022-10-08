@@ -38,7 +38,7 @@ export const sortByAction = (data: SortBY) => ({
   payload: data,
 });
 export const SEARCH_INPUT='layout/SEARCH_INPUT';
-export const searchInput=(data:string)=>({
+export const searchInput=(data:Search)=>({
     type:SEARCH_INPUT,
     payload:data
 })
@@ -53,7 +53,7 @@ export interface SortBYAction extends Action<typeof SORT_BY> {
   readonly payload: SortBY;
 }
 export interface SearchInputAction extends Action<typeof SEARCH_INPUT> {
-  readonly payload: string;
+  readonly payload: Search;
 }
 
 export type LayoutActions =

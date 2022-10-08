@@ -10,13 +10,13 @@ import {
 import { SearchOutlined } from "@material-ui/icons";
 import * as React from "react";
 import { useSearchInput, useSortBy } from "../../store/layout/hooks";
-import { byList, sortList } from "../constant/sort";
+import { byList, searchList, sortList } from "../constant/sort";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      paddingRight: 69,
+      // paddingRight: 69,
     },
     relative: {
       position: "relative",
@@ -38,15 +38,15 @@ const useStyles = makeStyles((theme) =>
 
 export interface SortProps {
   readonly onSort?: (data: SortBY) => void;
-  readonly onSearch?:(data:Search)=>void;
-  readonly onChange?:(data:string)=>void;
+  readonly onSearch?: (data: Search) => void;
+  readonly onChange?: (data: string) => void;
 }
 
 const Sort: React.FC<SortProps> = (props) => {
   const classes = useStyles();
-  const { onSort,onSearch,onChange } = props;
+  const { onSort, onSearch, onChange } = props;
   const [sortBy, sortAction] = useSortBy();
-  const [state,setState]=useSearchInput();
+  const [state, setState] = useSearchInput();
   const handleSort = (e: any) => {
     sortAction({ ...sortBy, sort: e.target.value });
     if (onSort) {
@@ -59,18 +59,25 @@ const Sort: React.FC<SortProps> = (props) => {
       onSort(sortBy);
     }
   };
-  const handleSubmit=(e:any)=>{
-      e.preventDefault();
-      if(onSearch){
-        onSearch({search:state});
-      }
-  }
-  const handleChange=(e:any)=>{
-    setState(e.target.value);
-    if(onChange){
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    if (onSearch) {
+      onSearch({...state});
+    }
+  };
+  const handleChange = (e: any) => {
+    setState({...state,search:e.target.value});
+    if (onChange) {
       onChange(e.target.value);
     }
+  };
+  const handleSearchBy=(e:any)=>{
+      setState({...state,title:e.target.value});
+      if (onSearch) {
+        onSearch({...state,title:e.target.value});
+      }
   }
+  console.log(state);
   return (
     <>
       <Grid
@@ -78,8 +85,9 @@ const Sort: React.FC<SortProps> = (props) => {
         xs={12}
         justifyContent="space-between"
         className={classes.root}
+        md={12}
       >
-        <Grid container item xs={12} md={7} spacing={1} alignItems="center">
+        <Grid container item xs={12} md={6} spacing={1} alignItems="center">
           <Grid item xs={12} md={5}>
             <FormControl variant="outlined" fullWidth color="primary">
               <InputLabel
@@ -124,23 +132,49 @@ const Sort: React.FC<SortProps> = (props) => {
             </FormControl>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={3}>
-          <FormControl
-            variant="outlined"
-            fullWidth
-            className={classes.relative}
-          >
-            <TextField
+        <Grid container item xs={12} md={5}>
+          <Grid item md={4}>
+            <FormControl variant="outlined" fullWidth color="primary">
+              <InputLabel
+                id="demo-simple-select-outlined-label"
+                color="primary"
+              >
+                Search By
+              </InputLabel>
+              <Select
+                variant="outlined"
+                label="Search By"
+                fullWidth
+                value={state?.title}
+                onChange={handleSearchBy}
+                color="primary"
+              >
+                {searchList.map((ele) => (
+                  <MenuItem key={ele.label} value={ele.value}>
+                    {ele.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item md={6}>
+            <FormControl
               variant="outlined"
-              label="Search"
-              className={classes.input_search}
-              value={state}
-              onChange={handleChange}
-            />
-            <IconButton className={classes.search} onClick={handleSubmit}>
-              <SearchOutlined color="primary" />
-            </IconButton>
-          </FormControl>
+              fullWidth
+              className={classes.relative}
+            >
+              <TextField
+                variant="outlined"
+                label="Search"
+                className={classes.input_search}
+                value={state.search}
+                onChange={handleChange}
+              />
+              <IconButton className={classes.search} onClick={handleSubmit}>
+                <SearchOutlined color="primary" />
+              </IconButton>
+            </FormControl>
+          </Grid>
         </Grid>
       </Grid>
     </>

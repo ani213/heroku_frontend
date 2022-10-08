@@ -125,7 +125,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   return (
     <>
       <MainTemplate>
-        <Typography variant="h5" align="center">
+        <Typography variant="h5" align="center" gutterBottom>
           {title} ( {problems.length} )
         </Typography>
         <Sort onSort={handleSorting} onSearch={handleSearch} onChange={handleSearchChange}/>

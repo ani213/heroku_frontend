@@ -18,7 +18,7 @@ export interface LayoutState {
   readonly notification?:string|undefined;
   readonly isNavbarOpen:boolean;
   readonly sortBy:SortBY;
-  readonly search?:string;
+  readonly search:Search;
 }
 export const defaultState: LayoutState = {
   error: undefined,
@@ -27,7 +27,7 @@ export const defaultState: LayoutState = {
   notification:undefined,
   isNavbarOpen:false,
   sortBy:{sort:"createdAt",by:'desc'},
-  search:""
+  search:{title:'all'}
 };
 
 const reducer: Reducer<LayoutState, LayoutActions | LogoutAction> = (

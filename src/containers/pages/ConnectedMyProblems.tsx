@@ -13,7 +13,7 @@ const ConnectedMyProblems = () => {
     if(!search){
       getProblems();
     }else{
-      onSearch({search:search})
+      onSearch({...search,id:user&&user._id})
     }
   }, []);
   const handleSearch=(data:Search)=>{

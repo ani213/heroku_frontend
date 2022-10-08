@@ -16,7 +16,7 @@ const ConnectedDashboard = () => {
     if(!search){
       getProblems();
     }else{
-      onSearch({search:search})
+      onSearch(search)
     }
     getProblemTypes();
   }, []);
