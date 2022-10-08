@@ -1,7 +1,7 @@
 import { Grid, IconButton, Tooltip, Typography } from "@material-ui/core";
 import * as React from "react";
 import MainTemplate from "../template/MainTemplate";
-import { makeStyles, createStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import { useNavigate } from "react-router-dom";
 import RouteService from "../../services/route.services";
@@ -82,14 +82,17 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
     return problems.slice((page - 1) * 10, page * 10);
   }, [page, problems]);
 
-const ToolTipText=(createdAt:string,updateAt:string)=>{
+const ToolTipText=(createdAt:string,updateAt:string,firstName:string,lastName?:string)=>{
    return (
      <>
        <Typography className={classes.createText}>
-         Created At: {moment(createdAt).format("DD/MM/YYYY HH:mm A")}
+         Created At : {moment(createdAt).format("DD/MM/YYYY HH:mm A")}
        </Typography>
        <Typography className={classes.createText}>
-         Updated At: {moment(updateAt).format("DD/MM/YYYY HH:mm A")}
+         Updated At : {moment(updateAt).format("DD/MM/YYYY HH:mm A")}
+       </Typography>
+       <Typography className={classes.createText}>
+         Created By : <b>{firstName} {lastName}</b>
        </Typography>
      </>
    );
@@ -104,7 +107,8 @@ const ToolTipText=(createdAt:string,updateAt:string)=>{
         </Typography>
         <div className={classes.contentContatiner}>
           <Grid container xs={12} spacing={1}>
-            {!isLoading && selectedProblems.map((ele, index) => {
+            {!isLoading && selectedProblems.map((ele:Problem, index) => {
+              const {user_id}=ele;
               return (
                 <Grid
                   item
@@ -118,7 +122,7 @@ const ToolTipText=(createdAt:string,updateAt:string)=>{
                         {ele.title}{" "}
                       </div>
                       <div>
-                          <Tooltip title={ToolTipText(ele.createdAt,ele.updatedAt)} arrow placement="left">
+                          <Tooltip title={ToolTipText(ele.createdAt,ele.updatedAt,user_id && user_id.firstName,user_id?.lastName)} arrow placement="left">
                           <IconButton>
                             <InfoOutlinedIcon color="primary"/>
                           </IconButton>
