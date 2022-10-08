@@ -26,7 +26,7 @@ export const defaultState: LayoutState = {
   isLoading: false,
   notification:undefined,
   isNavbarOpen:false,
-  sortBy:{sort:"createdAt",by:'desc'},
+  sortBy:{sort:"createdAt",by:-1},
   search:{type:'all'}
 };
 

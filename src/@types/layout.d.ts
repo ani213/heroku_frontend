@@ -13,7 +13,7 @@ declare interface SortBY{
     readonly sort:string;
     readonly by:BY
 }
-declare type BY='asc'|'desc';
+declare type BY=1|-1;
 declare interface BYType{
     readonly label:string;
     readonly value:BY;

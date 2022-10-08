@@ -5,7 +5,7 @@ export const sortList=[
 {label:"Problem",value:'question'},
 {label:"Solution",value:"answer"}
 ]
-export const byList:ReadonlyArray<BYType>=[{label:"ASC",value:'asc'},{label:"DESC",value:'desc'}];
+export const byList:ReadonlyArray<BYType>=[{label:"ASC",value:1},{label:"DESC",value:-1}];
 export const searchList:ReadonlyArray<SerarchBy>=[{label:"All",value:'all'},
 {label:"Title",value:"title"},{label:"Problem",value:"question"},{label:'Solution',value:'answer'}
 ]
