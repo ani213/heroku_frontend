@@ -10,5 +10,6 @@ export const isLoadingSelector=createSelector(getLayoutState,(state):boolean=>_.
 export const notificationSelector=createSelector(getLayoutState,(state)=>_.get(state,"notification"));
 export const isNavbarSelector=createSelector(getLayoutState,(state)=>_.get(state,"isNavbarOpen"));
 export const sortBySelector=createSelector(getLayoutState,(state)=>_.get(state,"sortBy"));
+export const searchInputSelector=createSelector(getLayoutState,(state)=>_.get(state,"search"));
 
 

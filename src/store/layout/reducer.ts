@@ -6,6 +6,7 @@ import {
   HIDE_LOADER,
   LayoutActions,
   NAVBAR_TOGGLE,
+  SEARCH_INPUT,
   SET_ERROR,
   SHOW_LOADER,
   SORT_BY,
@@ -16,7 +17,8 @@ export interface LayoutState {
   readonly isLoading: boolean;
   readonly notification?:string|undefined;
   readonly isNavbarOpen:boolean;
-  sortBy:SortBY
+  readonly sortBy:SortBY;
+  readonly search?:string;
 }
 export const defaultState: LayoutState = {
   error: undefined,
@@ -24,7 +26,8 @@ export const defaultState: LayoutState = {
   isLoading: false,
   notification:undefined,
   isNavbarOpen:false,
-  sortBy:{sort:"createdAt",by:'desc'}
+  sortBy:{sort:"createdAt",by:'desc'},
+  search:""
 };
 
 const reducer: Reducer<LayoutState, LayoutActions | LogoutAction> = (
@@ -68,7 +71,12 @@ const reducer: Reducer<LayoutState, LayoutActions | LogoutAction> = (
       return{
         ...state,
         sortBy:action.payload
-      }     
+      } 
+    case SEARCH_INPUT:
+      return{
+        ...state,
+        search:action.payload
+      }      
     case LOGOUT:
       return defaultState;
     default:

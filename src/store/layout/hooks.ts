@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNotification, hideError, navbarTogle, showError, sortByAction } from './action';
-import {  errorModalYNSelector, getErrorSelector, isLoadingSelector, isNavbarSelector, notificationSelector, sortBySelector } from './selector';
+import { addNotification, hideError, navbarTogle, searchInput, showError, sortByAction } from './action';
+import {  errorModalYNSelector, getErrorSelector, isLoadingSelector, isNavbarSelector, notificationSelector, searchInputSelector, sortBySelector } from './selector';
 
 export function useError():[{readonly error:ERROR|undefined;readonly isOpen:boolean},(data:ERROR)=>void,()=>void]{
     const error=useSelector(getErrorSelector);
@@ -40,4 +40,14 @@ export function useSortBy(): [SortBY, (data:SortBY) => void] {
         [dispatch]
     );
     return [sortBy, sortAction];
+}
+
+export function useSearchInput(): [string, (data:string) => void] {
+    const search = useSelector(searchInputSelector);
+    const dispatch = useDispatch();
+    const searchAction = React.useCallback(
+        (data:string) => dispatch(searchInput(data)),
+        [dispatch]
+    );
+    return [search||"", searchAction];
 }

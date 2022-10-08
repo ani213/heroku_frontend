@@ -7,10 +7,18 @@ import {
   getProblem,
   getProblemById,
   getProbleTypeRun,
+  searchProblem,
   selectProblemType,
   updateProblemRun,
 } from "./action";
-import { getCategoryItemSelector, getMyProblemSelector, getMyProblemTypesSelector, getProblemByIdSelector, getProblemSelector, getSelectedProblemTypeSelector } from "./selector";
+import {
+  getCategoryItemSelector,
+  getMyProblemSelector,
+  getMyProblemTypesSelector,
+  getProblemByIdSelector,
+  getProblemSelector,
+  getSelectedProblemTypeSelector,
+} from "./selector";
 
 export function useProblem(): [
   ReadonlyArray<Problem>,
@@ -50,10 +58,7 @@ export function useProblemById(): [
   return [problem, getProblems];
 }
 
-export function useMyProblem(): [
-  ReadonlyArray<Problem>,
-  () => void,
-] {
+export function useMyProblem(): [ReadonlyArray<Problem>, () => void] {
   const dispatch = useDispatch();
   const problems = useSelector(getMyProblemSelector);
   const getProblems = React.useCallback(
@@ -63,10 +68,7 @@ export function useMyProblem(): [
   return [problems, getProblems];
 }
 
-export function useProblemTypes(): [
-  ReadonlyArray<ProblemType>,
-  () => void,
-] {
+export function useProblemTypes(): [ReadonlyArray<ProblemType>, () => void] {
   const dispatch = useDispatch();
   const problemTypes = useSelector(getMyProblemTypesSelector);
   const getProblemTypes = React.useCallback(
@@ -77,13 +79,13 @@ export function useProblemTypes(): [
 }
 
 export function useSelectProblemType(): [
-  ProblemType|undefined,
-  (data:ProblemType) => void,
+  ProblemType | undefined,
+  (data: ProblemType) => void
 ] {
   const dispatch = useDispatch();
   const problemType = useSelector(getSelectedProblemTypeSelector);
   const selectedProblemType = React.useCallback(
-    (data:ProblemType) => dispatch(selectProblemType(data)),
+    (data: ProblemType) => dispatch(selectProblemType(data)),
     [dispatch]
   );
   return [problemType, selectedProblemType];
@@ -91,14 +93,22 @@ export function useSelectProblemType(): [
 
 export function useCategoryItem(): [
   ReadonlyArray<Problem>,
-  (data:string) => void,
+  (data: string) => void
 ] {
   const dispatch = useDispatch();
   const problems = useSelector(getCategoryItemSelector);
   const getProblemsItem = React.useCallback(
-    (data:string) => dispatch(getCategoryItemRun(data)),
+    (data: string) => dispatch(getCategoryItemRun(data)),
     [dispatch]
   );
   return [problems, getProblemsItem];
 }
 
+export function useSearch(): [(data: Search) => void] {
+  const dispatch = useDispatch();
+  const search = React.useCallback(
+    (data: Search) => dispatch(searchProblem(data)),
+    [dispatch]
+  );
+  return [search];
+}

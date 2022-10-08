@@ -37,7 +37,11 @@ export const sortByAction = (data: SortBY) => ({
   type: SORT_BY,
   payload: data,
 });
-
+export const SEARCH_INPUT='layout/SEARCH_INPUT';
+export const searchInput=(data:string)=>({
+    type:SEARCH_INPUT,
+    payload:data
+})
 export interface AddNotificationAction extends Action<typeof ADD_NOTIFICATION> {
   readonly payload: string | undefined;
 }
@@ -48,6 +52,9 @@ export interface NavbarAction extends Action<typeof NAVBAR_TOGGLE> {}
 export interface SortBYAction extends Action<typeof SORT_BY> {
   readonly payload: SortBY;
 }
+export interface SearchInputAction extends Action<typeof SEARCH_INPUT> {
+  readonly payload: string;
+}
 
 export type LayoutActions =
   | ErrorAction
@@ -56,4 +63,5 @@ export type LayoutActions =
   | HideLoaderAction
   | AddNotificationAction
   | NavbarAction
-  | SortBYAction;
+  | SortBYAction
+  | SearchInputAction;

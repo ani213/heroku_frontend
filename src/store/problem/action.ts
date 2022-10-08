@@ -107,7 +107,11 @@ export const getCategoryItemComplete=(data:ReadonlyArray<Problem>)=>({
     type:GET_CATEGORY_ITEMS_COMPLETE,
     payload:data,
 })
-
+export const SEARCH_PROBLEM="problem/SEARCH_PROBLEM";
+export const searchProblem=(data:Search)=>({
+  type:SEARCH_PROBLEM,
+  payload:data
+})
 
 export interface GetProblemTypeCompleteAction extends Action<typeof GET_PROBLEM_TYPE_COMPLETE>{
   readonly payload:ReadonlyArray<ProblemType>

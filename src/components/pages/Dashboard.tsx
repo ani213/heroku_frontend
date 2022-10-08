@@ -11,7 +11,6 @@ import Skeleton from "@material-ui/lab/Skeleton";
 import moment from "moment";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import Sort from "../sort/Sort";
-import { useProblem } from "../../store/problem/hooks";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -65,11 +64,12 @@ export interface DashboardProps {
   readonly problems: ReadonlyArray<Problem>;
   readonly title: string;
   readonly getProblems?: () => void;
+  readonly onSearch?: (data: Search) => void;
 }
 
 const dummy = ["", "", "", "", "", "", "", "", ""];
 const Dashboard: React.FC<DashboardProps> = (props) => {
-  const { problems, title, getProblems } = props;
+  const { problems, title, getProblems, onSearch } = props;
   const [isLoading] = useLoading();
   const [page, setPage] = React.useState<number>(1);
   const classes = useStyles();
@@ -88,6 +88,16 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
       getProblems();
     }
   };
+  const handleSearch = (data: Search) => {
+    if (onSearch && !!data.search) {
+      onSearch(data);
+    }
+  };
+  const handleSearchChange=(data:any)=>{
+     if(!data && getProblems){
+        getProblems();
+     }
+  }
   const ToolTipText = (
     createdAt: string,
     updateAt: string,
@@ -118,7 +128,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
         <Typography variant="h5" align="center">
           {title} ( {problems.length} )
         </Typography>
-        <Sort onSort={handleSorting} />
+        <Sort onSort={handleSorting} onSearch={handleSearch} onChange={handleSearchChange}/>
         <div className={classes.contentContatiner}>
           <Grid container xs={12} spacing={1}>
             {!isLoading &&

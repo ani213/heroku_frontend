@@ -25,6 +25,7 @@ import {
   GET_PROBLEM,
   GET_PROBLEM_ID,
   GET_PROBLEM_TYPE,
+  SEARCH_PROBLEM,
   setMyProblems,
   setProblems,
   UpdateProblemAction,
@@ -222,6 +223,33 @@ export function* watchCreateCategory() {
   yield takeLatest(CREATE_CATEGORY_TYPES, callCreateCategory);
 }
 
+export function* callSearchProblem(action:{type:string,payload:Search}):any {
+  try {
+    const sortBy=yield select(sortBySelector);
+    yield put(showLoading());
+    const response: ApiResponse<ReadonlyArray<Problem>> = yield call(callApi, {
+      method: Method.GET,
+      url: "/problems/search",
+      params:{...sortBy,...action.payload}
+    });
+    const { data } = response;
+    if(!!action.payload.id){
+      yield put(setMyProblems(data));
+    }else{
+      yield put(setProblems(data));
+    }
+    yield put(hideLoading());
+  } catch (err) {
+    yield put(hideLoading());
+    yield put(showError({ title: "Error", error: err }));
+  }
+}
+export function* watchSearchProblem() {
+  yield takeLatest(SEARCH_PROBLEM, callSearchProblem);
+}
+
+
+
 export default [
   watchGetProblem,
   watchCreateProblem,
@@ -230,5 +258,6 @@ export default [
   watchGetMyProblem,
   watchGetProblemTypes,
   watchGetCategoryItemId,
-  watchCreateCategory
+  watchCreateCategory,
+  watchSearchProblem
 ];

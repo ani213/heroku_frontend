@@ -18,3 +18,7 @@ declare interface BYType{
     readonly label:string;
     readonly value:BY;
 }
+declare interface Search{
+    readonly search?:string;
+    readonly id?:string;
+}

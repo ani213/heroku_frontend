@@ -1,15 +1,32 @@
-import * as React from 'react'
+import * as React from "react";
 import Dashboard from "../../components/pages/Dashboard";
-import { useMyProblem } from "../../store/problem/hooks";
+import { useSearchInput } from "../../store/layout/hooks";
+import { useMyProblem, useSearch } from "../../store/problem/hooks";
+import { useUserContext } from "../../store/user/hooks";
 
 const ConnectedMyProblems = () => {
-  const [problems,getProblems]=useMyProblem();
-  React.useEffect(()=>{
-    getProblems()
-  },[]);
+  const [problems, getProblems] = useMyProblem();
+  const [user]=useUserContext();
+  const [onSearch]=useSearch();
+  const [search]=useSearchInput();
+  React.useEffect(() => {
+    if(!search){
+      getProblems();
+    }else{
+      onSearch({search:search})
+    }
+  }, []);
+  const handleSearch=(data:Search)=>{
+    onSearch({...data,id:user&&user._id})
+  }
   return (
     <>
-      <Dashboard problems={problems} title='My Problems' getProblems={getProblems}/>
+      <Dashboard
+        problems={problems}
+        title="My Problems"
+        getProblems={getProblems}
+        onSearch={handleSearch}
+      />
     </>
   );
 };
