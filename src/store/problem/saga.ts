@@ -31,16 +31,14 @@ import {
   UPDATE_PROBLEM_RUN,
 } from "./action";
 
-export function* callGetProblem(action: {
-  readonly type: string;
-  readonly payload: SortBY;
-}) {
+export function* callGetProblem():any {
   try {
+    const sortBy=yield select(sortBySelector);
     yield put(showLoading());
     const response: ApiResponse<ReadonlyArray<Problem>> = yield call(callApi, {
       method: Method.GET,
       url: "/problems/all",
-      params:action.payload
+      params:sortBy
     });
     const { data } = response;
     yield put(setProblems(data));
@@ -83,7 +81,6 @@ export function* callCreateProblem(action: {
  
   try {
     yield put(showLoading());
-    // const sortBy=yield select(sortBySelector);
     const response: ApiResponse<{ readonly title: string }> = yield call(
       callApi,
       {
@@ -94,7 +91,7 @@ export function* callCreateProblem(action: {
     );
     const { data } = response;
     yield put(addNotification(`${data.title} successfully created.`));
-    // yield put(getProblem(sortBy));
+    yield put(getProblem());
     yield put(hideLoading());
     history.push(RouteService.myProblem.getPath());
   } catch (err) {

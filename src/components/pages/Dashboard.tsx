@@ -86,7 +86,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
     return problems.slice((page - 1) * 10, page * 10);
   }, [page, problems]);
  const handleSorting=(data:SortBY)=>{
-    console.log(data);
+    getProblems();
  }
 const ToolTipText=(createdAt:string,updateAt:string,firstName:string,lastName?:string)=>{
    return (
