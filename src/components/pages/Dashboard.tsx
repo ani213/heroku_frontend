@@ -6,7 +6,7 @@ import Card from "@material-ui/core/Card";
 import { useNavigate } from "react-router-dom";
 import RouteService from "../../services/route.services";
 import Pagination from "@material-ui/lab/Pagination";
-import { useLoading } from "../../store/layout/hooks";
+import { useLoading, useSearchInput } from "../../store/layout/hooks";
 import Skeleton from "@material-ui/lab/Skeleton";
 import moment from "moment";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
@@ -72,6 +72,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   const { problems, title, getProblems, onSearch } = props;
   const [isLoading] = useLoading();
   const [page, setPage] = React.useState<number>(1);
+  const [searchBy]=useSearchInput();
   const classes = useStyles();
   const navigate = useNavigate();
   const handleClick = (data: Problem) => {
@@ -84,8 +85,12 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
     return problems.slice((page - 1) * 10, page * 10);
   }, [page, problems]);
   const handleSorting = (data: SortBY) => {
-    if (getProblems) {
+    if (getProblems && !searchBy.search) {
       getProblems();
+    }else{
+       if(onSearch){
+        onSearch(searchBy);
+       }
     }
   };
   const handleSearch = (data: Search) => {

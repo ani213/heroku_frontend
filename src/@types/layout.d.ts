@@ -21,7 +21,7 @@ declare interface BYType{
 declare interface Search{
     readonly search?:string;
     readonly id?:string;
-    readonly title?:string;
+    readonly type?:string;
 }
 declare interface SerarchBy{
     readonly label:string;

@@ -27,7 +27,7 @@ export const defaultState: LayoutState = {
   notification:undefined,
   isNavbarOpen:false,
   sortBy:{sort:"createdAt",by:'desc'},
-  search:{title:'all'}
+  search:{type:'all'}
 };
 
 const reducer: Reducer<LayoutState, LayoutActions | LogoutAction> = (

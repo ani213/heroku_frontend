@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) =>
     },
   })
 );
-//problems/search?search=40&id=6208ba31b6027ec2b647b470&sort=title
+//problems/search?search=40&id=6208ba31b6027ec2b647b470&sort=type
 
 export interface SortProps {
   readonly onSort?: (data: SortBY) => void;
@@ -72,9 +72,9 @@ const Sort: React.FC<SortProps> = (props) => {
     }
   };
   const handleSearchBy=(e:any)=>{
-      setState({...state,title:e.target.value});
+      setState({...state,type:e.target.value});
       if (onSearch) {
-        onSearch({...state,title:e.target.value});
+        onSearch({...state,type:e.target.value});
       }
   }
   console.log(state);
@@ -145,7 +145,7 @@ const Sort: React.FC<SortProps> = (props) => {
                 variant="outlined"
                 label="Search By"
                 fullWidth
-                value={state?.title}
+                value={state?.type}
                 onChange={handleSearchBy}
                 color="primary"
               >
