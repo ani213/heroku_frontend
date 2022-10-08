@@ -5,6 +5,8 @@ declare interface Problem{
     readonly question?:string;
     readonly answer?:string;
     readonly type_id?:string;
+    readonly createdAt?:date;
+    readonly updatedAt?:date
 }
 
 declare interface ProblemType{

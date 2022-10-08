@@ -1,13 +1,15 @@
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, IconButton, Tooltip, Typography } from "@material-ui/core";
 import * as React from "react";
 import MainTemplate from "../template/MainTemplate";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { makeStyles, createStyles, withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import { useNavigate } from "react-router-dom";
 import RouteService from "../../services/route.services";
 import Pagination from "@material-ui/lab/Pagination";
 import { useLoading } from "../../store/layout/hooks";
 import Skeleton from "@material-ui/lab/Skeleton";
+import moment from "moment";
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -42,14 +44,27 @@ const useStyles = makeStyles((theme) =>
       alignItems:"center",
       width:"100%",
       height:"70vh"
+    },
+    row_line:{
+      display:'flex',
+      justifyContent:'space-between',
+      paddingRight:30,
+      flexWrap:"wrap",
+      alignItems:'center'
+    },
+    createText:{
+      fontSize:12,
     }
   })
 );
+
+
 
 export interface DashboardProps {
   readonly problems: ReadonlyArray<Problem>;
   readonly title: string;
 }
+
 const dummy = ["", "", "", "", "", "", "", "", ""];
 const Dashboard: React.FC<DashboardProps> = (props) => {
   const { problems, title } = props;
@@ -66,6 +81,20 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   const selectedProblems = React.useMemo(() => {
     return problems.slice((page - 1) * 10, page * 10);
   }, [page, problems]);
+
+const ToolTipText=(createdAt:string,updateAt:string)=>{
+   return (
+     <>
+       <Typography className={classes.createText}>
+         Created At: {moment(createdAt).format("DD/MM/YYYY HH:mm A")}
+       </Typography>
+       <Typography className={classes.createText}>
+         Updated At: {moment(updateAt).format("DD/MM/YYYY HH:mm A")}
+       </Typography>
+     </>
+   );
+}
+
 
   return (
     <>
@@ -84,9 +113,17 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                   onClick={() => handleClick(ele)}
                 >
                   <Card className={classes.card}>
-                    <Typography>
-                      {/* <b>{index + 1}.</b>  */}
-                      {ele.title}
+                    <Typography className={classes.row_line}>
+                      <div>
+                        {ele.title}{" "}
+                      </div>
+                      <div>
+                          <Tooltip title={ToolTipText(ele.createdAt,ele.updatedAt)} arrow placement="left">
+                          <IconButton>
+                            <InfoOutlinedIcon color="primary"/>
+                          </IconButton>
+                          </Tooltip>
+                        </div>
                     </Typography>
                   </Card>
                 </Grid>
