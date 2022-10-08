@@ -1,4 +1,4 @@
-import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import { ListItem, ListItemIcon, ListItemText, Tooltip } from "@material-ui/core";
 import * as React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -17,13 +17,15 @@ const NavItem: React.FC<NavItemProps> = (props) => {
         navigate(to)
       }
    }
-    return(
-        <>
-          <ListItem button selected={pathname===to} onClick={handleClick}>
-              <ListItemIcon>{icon}</ListItemIcon>
-              <ListItemText primary={title} />
+    return (
+      <>
+        <Tooltip title={title} placement="right" arrow>
+          <ListItem button selected={pathname === to} onClick={handleClick}>
+            <ListItemIcon>{icon}</ListItemIcon>
+            <ListItemText primary={title} />
           </ListItem>
-        </>
-    )
+        </Tooltip>
+      </>
+    );
 }
 export default NavItem;

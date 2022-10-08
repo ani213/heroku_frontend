@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNotification, hideError, showError } from './action';
-import {  errorModalYNSelector, getErrorSelector, isLoadingSelector, notificationSelector } from './selector';
+import { addNotification, hideError, navbarTogle, showError } from './action';
+import {  errorModalYNSelector, getErrorSelector, isLoadingSelector, isNavbarSelector, notificationSelector } from './selector';
 
 export function useError():[{readonly error:ERROR|undefined;readonly isOpen:boolean},(data:ERROR)=>void,()=>void]{
     const error=useSelector(getErrorSelector);
@@ -22,4 +22,12 @@ export function useNotification():[string|undefined,(data:string|undefined)=>voi
     const setNotification=React.useCallback((data:string|undefined)=>dispatch(addNotification(data)),[dispatch])
     return[notification,setNotification]
 }
-
+export function useNavebarSlider(): [boolean, () => void] {
+    const isOpen = useSelector(isNavbarSelector);
+    const dispatch = useDispatch();
+    const navbarAction = React.useCallback(
+        () => dispatch(navbarTogle()),
+        [dispatch]
+    );
+    return [isOpen, navbarAction];
+}

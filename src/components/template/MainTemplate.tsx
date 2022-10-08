@@ -24,12 +24,14 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Tooltip,
   Typography,
 } from "@material-ui/core";
 import { useUserContext } from "../../store/user/hooks";
 import Profile from "../layout/Profile";
 import ErrorModal from "../modals/ErrorModal";
 import Notification from "../layout/Notification";
+import { useNavebarSlider } from "../../store/layout/hooks";
 
 const drawerWidth = 240;
 
@@ -114,14 +116,15 @@ const MainTemplate: React.FC<MainTemplateProps> = (props) => {
   const { children } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
+  const [open,setOpen]=useNavebarSlider();
   const [profileYN, setProfile] = React.useState<boolean>(false);
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setOpen();
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    setOpen();
   };
 
   return (
@@ -181,12 +184,14 @@ const MainTemplate: React.FC<MainTemplateProps> = (props) => {
         <Navbar />
         <Divider />
         <List>
+          <Tooltip title="Profile" placement="right" arrow >
           <ListItem button onClick={() => setProfile(true)}>
             <ListItemIcon>
               {user?.picture?<Avatar className={classes.avatar} src={user.picture}/>:<Avatar className={classes.avatar}>{user?.firstName[0]}</Avatar>}
             </ListItemIcon>
             <ListItemText primary="Profile" />
           </ListItem>
+          </Tooltip>
         </List>
       </Drawer>
       <main className={classes.content}>

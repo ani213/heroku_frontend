@@ -5,6 +5,7 @@ import {
   HIDE_ERROR,
   HIDE_LOADER,
   LayoutActions,
+  NAVBAR_TOGGLE,
   SET_ERROR,
   SHOW_LOADER,
 } from "./action";
@@ -12,13 +13,15 @@ export interface LayoutState {
   readonly error: ERROR | undefined;
   readonly errorModalYN: boolean;
   readonly isLoading: boolean;
-  readonly notification?:string|undefined
+  readonly notification?:string|undefined;
+  readonly isNavbarOpen:boolean;
 }
 export const defaultState: LayoutState = {
   error: undefined,
   errorModalYN: false,
   isLoading: false,
-  notification:undefined
+  notification:undefined,
+  isNavbarOpen:false,
 };
 
 const reducer: Reducer<LayoutState, LayoutActions | LogoutAction> = (
@@ -52,7 +55,12 @@ const reducer: Reducer<LayoutState, LayoutActions | LogoutAction> = (
         return{
           ...state,
           notification:action.payload
-        }
+        };
+    case NAVBAR_TOGGLE:
+       return{
+        ...state,
+        isNavbarOpen:!state.isNavbarOpen
+       }    
     case LOGOUT:
       return defaultState;
     default:

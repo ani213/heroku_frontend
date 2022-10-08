@@ -28,16 +28,25 @@ export const addNotification = (data: string | undefined) => ({
   type: ADD_NOTIFICATION,
   payload: data,
 });
+export const NAVBAR_TOGGLE='layout/NAVBAR_TOGGLE';
+export const navbarTogle=()=>({
+  type:NAVBAR_TOGGLE
+})
 export interface AddNotificationAction extends Action<typeof ADD_NOTIFICATION> {
   readonly payload: string | undefined;
 }
 
 export interface ShowLoaderAction extends Action<typeof SHOW_LOADER> {}
 export interface HideLoaderAction extends Action<typeof HIDE_LOADER> {}
+export interface NavbarAction extends Action<typeof NAVBAR_TOGGLE> {}
+
 
 export type LayoutActions =
   | ErrorAction
   | HideErrorAction
   | ShowLoaderAction
   | HideLoaderAction
-  | AddNotificationAction;
+  | AddNotificationAction
+  | NavbarAction;
+  
+  

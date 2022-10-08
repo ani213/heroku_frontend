@@ -71,7 +71,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
     <>
       <MainTemplate>
         <Typography variant="h5" align="center">
-          {title}
+          {title} ( {problems.length} )
         </Typography>
         <div className={classes.contentContatiner}>
           <Grid container xs={12} spacing={1}>

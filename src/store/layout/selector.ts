@@ -8,3 +8,4 @@ export const getErrorSelector=createSelector(getLayoutState,(state):ERROR|undefi
 export const errorModalYNSelector=createSelector(getLayoutState,(state):boolean=>_.get(state,"errorModalYN"));
 export const isLoadingSelector=createSelector(getLayoutState,(state):boolean=>_.get(state,"isLoading"));
 export const notificationSelector=createSelector(getLayoutState,(state)=>_.get(state,"notification"));
+export const isNavbarSelector=createSelector(getLayoutState,(state)=>_.get(state,"isNavbarOpen"));
