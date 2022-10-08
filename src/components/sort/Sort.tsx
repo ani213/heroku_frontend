@@ -1,4 +1,4 @@
-import { FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@material-ui/core";
+import { FormControl, Grid, InputLabel, MenuItem, Select } from "@material-ui/core";
 import * as React from "react";
 import { useSortBy } from "../../store/layout/hooks";
 import { byList, sortList } from "../constant/sort";

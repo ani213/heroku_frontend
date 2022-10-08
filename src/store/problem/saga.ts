@@ -130,15 +130,14 @@ export function* watchUpdateProblem() {
   yield takeLatest(UPDATE_PROBLEM_RUN, callUpdateProblem);
 }
 
-export function* callGetMyProblem(action: {
-  readonly type: string;
-  readonly payload: LoginFormValues;
-}) {
+export function* callGetMyProblem():any {
   try {
+    const sortBy=yield select(sortBySelector);
     yield put(showLoading());
     const response: ApiResponse<ReadonlyArray<Problem>> = yield call(callApi, {
       method: Method.GET,
       url: "/problem",
+      params:sortBy
     });
     const { data } = response;
     yield put(setMyProblems(data));

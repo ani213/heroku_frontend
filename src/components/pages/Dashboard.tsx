@@ -9,7 +9,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import { useLoading } from "../../store/layout/hooks";
 import Skeleton from "@material-ui/lab/Skeleton";
 import moment from "moment";
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import Sort from "../sort/Sort";
 import { useProblem } from "../../store/problem/hooks";
 
@@ -27,51 +27,49 @@ const useStyles = makeStyles((theme) =>
       transition: "transform .2s",
       "&:hover": {
         transform: "scale(1.007)",
-        background:theme.palette.action.hover,
-      }
+        background: theme.palette.action.hover,
+      },
     },
     spaceTop: {
       marginTop: 20,
     },
     contentContatiner: {
       minHeight: "60vh",
-      marginTop:15
+      marginTop: 15,
     },
     text: {
       color: theme.palette.text.disabled,
       fontStyle: "italic",
     },
-    center:{
-      display:"flex",
-      justifyContent:"center",
-      alignItems:"center",
-      width:"100%",
-      height:"70vh"
+    center: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "100%",
+      height: "70vh",
     },
-    row_line:{
-      display:'flex',
-      justifyContent:'space-between',
-      paddingRight:30,
-      flexWrap:"wrap",
-      alignItems:'center'
+    row_line: {
+      display: "flex",
+      justifyContent: "space-between",
+      paddingRight: 30,
+      flexWrap: "wrap",
+      alignItems: "center",
     },
-    createText:{
-      fontSize:12,
-    }
+    createText: {
+      fontSize: 12,
+    },
   })
 );
-
-
 
 export interface DashboardProps {
   readonly problems: ReadonlyArray<Problem>;
   readonly title: string;
+  readonly getProblems?: () => void;
 }
 
 const dummy = ["", "", "", "", "", "", "", "", ""];
 const Dashboard: React.FC<DashboardProps> = (props) => {
-  const { problems, title } = props;
-  const [,getProblems]=useProblem();
+  const { problems, title, getProblems } = props;
   const [isLoading] = useLoading();
   const [page, setPage] = React.useState<number>(1);
   const classes = useStyles();
@@ -85,24 +83,34 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   const selectedProblems = React.useMemo(() => {
     return problems.slice((page - 1) * 10, page * 10);
   }, [page, problems]);
- const handleSorting=(data:SortBY)=>{
-    getProblems();
- }
-const ToolTipText=(createdAt:string,updateAt:string,firstName:string,lastName?:string)=>{
-   return (
-     <>
-       <Typography className={classes.createText}>
-         Created At : {moment(createdAt).format("DD/MM/YYYY HH:mm A")}
-       </Typography>
-       <Typography className={classes.createText}>
-         Updated At : {moment(updateAt).format("DD/MM/YYYY HH:mm A")}
-       </Typography>
-       <Typography className={classes.createText}>
-         Created By : <b>{firstName} {lastName}</b>
-       </Typography>
-     </>
-   );
-}
+  const handleSorting = (data: SortBY) => {
+    if (getProblems) {
+      getProblems();
+    }
+  };
+  const ToolTipText = (
+    createdAt: string,
+    updateAt: string,
+    firstName: string,
+    lastName?: string
+  ) => {
+    return (
+      <>
+        <Typography className={classes.createText}>
+          Created At : {moment(createdAt).format("DD/MM/YYYY HH:mm A")}
+        </Typography>
+        <Typography className={classes.createText}>
+          Updated At : {moment(updateAt).format("DD/MM/YYYY HH:mm A")}
+        </Typography>
+        <Typography className={classes.createText}>
+          Created By :{" "}
+          <b>
+            {firstName} {lastName}
+          </b>
+        </Typography>
+      </>
+    );
+  };
 
   return (
     <>
@@ -110,38 +118,44 @@ const ToolTipText=(createdAt:string,updateAt:string,firstName:string,lastName?:s
         <Typography variant="h5" align="center">
           {title} ( {problems.length} )
         </Typography>
-       
-          <Sort onSort={handleSorting}/>
+        <Sort onSort={handleSorting} />
         <div className={classes.contentContatiner}>
           <Grid container xs={12} spacing={1}>
-            {!isLoading && selectedProblems.map((ele:Problem, index) => {
-              const {user_id}=ele;
-              return (
-                <Grid
-                  item
-                  xs={12}
-                  key={ele._id}
-                  onClick={() => handleClick(ele)}
-                >
-                  <Card className={classes.card}>
-                    <Typography className={classes.row_line}>
-                      <div>
-                        {ele.title}{" "}
-                      </div>
-                      <div>
-                          <Tooltip title={ToolTipText(ele.createdAt,ele.updatedAt,user_id && user_id.firstName,user_id?.lastName)} arrow placement="left">
-                          <IconButton>
-                            <InfoOutlinedIcon color="primary"/>
-                          </IconButton>
+            {!isLoading &&
+              selectedProblems.map((ele: Problem, index) => {
+                const { user_id } = ele;
+                return (
+                  <Grid
+                    item
+                    xs={12}
+                    key={ele._id}
+                    onClick={() => handleClick(ele)}
+                  >
+                    <Card className={classes.card}>
+                      <Typography className={classes.row_line}>
+                        <div>{ele.title} </div>
+                        <div>
+                          <Tooltip
+                            title={ToolTipText(
+                              ele.createdAt,
+                              ele.updatedAt,
+                              user_id && user_id.firstName,
+                              user_id?.lastName
+                            )}
+                            arrow
+                            placement="left"
+                          >
+                            <IconButton>
+                              <InfoOutlinedIcon color="primary" />
+                            </IconButton>
                           </Tooltip>
                         </div>
-                    </Typography>
-                  </Card>
-                </Grid>
-              );
-            })}
-            {
-              isLoading &&
+                      </Typography>
+                    </Card>
+                  </Grid>
+                );
+              })}
+            {isLoading &&
               dummy.map((ele, index) => (
                 <Grid item xs={12} key={index + "loading"}>
                   <Card className={classes.card}>

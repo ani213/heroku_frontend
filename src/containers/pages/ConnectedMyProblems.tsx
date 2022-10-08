@@ -9,7 +9,7 @@ const ConnectedMyProblems = () => {
   },[]);
   return (
     <>
-      <Dashboard problems={problems} title='My Problems'/>
+      <Dashboard problems={problems} title='My Problems' getProblems={getProblems}/>
     </>
   );
 };

@@ -12,7 +12,7 @@ const ConnectedDashboard = () => {
   },[]);
   return (
     <>
-      <Dashboard problems={problems} title='All Problems'/>
+      <Dashboard problems={problems} title='All Problems' getProblems={getProblems}/>
     </>
   );
 };
