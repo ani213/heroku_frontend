@@ -28,10 +28,16 @@ export const addNotification = (data: string | undefined) => ({
   type: ADD_NOTIFICATION,
   payload: data,
 });
-export const NAVBAR_TOGGLE='layout/NAVBAR_TOGGLE';
-export const navbarTogle=()=>({
-  type:NAVBAR_TOGGLE
-})
+export const NAVBAR_TOGGLE = "layout/NAVBAR_TOGGLE";
+export const navbarTogle = () => ({
+  type: NAVBAR_TOGGLE,
+});
+export const SORT_BY = "layout/SORT_BY";
+export const sortByAction = (data: SortBY) => ({
+  type: SORT_BY,
+  payload: data,
+});
+
 export interface AddNotificationAction extends Action<typeof ADD_NOTIFICATION> {
   readonly payload: string | undefined;
 }
@@ -39,7 +45,9 @@ export interface AddNotificationAction extends Action<typeof ADD_NOTIFICATION> {
 export interface ShowLoaderAction extends Action<typeof SHOW_LOADER> {}
 export interface HideLoaderAction extends Action<typeof HIDE_LOADER> {}
 export interface NavbarAction extends Action<typeof NAVBAR_TOGGLE> {}
-
+export interface SortBYAction extends Action<typeof SORT_BY> {
+  readonly payload: SortBY;
+}
 
 export type LayoutActions =
   | ErrorAction
@@ -47,6 +55,5 @@ export type LayoutActions =
   | ShowLoaderAction
   | HideLoaderAction
   | AddNotificationAction
-  | NavbarAction;
-  
-  
+  | NavbarAction
+  | SortBYAction;

@@ -8,6 +8,7 @@ import {
   NAVBAR_TOGGLE,
   SET_ERROR,
   SHOW_LOADER,
+  SORT_BY,
 } from "./action";
 export interface LayoutState {
   readonly error: ERROR | undefined;
@@ -15,6 +16,7 @@ export interface LayoutState {
   readonly isLoading: boolean;
   readonly notification?:string|undefined;
   readonly isNavbarOpen:boolean;
+  sortBy:SortBY
 }
 export const defaultState: LayoutState = {
   error: undefined,
@@ -22,6 +24,7 @@ export const defaultState: LayoutState = {
   isLoading: false,
   notification:undefined,
   isNavbarOpen:false,
+  sortBy:{sort:"createdAt",by:'desc'}
 };
 
 const reducer: Reducer<LayoutState, LayoutActions | LogoutAction> = (
@@ -60,7 +63,12 @@ const reducer: Reducer<LayoutState, LayoutActions | LogoutAction> = (
        return{
         ...state,
         isNavbarOpen:!state.isNavbarOpen
-       }    
+       }  
+    case SORT_BY:
+      return{
+        ...state,
+        sortBy:action.payload
+      }     
     case LOGOUT:
       return defaultState;
     default:

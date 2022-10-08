@@ -10,6 +10,8 @@ import { useLoading } from "../../store/layout/hooks";
 import Skeleton from "@material-ui/lab/Skeleton";
 import moment from "moment";
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import Sort from "../sort/Sort";
+import { useProblem } from "../../store/problem/hooks";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -33,6 +35,7 @@ const useStyles = makeStyles((theme) =>
     },
     contentContatiner: {
       minHeight: "60vh",
+      marginTop:15
     },
     text: {
       color: theme.palette.text.disabled,
@@ -68,6 +71,7 @@ export interface DashboardProps {
 const dummy = ["", "", "", "", "", "", "", "", ""];
 const Dashboard: React.FC<DashboardProps> = (props) => {
   const { problems, title } = props;
+  const [,getProblems]=useProblem();
   const [isLoading] = useLoading();
   const [page, setPage] = React.useState<number>(1);
   const classes = useStyles();
@@ -81,7 +85,9 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   const selectedProblems = React.useMemo(() => {
     return problems.slice((page - 1) * 10, page * 10);
   }, [page, problems]);
-
+ const handleSorting=(data:SortBY)=>{
+    console.log(data);
+ }
 const ToolTipText=(createdAt:string,updateAt:string,firstName:string,lastName?:string)=>{
    return (
      <>
@@ -98,13 +104,14 @@ const ToolTipText=(createdAt:string,updateAt:string,firstName:string,lastName?:s
    );
 }
 
-
   return (
     <>
       <MainTemplate>
         <Typography variant="h5" align="center">
           {title} ( {problems.length} )
         </Typography>
+       
+          <Sort onSort={handleSorting}/>
         <div className={classes.contentContatiner}>
           <Grid container xs={12} spacing={1}>
             {!isLoading && selectedProblems.map((ele:Problem, index) => {

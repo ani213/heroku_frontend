@@ -1,4 +1,4 @@
-import { call, takeLatest, put } from "redux-saga/effects";
+import { call, takeLatest, put, select } from "redux-saga/effects";
 
 import { Method, ApiResponse, callApi } from "../../services/api/Api";
 import { history } from "../../services/history";
@@ -9,6 +9,7 @@ import {
   showError,
   showLoading,
 } from "../layout/action";
+import { sortBySelector } from "../layout/selector";
 import {
   ADD_PROBLEM,
   CreateCategoryTypeAction,
@@ -32,13 +33,14 @@ import {
 
 export function* callGetProblem(action: {
   readonly type: string;
-  readonly payload: LoginFormValues;
+  readonly payload: SortBY;
 }) {
   try {
     yield put(showLoading());
     const response: ApiResponse<ReadonlyArray<Problem>> = yield call(callApi, {
       method: Method.GET,
       url: "/problems/all",
+      params:action.payload
     });
     const { data } = response;
     yield put(setProblems(data));
@@ -78,8 +80,10 @@ export function* callCreateProblem(action: {
   readonly type: string;
   readonly payload: Problem;
 }) {
+ 
   try {
     yield put(showLoading());
+    // const sortBy=yield select(sortBySelector);
     const response: ApiResponse<{ readonly title: string }> = yield call(
       callApi,
       {
@@ -90,7 +94,7 @@ export function* callCreateProblem(action: {
     );
     const { data } = response;
     yield put(addNotification(`${data.title} successfully created.`));
-    yield put(getProblem());
+    // yield put(getProblem(sortBy));
     yield put(hideLoading());
     history.push(RouteService.myProblem.getPath());
   } catch (err) {

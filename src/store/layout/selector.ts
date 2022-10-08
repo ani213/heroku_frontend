@@ -9,3 +9,6 @@ export const errorModalYNSelector=createSelector(getLayoutState,(state):boolean=
 export const isLoadingSelector=createSelector(getLayoutState,(state):boolean=>_.get(state,"isLoading"));
 export const notificationSelector=createSelector(getLayoutState,(state)=>_.get(state,"notification"));
 export const isNavbarSelector=createSelector(getLayoutState,(state)=>_.get(state,"isNavbarOpen"));
+export const sortBySelector=createSelector(getLayoutState,(state)=>_.get(state,"sortBy"));
+
+

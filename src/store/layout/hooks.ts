@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNotification, hideError, navbarTogle, showError } from './action';
-import {  errorModalYNSelector, getErrorSelector, isLoadingSelector, isNavbarSelector, notificationSelector } from './selector';
+import { addNotification, hideError, navbarTogle, showError, sortByAction } from './action';
+import {  errorModalYNSelector, getErrorSelector, isLoadingSelector, isNavbarSelector, notificationSelector, sortBySelector } from './selector';
 
 export function useError():[{readonly error:ERROR|undefined;readonly isOpen:boolean},(data:ERROR)=>void,()=>void]{
     const error=useSelector(getErrorSelector);
@@ -30,4 +30,14 @@ export function useNavebarSlider(): [boolean, () => void] {
         [dispatch]
     );
     return [isOpen, navbarAction];
+}
+
+export function useSortBy(): [SortBY, (data:SortBY) => void] {
+    const sortBy = useSelector(sortBySelector);
+    const dispatch = useDispatch();
+    const sortAction = React.useCallback(
+        (data:SortBY) => dispatch(sortByAction(data)),
+        [dispatch]
+    );
+    return [sortBy, sortAction];
 }
