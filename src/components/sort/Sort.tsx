@@ -27,7 +27,12 @@ const useStyles = makeStyles((theme) =>
       borderColor: "rgba(0, 0, 0, 0.23)",
       padding: "15px",
       border: "1px solid",
-      right: "-55px",
+      right: "-56px",
+      background:theme.palette.primary.main,
+      color:theme.palette.common.white,
+      "&:hover":{
+        background:theme.palette.primary.light,
+      }
     },
     input_search: {
       "& div": { borderRadius: "4px 0px 0px 4px" },
@@ -170,8 +175,11 @@ const Sort: React.FC<SortProps> = (props) => {
                 value={state.search}
                 onChange={handleChange}
               />
-              <IconButton className={classes.search} onClick={handleSubmit}>
-                <SearchOutlined color="primary" />
+              <IconButton 
+              className={classes.search} 
+              onClick={handleSubmit}
+              >
+                <SearchOutlined  />
               </IconButton>
             </FormControl>
           </Grid>

@@ -11,6 +11,7 @@ import Skeleton from "@material-ui/lab/Skeleton";
 import moment from "moment";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import Sort from "../sort/Sort";
+import { getHighlightedText } from "../highlight/Highlight";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -149,7 +150,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                   >
                     <Card className={classes.card}>
                       <Typography className={classes.row_line}>
-                        <div>{ele.title} </div>
+                        <div>{getHighlightedText(ele.title,searchBy.search||"")} </div>
                         <div>
                           <Tooltip
                             title={ToolTipText(
