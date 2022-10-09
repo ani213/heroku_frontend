@@ -65,11 +65,12 @@ export interface DashboardProps {
   readonly title: string;
   readonly getProblems?: () => void;
   readonly onSearch?: (data: Search) => void;
+  readonly showSorting?:boolean;
 }
 
 const dummy = ["", "", "", "", "", "", "", "", ""];
 const Dashboard: React.FC<DashboardProps> = (props) => {
-  const { problems, title, getProblems, onSearch } = props;
+  const { problems, title, getProblems, onSearch,showSorting=true } = props;
   const [isLoading] = useLoading();
   const [page, setPage] = React.useState<number>(1);
   const [searchBy]=useSearchInput();
@@ -133,7 +134,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
         <Typography variant="h5" align="center" gutterBottom>
           {title} ( {problems.length} )
         </Typography>
-        <Sort onSort={handleSorting} onSearch={handleSearch} onChange={handleSearchChange}/>
+        {showSorting&&<Sort onSort={handleSorting} onSearch={handleSearch} onChange={handleSearchChange}/>}
         <div className={classes.contentContatiner}>
           <Grid container xs={12} spacing={1}>
             {!isLoading &&

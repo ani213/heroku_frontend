@@ -12,7 +12,7 @@ const ConnectedCategoryItemPage = () => {
   },[id]);
   return (
     <>
-      <Dashboard problems={problems} title={`${selected?.title} Problems`}/>
+      <Dashboard problems={problems} title={`${selected?.title} Problems`} showSorting={false}/>
     </>
   );
 };
