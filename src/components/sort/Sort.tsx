@@ -132,7 +132,7 @@ const Sort: React.FC<SortProps> = (props) => {
             </FormControl>
           </Grid>
         </Grid>
-        <Grid container item xs={12} md={5}>
+        <Grid container item xs={12} md={5} spacing={1}>
           <Grid item md={4}>
             <FormControl variant="outlined" fullWidth color="primary">
               <InputLabel

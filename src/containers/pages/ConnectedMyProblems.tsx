@@ -10,7 +10,7 @@ const ConnectedMyProblems = () => {
   const [onSearch]=useSearch();
   const [search]=useSearchInput();
   React.useEffect(() => {
-    if(!search){
+    if(!search.search){
       getProblems();
     }else{
       onSearch({...search,id:user&&user._id})
