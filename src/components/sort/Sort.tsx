@@ -85,6 +85,7 @@ const Sort: React.FC<SortProps> = (props) => {
         justifyContent="space-between"
         className={classes.root}
         md={12}
+        spacing={1}
       >
         <Grid container item xs={12} md={6} spacing={1} alignItems="center">
           <Grid item xs={12} md={5}>
@@ -132,7 +133,7 @@ const Sort: React.FC<SortProps> = (props) => {
           </Grid>
         </Grid>
         <Grid container item xs={12} md={5} spacing={1}>
-          <Grid item md={4}>
+          <Grid item md={4} xs={12}>
             <FormControl variant="outlined" fullWidth color="primary">
               <InputLabel
                 id="demo-simple-select-outlined-label"
@@ -156,7 +157,7 @@ const Sort: React.FC<SortProps> = (props) => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item md={6}>
+          <Grid item md={6} xs={9}>
             <FormControl
               variant="outlined"
               fullWidth
