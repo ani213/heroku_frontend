@@ -9,7 +9,7 @@ import {
   showError,
   showLoading,
 } from "../layout/action";
-import { sortBySelector } from "../layout/selector";
+import { searchInputSelector, sortBySelector } from "../layout/selector";
 import {
   ADD_PROBLEM,
   CreateCategoryTypeAction,
@@ -177,12 +177,15 @@ export function* watchGetProblemTypes() {
 export function* callGetCategoryItemId(action: {
   readonly type: string;
   readonly payload: string;
-}) {
+}):any {
   try {
+    const sortBy=yield select(sortBySelector);
+    const search=yield select(searchInputSelector);
     yield put(showLoading());
     const response: ApiResponse<ReadonlyArray<Problem>> = yield call(callApi, {
       method: Method.GET,
       url: `/problem-types/${action.payload}`,
+      params:{...sortBy,...search}
     });
     const { data } = response;
     yield put(getCategoryItemComplete(data));

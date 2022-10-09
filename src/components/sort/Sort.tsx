@@ -77,7 +77,6 @@ const Sort: React.FC<SortProps> = (props) => {
         onSearch({...state,type:e.target.value});
       }
   }
-  console.log(state);
   return (
     <>
       <Grid
