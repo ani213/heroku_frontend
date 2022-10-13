@@ -30,6 +30,7 @@ const FullScreenModal: React.FC<FullScreenModalProps> = (props) => {
             <div
               dangerouslySetInnerHTML={createMarkup(data || "")}
               className="ql-editor"
+              style={{width:"100%"}}
             ></div>
           </Grid>
         </BaseModalContent>
