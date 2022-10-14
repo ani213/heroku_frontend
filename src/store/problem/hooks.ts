@@ -22,14 +22,14 @@ import {
 
 export function useProblem(): [
   ReadonlyArray<Problem>,
-  () => void,
+  (data?:string) => void,
   (data: Problem) => void,
   (data: Problem, onComplete?: () => void) => void
 ] {
   const dispatch = useDispatch();
   const problems = useSelector(getProblemSelector);
   const getProblems = React.useCallback(
-    () => dispatch(getProblem()),
+    (data?:string) => dispatch(getProblem(data)),
     [dispatch]
   );
   const createProblems = React.useCallback(

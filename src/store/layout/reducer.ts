@@ -7,6 +7,7 @@ import {
   LayoutActions,
   NAVBAR_TOGGLE,
   SEARCH_INPUT,
+  SET_AUTO_SEARCH_USERS,
   SET_ERROR,
   SHOW_LOADER,
   SORT_BY,
@@ -19,6 +20,7 @@ export interface LayoutState {
   readonly isNavbarOpen:boolean;
   readonly sortBy:SortBY;
   readonly search:Search;
+  readonly autoSearch:ReadonlyArray<AutoSearchUser>;
 }
 export const defaultState: LayoutState = {
   error: undefined,
@@ -27,7 +29,8 @@ export const defaultState: LayoutState = {
   notification:undefined,
   isNavbarOpen:false,
   sortBy:{sort:"updatedAt",by:-1},
-  search:{type:'all'}
+  search:{type:'all'},
+  autoSearch:[]
 };
 
 const reducer: Reducer<LayoutState, LayoutActions | LogoutAction> = (
@@ -76,7 +79,12 @@ const reducer: Reducer<LayoutState, LayoutActions | LogoutAction> = (
       return{
         ...state,
         search:action.payload
-      }      
+      }   
+    case SET_AUTO_SEARCH_USERS:
+      return{
+        ...state,
+        autoSearch:action.payload
+      }     
     case LOGOUT:
       return defaultState;
     default:

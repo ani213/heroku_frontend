@@ -12,8 +12,9 @@ export const setProblems=(data:ReadonlyArray<Problem>)=>({
     payload:data
 })
 export const GET_PROBLEM='problem/GET_PROBLEM';
-export const getProblem=()=>({
-    type:GET_PROBLEM
+export const getProblem=(data?:string)=>({
+    type:GET_PROBLEM,
+    payload:data
 })
 
 export const SET_MY_PROBLEMS='problem/SET_MY_PROBLEMS';

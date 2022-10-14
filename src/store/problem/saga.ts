@@ -5,7 +5,9 @@ import { history } from "../../services/history";
 import RouteService from "../../services/route.services";
 import {
   addNotification,
+  GET_AUTO_SEARCH,
   hideLoading,
+  setAutoSearchUsers,
   showError,
   showLoading,
 } from "../layout/action";
@@ -32,14 +34,15 @@ import {
   UPDATE_PROBLEM_RUN,
 } from "./action";
 
-export function* callGetProblem():any {
+export function* callGetProblem(action:{type:string;payload:string}):any {
   try {
     const sortBy=yield select(sortBySelector);
+    const _id=action.payload;
     yield put(showLoading());
     const response: ApiResponse<ReadonlyArray<Problem>> = yield call(callApi, {
       method: Method.GET,
       url: "/problems/all",
-      params:sortBy
+      params:{...sortBy,_id}
     });
     const { data } = response;
     yield put(setProblems(data));
@@ -251,6 +254,23 @@ export function* watchSearchProblem() {
   yield takeLatest(SEARCH_PROBLEM, callSearchProblem);
 }
 
+export function* callAutoSearch(action:{type:string,payload:string}):any {
+  try {
+    const response: ApiResponse<ReadonlyArray<AutoSearchUser>> = yield call(callApi, {
+      method: Method.GET,
+      url: "/user/search",
+      params:{search:action.payload}
+    });
+    const { data } = response;
+    yield put(setAutoSearchUsers(data))
+  } catch (err) {
+    yield put(showError({ title: "Error", error: err }));
+  }
+}
+export function* watchAutoSearch() {
+  yield takeLatest(GET_AUTO_SEARCH, callAutoSearch);
+}
+
 
 
 export default [
@@ -262,5 +282,6 @@ export default [
   watchGetProblemTypes,
   watchGetCategoryItemId,
   watchCreateCategory,
-  watchSearchProblem
+  watchSearchProblem,
+  watchAutoSearch
 ];

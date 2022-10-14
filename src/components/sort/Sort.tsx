@@ -9,10 +9,12 @@ import {
 } from "@material-ui/core";
 import { SearchOutlined } from "@material-ui/icons";
 import * as React from "react";
-import { useSearchInput, useSortBy } from "../../store/layout/hooks";
+import { useAutoSearch, useSearchInput, useSortBy } from "../../store/layout/hooks";
 import { byList, searchList, sortList } from "../constant/sort";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
-
+import { Autocomplete } from "@material-ui/lab";
+import { useProblem } from "../../store/problem/hooks";
+import _ from 'lodash';
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
@@ -37,6 +39,9 @@ const useStyles = makeStyles((theme) =>
     input_search: {
       "& div": { borderRadius: "4px 0px 0px 4px" },
     },
+    auto:{
+      marginTop:"-16px"
+    }
   })
 );
 //problems/search?search=40&id=6208ba31b6027ec2b647b470&sort=type
@@ -52,6 +57,9 @@ const Sort: React.FC<SortProps> = (props) => {
   const { onSort, onSearch, onChange } = props;
   const [sortBy, sortAction] = useSortBy();
   const [state, setState] = useSearchInput();
+  const [userList,getAutoSearch,resetUserList]=useAutoSearch();
+  const [, getProblems] = useProblem();
+
   const handleSort = (e: any) => {
     sortAction({ ...sortBy, sort: e.target.value });
     if (onSort) {
@@ -82,6 +90,27 @@ const Sort: React.FC<SortProps> = (props) => {
         onSearch({...state,type:e.target.value});
       }
   }
+  const fetchData=_.debounce((data:string)=>getAutoSearch(data),500)
+  const handleAutoChange=(e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
+       if(!!e.target.value){
+        // getAutoSearch(e.target.value)
+        fetchData(e.target.value)
+       }else{
+        resetUserList();
+       }
+      //  console.log(!e.target.value,"onchange");
+  }
+  const autoSearch=(event:any, newValue:any)=>{
+    console.log(newValue);
+     if(!newValue){
+      resetUserList();
+     }else{
+      // getProblems(newValue._id);
+     }
+  }
+  const options:any=React.useMemo(()=>{
+      return userList;
+  },[userList])
   return (
     <>
       <Grid
@@ -168,18 +197,39 @@ const Sort: React.FC<SortProps> = (props) => {
               fullWidth
               className={classes.relative}
             >
-              <TextField
-                variant="outlined"
-                label="Search"
-                className={classes.input_search}
-                value={state.search}
-                onChange={handleChange}
-              />
-              <IconButton 
-              className={classes.search} 
-              onClick={handleSubmit}
-              >
-                <SearchOutlined  />
+              {state && state.type !== "user" ? (
+                <TextField
+                  variant="outlined"
+                  label="Search"
+                  className={classes.input_search}
+                  value={state.search}
+                  onChange={handleChange}
+                />
+              ) : (
+                <Autocomplete
+                  freeSolo
+                  id="free-solo-2-demo"
+                  disableClearable
+                  options={options}
+                  getOptionLabel={(option: AutoSearchUser) => option.firstName}
+                  className={classes.auto}
+                  onChange={autoSearch}
+                  includeInputInList={true}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Search"
+                      margin="normal"
+                      variant="outlined"
+                      InputProps={{ ...params.InputProps, type: "search" }}
+                      className={classes.input_search}
+                      onChange={handleAutoChange}
+                    />
+                  )}
+                />
+              )}
+              <IconButton className={classes.search} onClick={handleSubmit}>
+                <SearchOutlined />
               </IconButton>
             </FormControl>
           </Grid>

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNotification, hideError, navbarTogle, searchInput, showError, sortByAction } from './action';
-import {  errorModalYNSelector, getErrorSelector, isLoadingSelector, isNavbarSelector, notificationSelector, searchInputSelector, sortBySelector } from './selector';
+import { addNotification, getAutoSearch, hideError, navbarTogle, searchInput, setAutoSearchUsers, showError, sortByAction } from './action';
+import {  autoSearchUserSelector, errorModalYNSelector, getErrorSelector, isLoadingSelector, isNavbarSelector, notificationSelector, searchInputSelector, sortBySelector } from './selector';
 
 export function useError():[{readonly error:ERROR|undefined;readonly isOpen:boolean},(data:ERROR)=>void,()=>void]{
     const error=useSelector(getErrorSelector);
@@ -51,3 +51,18 @@ export function useSearchInput(): [Search, (data:Search) => void] {
     );
     return [search, searchAction];
 }
+
+export function useAutoSearch(): [ReadonlyArray<AutoSearchUser>,(data:string)=>void ,() => void] {
+    const userlist = useSelector(autoSearchUserSelector);
+    const dispatch = useDispatch();
+    const reset = React.useCallback(
+        () => dispatch(setAutoSearchUsers([])),
+        [dispatch]
+    );
+    const getAutoSearchList = React.useCallback(
+        (data:string) => dispatch(getAutoSearch(data)),
+        [dispatch]
+    );
+    return [userlist, getAutoSearchList,reset];
+}
+

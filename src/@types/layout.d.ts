@@ -22,8 +22,16 @@ declare interface Search{
     readonly search?:string;
     readonly id?:string;
     readonly type?:string;
+    readonly _id?:string;
 }
 declare interface SerarchBy{
     readonly label:string;
     readonly value:string;
+}
+declare interface AutoSearchUser{
+    readonly _id:string;
+    readonly username:string;
+    readonly firstName:string;
+    readonly lastName:string;
+    readonly email:string;
 }
