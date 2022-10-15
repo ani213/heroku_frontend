@@ -22,7 +22,7 @@ declare interface Search{
     readonly search?:string;
     readonly id?:string;
     readonly type?:string;
-    readonly _id?:string;
+    readonly autoSearchData?:AutoSearchUser;
 }
 declare interface SerarchBy{
     readonly label:string;

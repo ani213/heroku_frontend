@@ -51,11 +51,12 @@ export interface SortProps {
   readonly onSort?: (data: SortBY) => void;
   readonly onSearch?: (data: Search) => void;
   readonly onChange?: (data: string) => void;
+  readonly autoIsDisable?: boolean;
 }
 
 const Sort: React.FC<SortProps> = (props) => {
   const classes = useStyles();
-  const { onSort, onSearch, onChange } = props;
+  const { onSort, onSearch, onChange, autoIsDisable } = props;
   const [sortBy, sortAction] = useSortBy();
   const [state, setState] = useSearchInput();
   const [userList, getAutoSearch, resetUserList] = useAutoSearch();
@@ -103,10 +104,13 @@ const Sort: React.FC<SortProps> = (props) => {
   };
   const autoSearch = (event: any, newValue: any) => {
     if (!newValue) {
+      let { search, type, id } = state;
+      setState({ search, id, type });
       resetUserList();
       getProblems();
     } else {
       getProblems(newValue._id);
+      setState({ ...state, autoSearchData: newValue });
     }
   };
   const options: any = React.useMemo(() => {
@@ -185,8 +189,9 @@ const Sort: React.FC<SortProps> = (props) => {
                 color="primary"
               >
                 {searchList.map((ele) => (
-                  <MenuItem key={ele.label} value={ele.value}>
-                    {ele.label}
+                  <MenuItem key={ele.label} value={ele.value} 
+                    disabled={ele.value==='user'?autoIsDisable:false}>
+                      {ele.label}
                   </MenuItem>
                 ))}
               </Select>
@@ -209,13 +214,14 @@ const Sort: React.FC<SortProps> = (props) => {
               ) : (
                 <Autocomplete
                   id="free-solo-demo"
+                  disabled={autoIsDisable}
                   freeSolo
                   options={options}
                   onChange={autoSearch}
+                  value={state.autoSearchData}
                   getOptionLabel={(option: AutoSearchUser) =>
                     option.firstName + " " + option.lastName
                   }
-                  // onClose={()=>{console.log("object");}}
                   renderInput={(params) => (
                     <TextField
                       {...params}

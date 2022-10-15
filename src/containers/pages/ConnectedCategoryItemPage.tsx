@@ -25,6 +25,7 @@ const ConnectedCategoryItemPage = () => {
        title={`${selected?.title} Problems`} 
         onSearch={handleSearch}
         getProblems={handleProblem}
+        autoIsDisable={true}
       />
     </>
   );

@@ -37,7 +37,8 @@ import {
 export function* callGetProblem(action:{type:string;payload:string}):any {
   try {
     const sortBy=yield select(sortBySelector);
-    const _id=action.payload;
+    const search=yield select(searchInputSelector)
+    const _id=action.payload||(search && search.autoSearchData?._id);
     yield put(showLoading());
     const response: ApiResponse<ReadonlyArray<Problem>> = yield call(callApi, {
       method: Method.GET,
@@ -176,14 +177,13 @@ export function* callGetProblemTypes() {
 export function* watchGetProblemTypes() {
   yield takeLatest(GET_PROBLEM_TYPE, callGetProblemTypes);
 }
-
 export function* callGetCategoryItemId(action: {
   readonly type: string;
   readonly payload: string;
 }):any {
   try {
     const sortBy=yield select(sortBySelector);
-    const search=yield select(searchInputSelector);
+    const search:Search=yield select(searchInputSelector);
     yield put(showLoading());
     const response: ApiResponse<ReadonlyArray<Problem>> = yield call(callApi, {
       method: Method.GET,

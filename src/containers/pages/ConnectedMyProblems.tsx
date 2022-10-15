@@ -26,6 +26,7 @@ const ConnectedMyProblems = () => {
         title="My Problems"
         getProblems={getProblems}
         onSearch={handleSearch}
+        autoIsDisable={true}
       />
     </>
   );

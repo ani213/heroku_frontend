@@ -66,15 +66,23 @@ export interface DashboardProps {
   readonly title: string;
   readonly getProblems?: () => void;
   readonly onSearch?: (data: Search) => void;
-  readonly showSorting?:boolean;
+  readonly showSorting?: boolean;
+  readonly autoIsDisable?: boolean;
 }
 
 const dummy = ["", "", "", "", "", "", "", "", ""];
 const Dashboard: React.FC<DashboardProps> = (props) => {
-  const { problems, title, getProblems, onSearch,showSorting=true } = props;
+  const {
+    problems,
+    title,
+    getProblems,
+    onSearch,
+    showSorting = true,
+    autoIsDisable = false,
+  } = props;
   const [isLoading] = useLoading();
   const [page, setPage] = React.useState<number>(1);
-  const [searchBy]=useSearchInput();
+  const [searchBy] = useSearchInput();
   const classes = useStyles();
   const navigate = useNavigate();
   const handleClick = (data: Problem) => {
@@ -89,10 +97,10 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   const handleSorting = (data: SortBY) => {
     if (getProblems && !searchBy.search) {
       getProblems();
-    }else{
-       if(onSearch){
+    } else {
+      if (onSearch) {
         onSearch(searchBy);
-       }
+      }
     }
   };
   const handleSearch = (data: Search) => {
@@ -100,11 +108,11 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
       onSearch(data);
     }
   };
-  const handleSearchChange=(data:any)=>{
-     if(!data && getProblems){
-        getProblems();
-     }
-  }
+  const handleSearchChange = (data: any) => {
+    if (!data && getProblems) {
+      getProblems();
+    }
+  };
   const ToolTipText = (
     createdAt: string,
     updateAt: string,
@@ -135,7 +143,14 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
         <Typography variant="h5" align="center" gutterBottom>
           {title} ( {problems.length} )
         </Typography>
-        {showSorting&&<Sort onSort={handleSorting} onSearch={handleSearch} onChange={handleSearchChange}/>}
+        {showSorting && (
+          <Sort
+            onSort={handleSorting}
+            onSearch={handleSearch}
+            onChange={handleSearchChange}
+            autoIsDisable={autoIsDisable}
+          />
+        )}
         <div className={classes.contentContatiner}>
           <Grid container xs={12} spacing={1}>
             {!isLoading &&
@@ -150,7 +165,9 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                   >
                     <Card className={classes.card}>
                       <Typography className={classes.row_line}>
-                        <div>{getHighlightedText(ele.title,searchBy.search||"")} </div>
+                        <div>
+                          {getHighlightedText(ele.title, searchBy.search || "")}{" "}
+                        </div>
                         <div>
                           <Tooltip
                             title={ToolTipText(

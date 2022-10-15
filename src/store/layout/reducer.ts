@@ -16,21 +16,21 @@ export interface LayoutState {
   readonly error: ERROR | undefined;
   readonly errorModalYN: boolean;
   readonly isLoading: boolean;
-  readonly notification?:string|undefined;
-  readonly isNavbarOpen:boolean;
-  readonly sortBy:SortBY;
-  readonly search:Search;
-  readonly autoSearch:ReadonlyArray<AutoSearchUser>;
+  readonly notification?: string | undefined;
+  readonly isNavbarOpen: boolean;
+  readonly sortBy: SortBY;
+  readonly search: Search;
+  readonly autoSearch: ReadonlyArray<AutoSearchUser>;
 }
 export const defaultState: LayoutState = {
   error: undefined,
   errorModalYN: false,
   isLoading: false,
-  notification:undefined,
-  isNavbarOpen:false,
-  sortBy:{sort:"updatedAt",by:-1},
-  search:{type:'all'},
-  autoSearch:[]
+  notification: undefined,
+  isNavbarOpen: false,
+  sortBy: { sort: "updatedAt", by: -1 },
+  search: { type: "all" },
+  autoSearch: [],
 };
 
 const reducer: Reducer<LayoutState, LayoutActions | LogoutAction> = (
@@ -61,30 +61,38 @@ const reducer: Reducer<LayoutState, LayoutActions | LogoutAction> = (
         isLoading: false,
       };
     case ADD_NOTIFICATION:
-        return{
-          ...state,
-          notification:action.payload
-        };
+      return {
+        ...state,
+        notification: action.payload,
+      };
     case NAVBAR_TOGGLE:
-       return{
+      return {
         ...state,
-        isNavbarOpen:!state.isNavbarOpen
-       }  
+        isNavbarOpen: !state.isNavbarOpen,
+      };
     case SORT_BY:
-      return{
+      return {
         ...state,
-        sortBy:action.payload
-      } 
+        sortBy: action.payload,
+      };
     case SEARCH_INPUT:
-      return{
-        ...state,
-        search:action.payload
-      }   
+      const { type, search, autoSearchData, id } = action.payload;
+      if (type !== "user") {
+        return {
+          ...state,
+          search: { type, search, id },
+        };
+      } else {
+        return {
+          ...state,
+          search: { type, search, id, autoSearchData },
+        };
+      }
     case SET_AUTO_SEARCH_USERS:
-      return{
+      return {
         ...state,
-        autoSearch:action.payload
-      }     
+        autoSearch: action.payload,
+      };
     case LOGOUT:
       return defaultState;
     default:
