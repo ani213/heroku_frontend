@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       minWidth: 180,
-      minHeight: 350,
+      minHeight: 380,
     },
     avtar: {
       width: 100,
@@ -56,6 +56,7 @@ export interface ProfileProps {
   readonly name: string;
   readonly lastName?: string;
   readonly picture?:string;
+  readonly email?:string;
 }
 
 const colors:ReadonlyArray<{label:string,value:ThemeColor}>=[{label:"Green",value:'green'},
@@ -64,7 +65,7 @@ const colors:ReadonlyArray<{label:string,value:ThemeColor}>=[{label:"Green",valu
 ]
 
 const Profile: React.FC<ProfileProps> = (props) => {
-  const { open, onClose, name, lastName,picture } = props;
+  const { open, onClose, name, lastName,picture,email } = props;
   const classes = useStyles();
   const [theme, setTheme] = useTheme();
   const [themeColor,setThemeColor]=useThemeColor();
@@ -111,6 +112,9 @@ const Profile: React.FC<ProfileProps> = (props) => {
             </Grid>
             <Typography align="center" variant="h6">
               {name[0].toUpperCase()+name.substring(1)} {lastName}
+              <Typography color='primary'>
+              {email}
+              </Typography>
             </Typography>
             <Grid item xs={12} justifyContent="center" container>
               <Grid item>

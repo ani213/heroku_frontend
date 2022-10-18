@@ -204,6 +204,7 @@ const MainTemplate: React.FC<MainTemplateProps> = (props) => {
         lastName={user?.lastName}
         onClose={()=>setProfile(false)}
         picture={user?.picture}
+        email={user?.email}
       />
       <ErrorModal />
       <Notification />
