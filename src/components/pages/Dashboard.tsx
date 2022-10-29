@@ -122,10 +122,10 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
     return (
       <>
         <Typography className={classes.createText}>
-          Created At : {moment(createdAt).format("DD/MM/YYYY HH:mm A")}
+          Created At : {moment(createdAt).format("LLLL")}
         </Typography>
         <Typography className={classes.createText}>
-          Updated At : {moment(updateAt).format("DD/MM/YYYY HH:mm A")}
+          Updated At : {moment(updateAt).format("LLLL")}
         </Typography>
         <Typography className={classes.createText}>
           Created By :{" "}
