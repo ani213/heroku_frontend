@@ -59,7 +59,7 @@ export interface ProfileProps {
   readonly email?:string;
 }
 
-const colors:ReadonlyArray<{label:string,value:ThemeColor}>=[{label:"Green",value:'green'},
+const colors:ReadonlyArray<{label:string,value:ThemeColor}>=[{label:"Green",value:'green'},{label:"Blue Gray",value:"blueGray"},
 {label:"Blue",value:'blue'},{label:"Cyan",value:'cyan'},{label:"Lime",value:'lime'},
 {label:"Orange",value:'orange'},{label:"Teal",value:'teal'},{label:"Indigo",value:'indigo'},
 ]

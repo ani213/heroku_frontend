@@ -5,7 +5,7 @@ import blue from '@material-ui/core/colors/blue';
 import cyan from '@material-ui/core/colors/cyan';
 import lime from '@material-ui/core/colors/lime';
 import orange from '@material-ui/core/colors/orange';
-import teal from '@material-ui/core/colors/teal';
+// import teal from '@material-ui/core/colors/teal';
 import indigo from '@material-ui/core/colors/indigo';
 
 
@@ -94,10 +94,10 @@ const Theme: React.FC<any> =(props)=>{
       const tealTheme = responsiveFontSizes(createTheme({
         palette: {
           primary: {
-            main: teal['A400'],
+            main: "#00695c",
           },
           secondary: {
-            main: deepPurple[700],
+            main: deepPurple[900],
           },
           type:selectedTheme,
         },
@@ -113,6 +113,17 @@ const Theme: React.FC<any> =(props)=>{
           type:selectedTheme,
         },
       }));    
+      const blueGreyTheme = responsiveFontSizes(createTheme({
+        palette: {
+          primary: {
+            main: '#263238',
+          },
+          secondary: {
+            main: '#880e4f',
+          },
+          type:selectedTheme,
+        },
+      }));      
  const getTheme=()=>{
    switch (color){
       case 'green':
@@ -129,6 +140,8 @@ const Theme: React.FC<any> =(props)=>{
         return tealTheme  
       case 'indigo':
         return indigoTheme  
+      case 'blueGray':
+        return blueGreyTheme
       default:
         return greenTheme       
    }

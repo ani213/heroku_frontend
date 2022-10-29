@@ -7,7 +7,7 @@ declare type MyTheme='light'|'dark'
 declare type ThemeColor='green'|'red'|'pink'
 |'purple'|'indigo'|'blue'|'teal'
 |'cyan'|'lightBlue'|'lime'
-|'orange'
+|'orange'|'blueGray'
 
 declare interface SortBY{
     readonly sort:string;
