@@ -132,6 +132,7 @@ const classes=useStyles()
                       onSuccess={responseSuccessGoogle}
                       onFailure={responseFailureGoogle}
                       className={classes.root}
+                      disabled={isLoading}
                     />
                   </Box>
                   <Grid container>

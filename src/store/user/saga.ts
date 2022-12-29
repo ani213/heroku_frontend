@@ -62,7 +62,7 @@ export function* callLoginWithGoogle(action: {
   readonly payload: LoginWithGoogle;
 }) {
   try {
-    
+    yield put(showLoading());
     const response: ApiResponse<LoginResponse> = yield call(request, {
       data: action.payload,
       url: "/google/auth",
@@ -76,7 +76,11 @@ export function* callLoginWithGoogle(action: {
     });
     yield put(setUserContext(userData.data));
     yield put(hideLoading());
-    history.push(RouteService.dashboard.getPath())
+    if(roles.superAdmin===userData.data.role){
+      history.push(RouteService.superAdmin.dashboard.getPath())
+    }if(roles.user===userData.data.role){
+      history.push(RouteService.dashboard.getPath())
+    }
   } catch (err) {
     yield put(hideLoading());
     yield put(showError({ title: "Login Error", error: err }));
