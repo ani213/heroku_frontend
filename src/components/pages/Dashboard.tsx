@@ -1,4 +1,4 @@
-import { Grid, IconButton, Tooltip, Typography } from "@material-ui/core";
+import { Divider, Grid, IconButton, Tooltip, Typography } from "@material-ui/core";
 import * as React from "react";
 import MainTemplate from "../template/MainTemplate";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
@@ -54,10 +54,12 @@ const useStyles = makeStyles((theme) =>
       paddingRight: 30,
       flexWrap: "wrap",
       alignItems: "center",
+      width: "100%"
     },
     createText: {
       fontSize: 12,
     },
+
   })
 );
 
@@ -80,6 +82,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
     showSorting = true,
     autoIsDisable = false,
   } = props;
+
   const [isLoading] = useLoading();
   const [page, setPage] = React.useState<number>(1);
   const [searchBy] = useSearchInput();
@@ -136,7 +139,9 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
       </>
     );
   };
-
+  const createMarkup = (data: string) => {
+    return { __html: data };
+  };
   return (
     <>
       <MainTemplate>
@@ -165,10 +170,22 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                   >
                     <Card className={classes.card}>
                       <Typography className={classes.row_line}>
-                        <div>
-                          {getHighlightedText(ele.title, searchBy.search || "")}{" "}
+                        <div style={{ width: "95%" }}>
+                          <div>
+                            <Typography variant="h6" style={{ fontWeight: 700 }}>
+                              {getHighlightedText(ele.title, searchBy.search || "")}{" "}
+                            </Typography>
+                            <Divider variant='fullWidth' />
+                          </div>
+                          <div
+                            dangerouslySetInnerHTML={createMarkup(
+                              ele?.question || ""
+                            )}
+                            className="ql-editor"
+                            style={{ height: '100px', overflow: 'hidden' }}
+                          ></div>
                         </div>
-                        <div>
+                        <div >
                           <Tooltip
                             title={ToolTipText(
                               ele.createdAt,
