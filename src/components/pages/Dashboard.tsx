@@ -170,7 +170,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                   >
                     <Card className={classes.card}>
                       <Typography className={classes.row_line}>
-                        <div style={{ width: "95%" }}>
+                        <div style={{ width: "94%" }}>
                           <div>
                             <Typography variant="h6" style={{ fontWeight: 700 }}>
                               {getHighlightedText(ele.title, searchBy.search || "")}{" "}
