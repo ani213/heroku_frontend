@@ -9,16 +9,18 @@ import {
 
 const ConnectedDashboard = () => {
   const [problems, getProblems] = useProblem();
-  const [, getProblemTypes] = useProblemTypes();
+  const [problemTypes, getProblemTypes] = useProblemTypes();
   const [onSearch] = useSearch();
-  const [search]=useSearchInput();
+  const [search] = useSearchInput();
   React.useEffect(() => {
-    if(!search.search){
+    if (!search.search) {
       getProblems();
-    }else{
+    } else {
       onSearch(search)
     }
-    getProblemTypes();
+    if (problemTypes.length === 0) {
+      getProblemTypes();
+    }
   }, []);
   return (
     <>
