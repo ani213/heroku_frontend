@@ -59,7 +59,9 @@ const useStyles = makeStyles((theme) =>
     createText: {
       fontSize: 12,
     },
-
+    titleFont: {
+      fontWeight: 700
+    }
   })
 );
 
@@ -172,18 +174,21 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                       <Typography className={classes.row_line}>
                         <div style={{ width: "94%" }}>
                           <div>
-                            <Typography variant="h6" style={{ fontWeight: 700 }}>
+                            <Typography
+                            // variant="h6"
+                            // className={classes.titleFont}
+                            >
                               {getHighlightedText(ele.title, searchBy.search || "")}{" "}
                             </Typography>
-                            <Divider variant='fullWidth' />
+                            {/* <Divider variant='fullWidth' /> */}
                           </div>
-                          <div
+                          {/* <div
                             dangerouslySetInnerHTML={createMarkup(
                               ele?.question || ""
                             )}
                             className="ql-editor"
                             style={{ height: '100px', overflow: 'hidden' }}
-                          ></div>
+                          ></div> */}
                         </div>
                         <div >
                           <Tooltip
