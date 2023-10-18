@@ -3,7 +3,8 @@ import { createSelector } from 'reselect';
 import { ApplicationState } from '../../models/ApplicationState';
 const stateKey = 'Theme';
 
-const getThemeState = (state:ApplicationState) => _.get(state, stateKey);
+const getThemeState = (state: ApplicationState) => _.get(state, stateKey);
 
-export const themeSelector=createSelector(getThemeState,(state):'light'|'dark'=>_.get(state,"theme"));
-export const themeColorSelector=createSelector(getThemeState,(state):ThemeColor=>_.get(state,"themeColor"));
+export const themeSelector = createSelector(getThemeState, (state): 'light' | 'dark' => _.get(state, "theme"));
+export const themeColorSelector = createSelector(getThemeState, (state): ThemeColor => _.get(state, "themeColor"));
+export const rememberMeSelector = createSelector(getThemeState, (state): RememberMe => _.get(state, "rememberMe"));

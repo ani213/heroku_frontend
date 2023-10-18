@@ -1,4 +1,4 @@
-import { call, takeLatest, put, takeEvery } from "redux-saga/effects";
+import { call, takeLatest, put, takeEvery, select } from "redux-saga/effects";
 import {
   LOGIN,
   REGISTER,
@@ -21,30 +21,47 @@ import { hideLoading, showError, showLoading } from "../layout/action";
 import { history } from "../../services/history";
 import RouteService from "../../services/route.services";
 import { roles } from "../../config/roleConfig";
+import { rememberMeSelector } from "../theme/selector";
+import { setRememberMe } from "../theme/action";
 export function* callLogin(action: {
   readonly type: string;
   readonly payload: LoginFormValues;
 }) {
   try {
     yield put(showLoading());
+    const rememberMe: RememberMe = yield select(rememberMeSelector);
+
     const reqdata = qs.stringify(action.payload);
     const response: ApiResponse<LoginResponse> = yield call(request, {
       data: reqdata,
       url: "/login",
       method: "POST",
     });
-    const {data}=response;
+    const { data } = response;
     yield put(loginComplete(data))
-    const userData:ApiResponse<UserContext> =yield call(callApi, {
+    if (rememberMe.rememberMe) {
+      yield put(setRememberMe({
+        rememberMe: rememberMe.rememberMe,
+        password: action.payload.password,
+        username: action.payload.username,
+      }))
+    } else {
+      yield put(setRememberMe({
+        rememberMe: rememberMe.rememberMe,
+        password: "",
+        username: "",
+      }))
+    }
+    const userData: ApiResponse<UserContext> = yield call(callApi, {
       method: Method.GET,
       url: "/usercontext",
     });
     yield put(setUserContext(userData.data));
     yield put(hideLoading());
 
-    if(roles.superAdmin===userData.data.role){
+    if (roles.superAdmin === userData.data.role) {
       history.push(RouteService.superAdmin.dashboard.getPath())
-    }if(roles.user===userData.data.role){
+    } if (roles.user === userData.data.role) {
       history.push(RouteService.dashboard.getPath())
     }
   } catch (err) {
@@ -68,17 +85,17 @@ export function* callLoginWithGoogle(action: {
       url: "/google/auth",
       method: "POST",
     });
-    const {data}=response;
+    const { data } = response;
     yield put(loginComplete(data))
-    const userData:ApiResponse<UserContext> =yield call(callApi, {
+    const userData: ApiResponse<UserContext> = yield call(callApi, {
       method: Method.GET,
       url: "/usercontext",
     });
     yield put(setUserContext(userData.data));
     yield put(hideLoading());
-    if(roles.superAdmin===userData.data.role){
+    if (roles.superAdmin === userData.data.role) {
       history.push(RouteService.superAdmin.dashboard.getPath())
-    }if(roles.user===userData.data.role){
+    } if (roles.user === userData.data.role) {
       history.push(RouteService.dashboard.getPath())
     }
   } catch (err) {
@@ -142,8 +159,8 @@ export function* callVarificationRun(action: VarificationAction) {
         action.meta.onComplete();
       }
     }
-    if(data.forget){
-        history.push(RouteService.changePassword.getPath())
+    if (data.forget) {
+      history.push(RouteService.changePassword.getPath())
     }
   } catch (err) {
     yield put(hideLoading());

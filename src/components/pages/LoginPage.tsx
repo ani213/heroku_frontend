@@ -23,27 +23,32 @@ import ErrorModal from "../modals/ErrorModal";
 import { GoogleLogin } from "react-google-login";
 import { useLogin } from "../../store/user/hooks";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { useRememberMe } from "../../store/theme/hooks";
+import _ from "lodash";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-     background:`${theme.palette.primary.main} !important`,
-     color:'#fff !important',
-     borderRadius:'4px !important',
-     '& div':{
-      background:`${theme.palette.primary.main} !important`
-     }
+      background: `${theme.palette.primary.main} !important`,
+      color: '#fff !important',
+      borderRadius: '4px !important',
+      '& div': {
+        background: `${theme.palette.primary.main} !important`
+      }
     },
-   
+
   })
 );
 export interface LoginPageProps {
   readonly onSubmit: (data: LoginFormValues) => void;
+  readonly InitialLoginValue: RememberMe,
 }
 
 const LoginPage: React.FC<LoginPageProps> = (props) => {
+  const { InitialLoginValue } = props;
   const [isLoading] = useLoading();
-  const [,,loginWithGoogle]=useLogin()
+  const [, , loginWithGoogle] = useLogin();
+  const [rememberMe, setRememberMe] = useRememberMe();
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const { onSubmit } = props;
   const handleSubmit = (data: LoginFormValues) => {
@@ -51,18 +56,25 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
   };
   const responseSuccessGoogle = (response: any) => {
     // console.log(response.tokenId,"token id");
-    loginWithGoogle({idToken:response.tokenId})
+    loginWithGoogle({ idToken: response.tokenId })
   };
   const responseFailureGoogle = (response: any) => {
     // console.log(response);
   };
-const classes=useStyles()
+  const handleRememberMe = (e: any) => {
+    setRememberMe({
+      rememberMe: !!e.target.checked,
+      username: '',
+      password: ''
+    })
+  }
+  const classes = useStyles()
   return (
     <>
       <Formik<LoginFormValues>
         initialValues={{
-          username: "",
-          password: "",
+          username: _.get(InitialLoginValue, 'username'),
+          password: window.atob(_.get(InitialLoginValue, 'password')),
         }}
         onSubmit={handleSubmit}
         validateOnBlur={false}
@@ -111,7 +123,7 @@ const classes=useStyles()
                     autoComplete="current-password"
                   />
                   <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
+                    control={<Checkbox value="remember" color="primary" checked={rememberMe.rememberMe} onChange={handleRememberMe} />}
                     label="Remember me"
                   />
                   <Box sx={{ paddingBottom: 10 }}>
@@ -125,9 +137,9 @@ const classes=useStyles()
                       {isLoading ? <PreLoader /> : "Sign in"}
                     </Button>
                   </Box>
-                  <Box sx={{ paddingBottom: 10,display:"flex", justifyContent:"center" }}>
+                  <Box sx={{ paddingBottom: 10, display: "flex", justifyContent: "center" }}>
                     <GoogleLogin
-                      clientId={process.env.REACT_APP_CLIENT_ID||""}
+                      clientId={process.env.REACT_APP_CLIENT_ID || ""}
                       // buttonText="Login With Google"
                       onSuccess={responseSuccessGoogle}
                       onFailure={responseFailureGoogle}
