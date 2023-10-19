@@ -74,7 +74,7 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
       <Formik<LoginFormValues>
         initialValues={{
           username: _.get(InitialLoginValue, 'username'),
-          password: window.atob(_.get(InitialLoginValue, 'password')),
+          password: (_.get(InitialLoginValue, 'password')),
         }}
         onSubmit={handleSubmit}
         validateOnBlur={false}

@@ -15,7 +15,7 @@ const ConnectedLoginPage: React.FC<ConnectedLoginPageProps> = (props) => {
     if (rememberMe.rememberMe) {
       setState({
         username: rememberMe.username,
-        password: window.btoa(rememberMe.password),
+        password: (rememberMe.password),
         rememberMe: rememberMe.rememberMe,
       })
     } else {
